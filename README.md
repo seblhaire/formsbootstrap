@@ -3,7 +3,7 @@
 
 [By Sébastien L'haire](http://sebastien.lhaire.org)
 
-A Laravel library to generate forms based on Laravel Collective [Forms & HTML](https://laravelcollective.com/docs/6.0/html), [Boostrap](https://getbootstrap.com/) 5 CSS Framework. and  Icons provided by [FontAwesome](https://fontawesome.com/)
+A Laravel library to generate forms based on Laravel Collective [Forms & HTML](https://laravelcollective.com/docs/6.0/html), [Boostrap](https://getbootstrap.com/) 5 CSS Framework. RichText editor, and  Icons provided by [FontAwesome](https://fontawesome.com/)
 
 # Installation
 
