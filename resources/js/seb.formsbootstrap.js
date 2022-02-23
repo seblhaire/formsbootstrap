@@ -184,12 +184,19 @@ SebFormsBootstrapValidateForm = function(params){
       }
     }
     if (jQuery(this).data('uploader') != undefined){
-      console.log(jQuery(this).data('uploader').getresultprocessor().countFiles());
       if (jQuery(this).data('uploader').getresultprocessor().countFiles() == 0){
         isValid = false;
         jQuery(this).find('.uploader').addClass('is-invalid');
       }else{
         jQuery(this).find('.uploader').addClass('is-valid');
+      }
+    }
+    if (jQuery(this).data('tagsinput') != undefined){
+      if (jQuery(this).data('tagsinput').count() == 0){
+        isValid = false;
+        jQuery(this).data('tagsinput').autocompleter.addClass('is-invalid');
+      }else{
+        jQuery(this).data('tagsinput').autocompleter.addClass('is-valid');
       }
     }
   });
