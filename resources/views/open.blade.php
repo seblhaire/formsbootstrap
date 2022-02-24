@@ -12,12 +12,6 @@ $values = [
 ];
 $values['action'] = $data['action'];
 $values['method'] = $data['method'];
-/*
-if ($data['validate']){
-  $values['dovalidate'] = 1;
-}else{
-  $values['dovalidate'] = 0;
-}*/
 $values = array_merge($values, $data['options']);
 ?>
 <form
