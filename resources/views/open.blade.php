@@ -50,14 +50,12 @@ jQuery('#{!! $values["id"] !!}').on('submit', function(event){
   SebFormsBootstrapResetForm({!! $values['id'] !!}_params);
   if (!SebFormsBootstrapValidateForm({!! $values['id'] !!}_params)){
     event.stopPropagation();
-    //jQuery(this).addClass('was-validated');
-  }else{
-  //  jQuery(this).addClass('was-validated');
-    @if (!is_null($data['ajaxcallback']))
-    {!! $data['ajaxcallback'] !!}(jQuery('#{!! $values["id"] !!}'));
-    @endif
   }
-
+@if (!is_null($data['ajaxcallback']))
+  else{
+    {!! $data['ajaxcallback'] !!}(jQuery('#{!! $values["id"] !!}'));
+  }
+@endif
 });
 </script>
 @elseif(!is_null($data['ajaxcallback']))
