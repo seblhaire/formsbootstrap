@@ -2,13 +2,6 @@
 define('PASSWORD_MIN_LENGTH', 8);
 define('PASSWORD_MAX_LENGTH', 100);
 return [
-  /*password settings, common to both passwords*/
-  'min_password' => PASSWORD_MIN_LENGTH,
-  'max_password' => PASSWORD_MAX_LENGTH,  //  to be changed in regex too
-  'password_regex' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\.;,:+|()])[A-Za-z\d\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\.;,:+|()]{" . PASSWORD_MIN_LENGTH . ',' . PASSWORD_MAX_LENGTH . "}$/",
-  'password_regex_php' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\\\.;,:+|()])[A-Za-z\d\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\\\.;,:+|()]{" . PASSWORD_MIN_LENGTH . ',' . PASSWORD_MAX_LENGTH . "}$/",
-  'authorized_special_chars' => '^!?-_§=@$£¢€&§°[]{}*#%/\.;,:+|()',
-  'password_chars' => '123456789ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^!?-§=@$£¢€&§°[]{}*#%/\.;,:+|()', //exclude ambiguous O/0
   /******/
   'class-required' => 'verify',
   'class-required-check' => 'verify-check',
@@ -205,6 +198,14 @@ return [
         'invalid-feedback' => "#formsbootstrap::messages.invalidpassword#",
         'valid-feedback' => '',
         'divclass' => "mb-3"
+      ],
+      'password_common' => [
+        'min_password' => PASSWORD_MIN_LENGTH,
+        'max_password' => PASSWORD_MAX_LENGTH,  //  to be changed in regex too
+        'password_regex' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\.;,:+|()])[A-Za-z\d\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\.;,:+|()]{" . PASSWORD_MIN_LENGTH . ',' . PASSWORD_MAX_LENGTH . "}$/",
+        'password_regex_php' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\\\.;,:+|()])[A-Za-z\d\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\\\.;,:+|()]{" . PASSWORD_MIN_LENGTH . ',' . PASSWORD_MAX_LENGTH . "}$/",
+        'authorized_special_chars' => '^!?-_§=@$£¢€&§°[]{}*#%/\.;,:+|()',
+        'password_chars' => '123456789ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^!?-§=@$£¢€&§°[]{}*#%/\.;,:+|()'
       ],
       'select' => [
           'labeltext' => 'null',

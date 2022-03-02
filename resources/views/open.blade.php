@@ -37,7 +37,7 @@ var {!! $values['id'] !!}_params = {
   requiredMailId :"{!! config('formsbootstrap.class-verifymail') !!}",
   requiredPassId :"{!! config('formsbootstrap.class-verifypass') !!}",
   emailregex : {!! config('formsbootstrap.defaults.email.regex') !!},
-  passregex : {!! config('formsbootstrap.password_regex') !!}
+  passregex : {!! config('formsbootstrap.defaults.password_common.password_regex') !!}
 };
 jQuery('#{!! $values["id"] !!}').on('submit', function(event){
   event.preventDefault();

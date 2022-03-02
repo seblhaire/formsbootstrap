@@ -1,3 +1,64 @@
+var SebPasswordHelper = {
+    input: null,
+    confirminput : null,
+    clearinput : null,
+    options: null,
+    init: function(input, options, confirminput, clearinput){
+      this.input = input,
+      this.options = options;
+      this.confirminput = confirminput;
+      this.clearinput = clearinput;
+      var self = this;
+      if (this.clearinput != undefined){
+        this.input.on('change', function(){
+          self.copyval(this, self.clearinput);
+        });
+        this.clearinput.on('change', function(){
+          self.copyval(this, self.input);
+        });
+      }
+    },
+    generate : function(){
+      var pass = '';
+      do{
+        pass = '';
+        for (var i = 0; i < this.options.genlength; i++){
+          idx = Math.floor(Math.random() * Math.floor(this.options.passchars.length));
+          pass += this.options.passchars[idx];
+        }
+      }while(this.options.passregex.exec(pass) == null);
+      this.input.val(pass);
+      if (this.confirminput != undefined){
+          this.confirminput.val(pass);
+      }
+      if (this.clearinput != undefined){
+          this.clearinput.val(pass);
+      }
+    },
+    clearpass: function(){
+      this.input.val('');
+      if (this.confirminput != undefined){
+        this.confirminput.val('');
+      }
+      if (this.clearinput != undefined){
+          this.clearinput.val('');
+      }
+    },
+    checkStrength: function(){
+      return this.options.passregex.exec(this.input.val()) != null
+    },
+    checkIdentity: function(){
+      return this.input.val() == this.confirminput.val();
+    },
+    copyval: function(source, dest){
+      dest.val(source.val());
+    },
+    toggleInputs: function(){
+      this.input.toggle();
+      this.clearinput.toggle();
+    }
+};
+
 var SebRichTextHelper = {
   div : null,
   divid : null,
@@ -39,9 +100,21 @@ if (typeof Object.create !== 'function') {
 		return new F();
 	};
 }
-// table builder function
+// rich text helper builder function
 (function(jQuery) {
 	/* Create plugin */
+  jQuery.fn.sebPasswordHelper = function(options, confirminput, clearinput){
+    return this.each(function() {
+			var element = jQuery(this);
+			if (element.prop('tagName') != 'INPUT') throw 'not a INPUT';
+      if (confirminput != undefined && confirminput.prop('tagName') != 'INPUT') throw 'confirminput not a INPUT';
+      if (clearinput != undefined && clearinput.prop('tagName') != 'INPUT') throw 'clearinput not a INPUT';
+      if (element.data('sebpasswordhelper')) return element.data('sebpasswordhelper');
+      var sebpasswordhelper = Object.create(SebPasswordHelper);
+      sebpasswordhelper.input(this, options, confirminput, clearinput);
+      element.data('sebpasswordhelper', sebpasswordhelper);
+    });
+  }
 	jQuery.fn.sebRichTextHelper = function(options)  {
 		return this.each(function() {
 			var element = jQuery(this);
@@ -56,61 +129,29 @@ if (typeof Object.create !== 'function') {
 	};
 })(jQuery);
 
-/**
- * generates passwprd following rules
- * @param  string passcharsalid characters to generate pass
- * @param  regex passregex regular expression to validate passwprd
- * @param  int length    password length
- * @param  JqueryObj[] inputs array of objs fields to fill with èassword ex: jQuery('#passwotd')
- * @return void
- */
-SebFormsBootstrapGeneratepass = function(passchars, passregex, length, inputs){
-  var pass = '';
-  do{
-    pass = '';
-    for (var i = 0; i < length; i++){
-      idx = Math.floor(Math.random() * Math.floor(passchars.length));
-      pass += passchars[idx];
-    }
-  }while(passregex.exec(pass) == null);
-  jQuery(inputs).each(function() {
-      this.val(pass);
-  });
-};
-
-/**
- * clears input fields
- * @param  JqueryObj[] fields array of objs fields to cleai ex: jQuery('#passwotd')
- * @return void
- */
-SebFormsBootstrapClearpass = function(fields){
-  jQuery(fields).each(function() {
-      this.val('');
-  });
-}
 SebFormsBootstrapClearOnClick = function(params){
   jQuery("#" + params.formId + " ." + params.requiredId).each(function(i){
-    jQuery(this).bind( "click", function() {
+    jQuery(this).on( "click", function() {
       jQuery(this).removeClass('is-invalid').removeClass('is-valid');
     });
   });
   jQuery("#" + params.formId + " ." + params.requiredCheckedId).each(function(i){
-    jQuery(this).bind( "click", function() {
+    jQuery(this).on( "click", function() {
       jQuery(this).removeClass('is-invalid').removeClass('is-valid');
     });
   });
   jQuery("#" + params.formId + " ." + params.requiredMailId).each(function(i){
-    jQuery(this).bind( "click", function() {
+    jQuery(this).on( "click", function() {
       jQuery(this).removeClass('is-invalid').removeClass('is-valid');
     });
   });
   jQuery("#" + params.formId + " ." + params.requiredPassId).each(function(i){
-    jQuery(this).bind( "click", function() {
+    jQuery(this).on( "click", function() {
       jQuery(this).removeClass('is-invalid').removeClass('is-valid');
     });
   });
   jQuery("#" + params.formId + " ." + params.requiredSpecialId).each(function(i){
-    jQuery(this).bind( "click", function() {
+    jQuery(this).on( "click", function() {
       jQuery(this).find('.is-invalid').removeClass('is-invalid').removeClass('is-valid');
     });
   });

@@ -5,12 +5,6 @@ $data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.passwor
 $data['newpass']['inputclass'] .= ' ' . config('formsbootstrap.class-verifypass');
 $data['newpass']['validate'] = true;
 $data['newpassclear']['inputclass'] .= ' ' . config('formsbootstrap.class-verifypass');
-/*$data['newpassclear']['attributes'] = array_merge([
-    'pattern' => config('formsbootstrap.password_regex'),
-], $data['newpassclear']['attributes']);
-if ($data['newpassclear']['attributes']['pattern'] == ''){
-  unset($data['newpassclear']['attributes']['pattern']);
-}*/
 $data['oldpass']['inputclass'] .= ' ' . config('formsbootstrap.class-required');
 $data['oldpass']['validate'] = false;
 $data['confirmpass']['inputclass'] .= ' ' . config('formsbootstrap.class-required');
@@ -52,8 +46,8 @@ $data['confirmpass']['validate'] = false;
       <script>
         jQuery('#{{ $data["generatepwdbtn-id"] }}').click(function(){
             SebFormsBootstrapGeneratepass(
-              '{{ addslashes(config('formsbootstrap.password_chars')) }}',
-              {{ config('formsbootstrap.password_regex') }},
+              '{{ addslashes(config('formsbootstrap.defaults.password_common.password_chars')) }}',
+              {{ config('formsbootstrap.defaults.password_common.password_regex') }},
               {{ $data["generated_pass_length"] }},
               [
                 jQuery('#{{ $data["newpass"]["name"] }}'),
@@ -67,8 +61,8 @@ $data['confirmpass']['validate'] = false;
 
         jQuery('#{{ $data["generatepwdbtn-id-clear"] }}').click(function(){
             SebFormsBootstrapGeneratepass(
-              '{{ addslashes(config('formsbootstrap.password_chars')) }}',
-              {{ config('formsbootstrap.password_regex') }},
+              '{{ addslashes(config('formsbootstrap.defaults.password_common.password_chars')) }}',
+              {{ config('formsbootstrap.defaults.password_common.password_regex') }},
               {{ $data["generated_pass_length"] }},
               [
                 jQuery('#{{ $data["newpass"]["name"] }}'),

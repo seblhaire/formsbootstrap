@@ -26,3 +26,6 @@ if ($data['validate']){
 @if ($data['input_in_div'])
 </div>
 @endif
+<script>
+  jQuery('#{{ $data['name']}}').sebPasswordHelper({passregex : '{{ config('formsbootstrap.defaults.password_common')}}'});
+</script>

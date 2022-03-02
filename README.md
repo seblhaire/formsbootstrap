@@ -1,4 +1,3 @@
-
 # FormsBootstrap
 
 [By Sébastien L'haire](http://sebastien.lhaire.org)
@@ -6,27 +5,26 @@
 A Laravel library to generate forms based on Laravel Collective [Forms & HTML](https://laravelcollective.com/docs/6.0/html), [Boostrap](https://getbootstrap.com/) 5 CSS Framework. RichText editor, and  Icons provided by [FontAwesome](https://fontawesome.com/)
 
 # Installation
+1. install package
 
-composer require seblhaire/formabootstrap
+`composer require seblhaire/formabootstrap`
 
-Add in config/app.php
+2.  Composer will automatically link the package with Laravel. But you still can explicitely add provider and facade to your `config/app.php`:
 ```php
-  'providers' => [
-Collective\Html\HtmlServiceProvider::class,
-Seb\FormsBootstrap\FormsBootstrapServiceProvider::class,
+'providers' => [
+	Collective\Html\HtmlServiceProvider::class,
+	Seb\FormsBootstrap\FormsBootstrapServiceProvider::class,
 ]
 ```
-JQuery.
-Install Bootstrap. Install FontAwesome
 
-You can publish templates, config file, translation files, and/or js file in case you need to modifiy it.
-
+3. Publish package (optionally).
 ``` sh
 $ php artisan vendor:publish
 ```
-NB: js file can be either packed in Webpack files or published in public directory.
 
-# Javascript ans stylesheets
+4. For Javascript and stylesheets, see next section.
+
+# Javascript and stylesheets
 
 On a webpage, every JS library and CSS stylesheets can be linked separately. If you choose this classical way, first dowload and install above mentioned libraries or use Content Delivery Network (CDN) links as in the example page in last section. Then publish package files as explained above and put following tags in your template:
 
@@ -48,8 +46,8 @@ var jQuery = global.JQuery;
 window.$ = $;
 window.jQuery = jQuery;
 require('bootstrap');
-require('../../vendor/seblhaire/formsbootstrap/js/seb.formsbootstrap.js');
-
+require('../../vendor/seblhaire/formsbootstrap/resources/js/seb.formsbootstrap.js');
+require('../../vendor/seblhaire/formsbootstrap/resources/js/jquery.richtext.js');
 ```
 For your stylesheet:
 
@@ -59,6 +57,8 @@ For your stylesheet:
 @import "~@fortawesome/fontawesome-free/scss/regular";
 @import "~@fortawesome/fontawesome-free/scss/solid";
 @import "~@fortawesome/fontawesome-free/scss/brands";
+@import "../../vendor/seblhaire/formsbootstrap/resources/css/formsbootstrap";
+@import "../../vendor/seblhaire/formsbootstrap/resources/css/richtext";
 ```
 # Config files
 
@@ -68,12 +68,13 @@ Accessible through
 config('formsbootstrap')
 ```
 
-Section `formsbootstrap.mandatory` gives mandatory parameters for each form tag, whereas `formsbootstrap.defaults` contains default parameters.
+Section `formsbootstrap.mandatory` gives mandatory parameters for each form tag, whereas `formsbootstrap.defaults` contains default parameters. We also have other variables necessary for several form inputs or for other purposes.
+
  If you need eg. define your own classes  or define your own translation files, this is where you can change it.
 
 # Translation keys
 
-Laravel loads config files very early in process. Therefore config files cannot contain `__('translation.key')`. Therefore, we made an helper either to print directly strings or to send translation key to translation helper. Translation keys can be delimited by character #- Ex: `"#formsbootstrap::messages.required#"`.
+Laravel loads config files very early in process. Thus config files cannot contain `__('translation.key')`. Therefore, we made an helper either to print directly strings or to send translation key to translation helper. Translation keys can be delimited by character #- Ex: `"#formsbootstrap::messages.required#"`.
 
 In templates, helper is called by eg: `FormsBootstrapUtils::translateOrPrint($data['oldpass']['labeltext']);`
 
