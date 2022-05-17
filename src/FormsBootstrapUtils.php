@@ -40,7 +40,23 @@ class FormsBootstrapUtils
     return $defaults;
   }
 
-  public static function validateEditorParams($params = null, $addTranslations = false){
+  public static function complileRules(){
+    return [
+      sprintf(
+        __('formsbootstrap::messages.password_rule_length'),
+        config('formsbootstrap.defaults.password_common.min_password'),
+        config('formsbootstrap.defaults.password_common.max_password')
+      ),
+      __('formsbootstrap::messages.password_rule_case'),
+      __('formsbootstrap::messages.password_rule_number'),
+      sprintf(
+        __('formsbootstrap::messages.password_rule_special_char'),
+        config('formsbootstrap.defaults.password_common.authorized_special_chars')
+      ),
+    ];
+  }
+
+  public static function validateEditorParams($params = null, $addTranslations = null){
     if (!is_array($params) && !is_null($params)) {
       throw new \Exception('no array');
     }
@@ -129,6 +145,7 @@ class FormsBootstrapUtils
       'fontColor' => true,
       'fontSize' => true,
       // uploads
+      // better use https://github.com/seblhaire/uploader
       'imageUpload' => true,
       'fileUpload' => true,
       // media
@@ -170,16 +187,16 @@ class FormsBootstrapUtils
           }
         }
       }
-      if (count($params) > 0){
-        if ($addTranslations){
-          $translations = [];
-          foreach (config('formsbootstrap.editorTranslations') as $key => $trad){
-            $translations[$key] = self::translateOrPrint($trad);
-          }
-          $params['translations'] = $translations;
-        }
-        return json_encode($params);
+      if ($addTranslations != null && count($addTranslations) > 0){
+        $translations = self::mergeValues(config('formsbootstrap.editorTranslations'), $addTranslations);
+      }else{
+        $translations = config('formsbootstrap.editorTranslations');
       }
+      foreach ($translations as $key => $trad){
+        $translations[$key] = self::translateOrPrint($trad);
+      }
+      $params['translations'] = $translations;
+      return json_encode($params, JSON_PRETTY_PRINT);
     }
     return '';
   }

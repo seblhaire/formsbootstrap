@@ -5,11 +5,13 @@ $mandatory = config('formsbootstrap.mandatory.radio');
 foreach ($mandatory as $param){
     if (!isset($data[$param])) throw new Exception('missing mandatory parameter ' . $param);
 }
-$data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.radio'), $data);
+$data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defaults.radio'), config('formsbootstrap.classes')),
+    $data);
 if ($data['required']){
-    $data['divelt'] .= ' ' . config('formsbootstrap.class-required-check');
-    $data['divclass'] .= ' ' . config('formsbootstrap.class-selcheck');
+  $data['divelt'] .= ' ' . $data['requiredcheckclass'];
+  $data['divclass'] .= ' ' . $data['selcheckclass'];
 }
+$data['divclass'] .= ' ' . $data['resetradioclass'];
 ?>
 <div class="{{ $data['divclass'] }}" id="main_{{$data['name']}}"
     @foreach ($data['mainattr'] as $mainattrkey => $mainattrvalue)

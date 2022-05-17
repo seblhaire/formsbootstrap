@@ -33,7 +33,7 @@ return [
 'center' => 'Centré',
 'right' => 'Droit',
 'rows' => 'Lignes',
-'columns' => 'Colones',
+'columns' => 'Colonnes',
 'add' => 'Ajouter',
 'pleaseEnterURL' => 'Veuillez entrer un URL',
 'videoURLnotSupported' => 'URL vidéo non pris en charge',

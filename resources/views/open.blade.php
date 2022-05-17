@@ -5,7 +5,12 @@ $mandatory = config('formsbootstrap.mandatory.open');
 foreach ($mandatory as $param){
     if (!isset($data[$param])) throw new Exception('missing mandatory parameter ' . $param);
 }
-$data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.open'), $data);
+$data = FormsBootstrapUtils::mergeValues(array_merge(
+  config('formsbootstrap.defaults.open'),
+  config('formsbootstrap.classes'),
+  ['csrf' => csrf_token()]),
+  $data
+);
 $values = [
   'id' => $data['id'],
   'novalidate' => 'novalidate',
@@ -23,40 +28,34 @@ $values = array_merge($values, $data['options']);
   @endif
 @endforeach>
 <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}" />
-@if ($data['validate'])
 <script>
-jQuery(document).ready(function() {
-  SebFormsBootstrapClearOnClick({!! $values['id'] !!}_params);
-});
-var {!! $values['id'] !!}_params = {
-  formId : "{!! $values['id'] !!}",
-  requiredId : "{!! config('formsbootstrap.class-required') !!}",
-  requiredCheckedId : "{!! config('formsbootstrap.class-required-check') !!}",
-  requiredSpecialId : "{!! config('formsbootstrap.class-required-special') !!}",
-  requiredSelcheckId :"{!! config('formsbootstrap.class-selcheck') !!}",
-  requiredMailId :"{!! config('formsbootstrap.class-verifymail') !!}",
-  requiredPassId :"{!! config('formsbootstrap.class-verifypass') !!}",
-  emailregex : {!! config('formsbootstrap.defaults.email.regex') !!},
-  passregex : {!! config('formsbootstrap.password_regex') !!}
-};
-jQuery('#{!! $values["id"] !!}').on('submit', function(event){
-  event.preventDefault();
-  SebFormsBootstrapResetForm({!! $values['id'] !!}_params);
-  if (!SebFormsBootstrapValidateForm({!! $values['id'] !!}_params)){
-    event.stopPropagation();
-  }
-@if (!is_null($data['ajaxcallback']))
-  else{
-    {!! $data['ajaxcallback'] !!}(jQuery('#{!! $values["id"] !!}'));
-  }
-@endif
-});
+  jQuery(document).ready(function() {
+    jQuery('#{!! $values["id"] !!}').sebFormHelper({
+      validate : {!! $data['validate'] ? 'true' : 'false' !!},
+      checkonleave : {!! $data['checkonleave'] ? 'true' : 'false' !!},
+      ajaxcallback : {!! is_null($data['ajaxcallback']) ? 'null' : $data['ajaxcallback'] !!},
+      filldatacallback : {!! is_null($data['filldatacallback']) ? 'null' : $data['filldatacallback'] !!},
+      requiredclass : '{!! $data['requiredclass'] !!}',
+      requiredcheckclass : '{!! $data['requiredcheckclass'] !!}',
+      selcheckclass : '{!! $data['selcheckclass'] !!}',
+      requiredspecialclass : '{!! $data['requiredspecialclass'] !!}',
+      verifymailclass : '{!! $data['verifymailclass'] !!}',
+      verifypassclass : '{!! $data['verifypassclass'] !!}',
+      verifypassmatchclass : '{!! $data['verifypassmatchclass'] !!}',
+      verifypassold : '{!! $data['verifypassold'] !!}',
+      resettextclass : '{!! $data['resettextclass'] !!}',
+      resetselectclass : '{!! $data['resetselectclass'] !!}',
+      resetcheckclass : '{!! $data['resetcheckclass'] !!}',
+      resetradioclass : '{!! $data['resetradioclass'] !!}',
+      csrfrefreshroute  : {!! is_null($data['csrfrefreshroute']) ? 'null' : '"' . $data['csrfrefreshroute'] . '"'  !!},
+      data_build_function : {!! is_null($data['data_build_function']) ? 'null' :  $data['data_build_function']  !!},
+      remove_validation_function : {!! is_null($data['remove_validation_function']) ? 'null' :  $data['remove_validation_function']  !!},
+      clearonclick_function : {!! is_null($data['clearonclick_function']) ? 'null' :  $data['clearonclick_function']  !!},
+      validate_function : {!! is_null($data['validate_function']) ? 'null' :  $data['validate_function']  !!},
+      clear_function : {!! is_null($data['clear_function']) ? 'null' :  $data['clear_function']  !!},
+      csrf : '{!! $data['csrf'] !!}',
+      check_modified_on_reset : {!! $data['check_modified_on_reset'] ? 'true' : 'false' !!},
+      modified_on_reset_confirm_text : '{{ FormsBootstrapUtils::translateOrPrint($data['modified_on_reset_confirm_text']) }}'
+    });
+  });
 </script>
-@elseif(!is_null($data['ajaxcallback']))
-<script>
-jQuery('#{!! $values["id"] !!}').on('submit', function(event){
-  event.preventDefault();
-  {!! $data['ajaxcallback'] !!}(jQuery('#{!! $values["id"] !!}').first());
-});
-</script>
-@endif

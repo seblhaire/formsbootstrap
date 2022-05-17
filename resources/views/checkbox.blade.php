@@ -5,7 +5,9 @@ $mandatory = config('formsbootstrap.mandatory.checkbox');
 foreach ($mandatory as $param){
     if (!isset($data[$param])) throw new Exception('missing mandatory parameter ' . $param);
 }
-$data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.checkbox'), $data);
+$data = FormsBootstrapUtils::mergeValues(
+  array_merge(config('formsbootstrap.defaults.checkbox'), config('formsbootstrap.classes')),
+  $data);
 if (preg_match('/^(\w+)\[\]$/', $data['name'], $m) > 0){
   $data['id'] = $m[1];
 }else{
@@ -17,9 +19,10 @@ if ($data['switch']){
   $data['attributes']['role'] = 'switch';
 }
 if ($data['required']){
-    $data['divelt'] .= ' ' . config('formsbootstrap.class-required-check');
-    $data['divclass'] .= ' ' . config('formsbootstrap.class-selcheck');
+    $data['divelt'] .= ' ' . $data['requiredcheckclass'];
+    $data['divclass'] .= ' ' . $data['selcheckclass'];
 }
+$data['divclass'] .= ' ' . $data['resetcheckclass'];
 ?>
 <div class="{{ $data['divclass'] }}" id="main_{{$data['id']}}"
     @foreach ($data['mainattr'] as $mainattrkey => $mainattrvalue)

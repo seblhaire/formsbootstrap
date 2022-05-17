@@ -5,10 +5,11 @@ $mandatory = config('formsbootstrap.mandatory.text');
 foreach ($mandatory as $param){
     if (!isset($data[$param])) throw new Exception('missing mandatory parameter ' . $param);
 }
-$data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.text'), $data);
+$data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defaults.text'), config('formsbootstrap.classes')), $data);
 if ($data['required']){
-  $data['inputclass'] .= ' ' . config('formsbootstrap.class-required');
+  $data['inputclass'] .= ' ' . $data['requiredclass'];;
 }
+$data['inputclass'] .= ' ' . $data['resettextclass'];
  ?>
 @if ($data['input_in_div'])
 <div class="{{ $data['divclass'] }}" id="fg-{{ $data['name'] }}">
