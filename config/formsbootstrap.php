@@ -1,14 +1,21 @@
 <?php
-define('PASSWORD_MIN_LENGTH', 8);
-define('PASSWORD_MAX_LENGTH', 100);
+if (!defined('PASSWORD_MIN_LENGTH')) define('PASSWORD_MIN_LENGTH', 8);
+if (!defined('PASSWORD_MAX_LENGTH')) define('PASSWORD_MAX_LENGTH', 80);
 return [
-  /******/
-  'class-required' => 'verify',
-  'class-required-check' => 'verify-check',
-  'class-selcheck' => 'selcheck',
-  'class-required-special' => 'verify-special',
-  'class-verifymail' => 'verify-email',
-  'class-verifypass' => 'verify-pass',
+  'classes' => [
+    'requiredclass' => 'verify',
+    'requiredcheckclass' => 'verify-check',
+    'selcheckclass' => 'selcheck',
+    'requiredspecialclass' => 'verify-special',
+    'verifymailclass' => 'verify-email',
+    'verifypassclass' => 'verify-pass',
+    'verifypassmatchclass' => 'verify-pass-match',
+    'verifypassold' => 'verify-pass-old',
+    'resettextclass' => 'resettext',
+    'resetselectclass' => 'resetselect',
+    'resetcheckclass' => 'resetcheck',
+    'resetradioclass' => 'resetradio',
+  ],
   'mandatory' =>  [
     'open' => ['id'],
     'button' => ['id', 'label'],
@@ -56,7 +63,7 @@ return [
       'center' => "#formsbootstrap::editor.center#",
       'right' => "#formsbootstrap::editor.right#",
       'rows' => "#formsbootstrap::editor.rows#",
-      'columns' => "#formsbootstrap::editor.column#",
+      'columns' => "#formsbootstrap::editor.columns#",
       'add' => "#formsbootstrap::editor.add#",
       'pleaseEnterURL' => "#formsbootstrap::editor.pleaseEnterURL#",
       'videoURLnotSupported' => "#formsbootstrap::editor.videoURLnotSupported#",
@@ -76,7 +83,7 @@ return [
       'addFontSize'  => "#formsbootstrap::editor.addFontSize#",
       'addImage' => "#formsbootstrap::editor.addImage#",
       'addVideo' => "#formsbootstrap::editor.addVideo#",
-      'addFile' => "#formsbootstrap::editor.addFile",
+      'addFile' => "#formsbootstrap::editor.addFile#",
       'addURL' => "#formsbootstrap::editor.addURL#",
       'addTable' => "#formsbootstrap::editor.addTable#",
       'removeStyles' => "#formsbootstrap::editor.removeStyles#",
@@ -86,7 +93,7 @@ return [
       'close' => "#formsbootstrap::editor.close#"
   ],
   'defaults' =>[
-      'button' => ['attributes' => [], 'class' => 'btn btn-default'],
+      'button' => ['attributes' => [], 'action' => null, 'class' => 'btn btn-secondary'],
       'checkbox' => [
         'checkedvalues' => null,
         'attributes' => [],
@@ -122,12 +129,21 @@ return [
       'open' => [
         'action' => '',
         'method' => 'post',
-        'validate' => true,
-        'confirm_page_leave' => true,
         'class' => '',
+        'options' => [],
+        'validate' => true,
         'ajaxcallback' => null,
-        'custom_verify_callback' => null,
-        'options' => []
+        'filldatacallback' => null,
+        'data_build_function' => null,
+        'csrfrefreshroute' => null,
+        'csrf' => null,
+        'remove_validation_function' => null,
+        'clearonclick_function' => null,
+        'validate_function' => null,
+        'clear_function' => null,
+        'checkonleave' => true,
+        'check_modified_on_reset' => true,
+        'modified_on_reset_confirm_text' => "#formsbootstrap::messages.modified_on_reset_confirm_text#",
       ],
       'password-with-confirm' => [
         'oldpass' => [
@@ -164,25 +180,34 @@ return [
         'show_old' => true,
         'show_generate' => true,
         'show_clear' => true,
+        'show_rules' => true,
+        'showrulesbtntext' => '#formsbootstrap::messages.showrules#',
+        'password_rules_modal_head' => '#formsbootstrap::messages.password_rules#',
+        'password_rules_intro' => '#formsbootstrap::messages.password_rules_intro#',
+        'password_rules_list' => [],
+        'close_rules' => '#formsbootstrap::messages.close_rules#',
         'input_in_div' => true,
         'generated_pass_length' => PASSWORD_MIN_LENGTH + 4,
         'helptext' => '',
         'pwdbtngroup-class' => 'input-group',
-        'pwdbtn-class' => 'input-group-append',
-        'togglebtn-id' => 'toggle-pwd-btn',
-        'togglebtn-id-clear' => 'toggle-pwd-btn-clear',
         'togglebtn-class' => 'btn btn-primary',
         'toggledbtn-title' => '#formsbootstrap::messages.display_pwd#',
         'toggledbtn-icon-on' => '<i class="far fa-eye"></i>',
         'toggledbtn-icon-off' => '<i class="far fa-eye-slash"></i>',
-        'generatepwdbtn-id' => 'generate-pwd-btn',
-        'generatepwdbtn-id-clear' => 'generate-pwd-btn-clear',
+        'generatebtn-icon' => '<i class="fa-solid fa-gears"></i>',
         'generatepwdbtn-class' => 'btn btn-outline-secondary',
         'generatepwdbtn-lbl' => '#formsbootstrap::messages.generate#',
         'generatepwdbtn-title' => '#formsbootstrap::messages.generate_long#',
+        'oldpass-feedback' => "#formsbootstrap::messages.incorrectoldpass#",
+        'oldpass-validfeedback' => '',
         'invalid-feedback' => "#formsbootstrap::messages.invalidpassword#",
+        'nomatch-feedback' => "#formsbootstrap::messages.nomatchpassword#",
+        'nomatch-validfeedback' => '',
         'valid-feedback' => '',
-        'divclass' => "mb-3"
+        'divclass' => "mb-3",
+        'checkoldpassurl' => null,
+        'csrfrefreshroute' => null,
+        'csrf' => null,
       ],
       'password' => [
         'name' => 'password',
@@ -197,32 +222,32 @@ return [
         'labelattributes' => [],
         'invalid-feedback' => "#formsbootstrap::messages.invalidpassword#",
         'valid-feedback' => '',
-        'divclass' => "mb-3"
+        'divclass' => "mb-3",
       ],
       'password_common' => [
         'min_password' => PASSWORD_MIN_LENGTH,
-        'max_password' => PASSWORD_MAX_LENGTH,  //  to be changed in regex too
-        'password_regex' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\.;,:+|()])[A-Za-z\d\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\.;,:+|()]{" . PASSWORD_MIN_LENGTH . ',' . PASSWORD_MAX_LENGTH . "}$/",
-        'password_regex_php' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\\\.;,:+|()])[A-Za-z\d\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\\\.;,:+|()]{" . PASSWORD_MIN_LENGTH . ',' . PASSWORD_MAX_LENGTH . "}$/",
+        'max_password' => PASSWORD_MAX_LENGTH,
+        'password_regex' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\\\.;,:+|()])[A-Za-z\d\^!\-_\?§=@$&\§°\[\]{}£¢€*#%\/\\\\.;,:+|()]{" . PASSWORD_MIN_LENGTH . ',' . PASSWORD_MAX_LENGTH . "}$/",
+        'password_regex_php' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\^!\-_?§=@$&§°\[\]{}£¢€*#%\/\\\\\\\\.;,:+|()])[A-Za-z\d\^!\-_\?§=@$&\§°\[\]{}£¢€*#%\/\\\\\\\\.;,:+|()]{' . PASSWORD_MIN_LENGTH . ',' . PASSWORD_MAX_LENGTH .'}$/',
         'authorized_special_chars' => '^!?-_§=@$£¢€&§°[]{}*#%/\.;,:+|()',
-        'password_chars' => '123456789ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^!?-§=@$£¢€&§°[]{}*#%/\.;,:+|()'
+        'password_chars' => '123456789ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^!?-§=@$£¢€&§°[]{}*#%/\.;,:+|()',
       ],
       'select' => [
-          'labeltext' => 'null',
-          'values' => [],
-          'multiple' => false,
-          'default' => '',
-          'helptext' => '',
-          'input_in_div' => true,
-          'inputclass' => 'form-select',
-          'labelclass' => 'form-label',
-          'attributes' => [],
-          'labelattributes' => [],
-          'required' => false,
-          'invalid-feedback' => "#formsbootstrap::messages.required#",
-          'valid-feedback' => '',
-          'divclass' => "mb-3",
-          'feedback' => false
+        'labeltext' => 'null',
+        'values' => [],
+        'multiple' => false,
+        'default' => '',
+        'helptext' => '',
+        'input_in_div' => true,
+        'inputclass' => 'form-select',
+        'labelclass' => 'form-label',
+        'attributes' => [],
+        'labelattributes' => [],
+        'required' => false,
+        'invalid-feedback' => "#formsbootstrap::messages.required#",
+        'valid-feedback' => '',
+        'divclass' => "mb-3",
+        'feedback' => true
       ],
       'submit' => [
         'id' => 'submit',
@@ -231,7 +256,6 @@ return [
         'attributes' => []
       ],
       'colorpicker' => [
-          'value' => null,
           'input_in_div' => true,
           'inputclass' => 'form-control form-control-color',
            'labelclass' => 'form-label',
@@ -286,33 +310,35 @@ return [
       ],
       'textarea' => [
         'value' => null,
-          'required' => false,
-          'helptext' => '',
-          'input_in_div' => true,
-          'inputclass' =>'form-control',
-          'labelclass' => 'form-label',
-          'attributes' => [],
-          'labelattributes' => [],
-          'invalid-feedback' => "#formsbootstrap::messages.required#",
-          'valid-feedback' => '',
-          'divclass' => "mb-3"
+        'required' => false,
+        'helptext' => '',
+        'input_in_div' => true,
+        'inputclass' =>'form-control',
+        'labelclass' => 'form-label',
+        'attributes' => [],
+        'labelattributes' => [],
+        'invalid-feedback' => "#formsbootstrap::messages.required#",
+        'valid-feedback' => '',
+        'divclass' => "mb-3"
       ],
       'editor' => [
         'value' => null,
-          'required' => false,
-          'helptext' => '',
-          'inputclass' =>'form-control',
-          'labelclass' => 'form-label',
-          'attributes' => [],
-          'labelattributes' => [],
-          'invalid-feedback' => "#formsbootstrap::messages.required#",
-          'valid-feedback' => '',
-          'divclass' => "mb-3",
-          'config' => [
-            //'class' => 'form-control',
-            'useParagraph' => true,
-          ],
-          'configvar' => null
+        'required' => false,
+        'helptext' => '',
+        'inputclass' =>'form-control',
+        'labelclass' => 'form-label',
+        'attributes' => [],
+        'labelattributes' => [],
+        'invalid-feedback' => "#formsbootstrap::messages.required#",
+        'valid-feedback' => '',
+        'divclass' => "mb-3",
+        'config' => [
+          'useParagraph' => true,
+          'imageUpload' => false,
+          'fileUpload' => false,
+        ],
+        'configvar' => null,
+        'translations' => null
       ],
       'email' => [
         'name' => 'email',
@@ -329,7 +355,7 @@ return [
         'invalid-feedback' => "#formsbootstrap::messages.invalidemail#",
         'valid-feedback' => '',
         'divclass' => "mb-3",
-        'regex' => "/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/"
+        'regex' => "/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/"
       ],
     ]
 ];

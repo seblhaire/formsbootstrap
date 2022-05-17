@@ -5,7 +5,12 @@ $mandatory = config('formsbootstrap.mandatory.select');
 foreach ($mandatory as $param){
     if (!isset($data[$param])) throw new Exception('missing mandatory parameter ' . $param);
 }
-$data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.range'), $data);
+$data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defaults.range'), config('formsbootstrap.classes')), $data);
+if (!is_null($data['value'])){
+  $data['placeholder'] = $data['value'];
+}
+$data['inputclass'] .= ' ' . $data['resettextclass'];
+
 ?>
 @if ($data['input_in_div'])
 <div class="{{ $data['divclass'] }}" id="fg-{{ $data['name'] }}">
@@ -25,6 +30,9 @@ $data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.range')
     @endif
     @if (!is_null($data['step']))
       step="{{ $data['step'] }}"
+    @endif
+    @if (isset($data['placeholder']) && !is_null($data['placeholder']))
+      placeholder="{{ $data['placeholder'] }}"
     @endif
   >
   @if (!is_null($data['max']) && $data['show_bounds'])
@@ -47,6 +55,9 @@ $data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.range')
   @if (!is_null($data['step']))
     step="{{ $data['step'] }}"
   @endif
+  @if (isset($data['placeholder']) && !is_null($data['placeholder']))
+    placeholder="{{ $data['placeholder'] }}"
+  @endif
 >
 @endif
 @if ($data['input_in_div'])
@@ -54,7 +65,7 @@ $data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.range')
 @endif
 @if ($data['showvalue'])
 <script>
-  jQuery('#{{ $data['name']}}').on('change mousemove', function(){
+  jQuery('#{{ $data['name']}}').on('input', function(){
     jQuery('#{{ $data['name']}}_val').html(jQuery('#{{ $data['name']}}').val());
   });
   jQuery('#{{ $data['name']}}_val').html(jQuery('#{{ $data['name']}}').val());

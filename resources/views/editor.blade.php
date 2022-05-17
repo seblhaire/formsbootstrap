@@ -5,9 +5,9 @@ $mandatory = config('formsbootstrap.mandatory.editor');
 foreach ($mandatory as $param){
     if (!isset($data[$param])) throw new Exception('missing mandatory parameter ' . $param);
 }
-$data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.editor'), $data);
+$data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defaults.editor'), config('formsbootstrap.classes')), $data);
 if ($data['required']){
-  $data['divclass'] .= ' ' . config('formsbootstrap.class-required-special');
+  $data['divclass'] .= ' ' . $data['requiredspecialclass'];
 }
 ?>
 <div class="{{ $data['divclass'] }}" id="{{ $data['name'] }}">
@@ -27,7 +27,7 @@ if ($data['required']){
 @if (!is_null($data['configvar']))
 jQuery('#{{ $data["name"] }}').sebRichTextHelper({{ $data['configvar'] }});
 @elseif (!is_null($data['config']))
-jQuery('#{{ $data["name"] }}').sebRichTextHelper({!! FormsBootstrapUtils::validateEditorParams($data['config'], config('formsbootstrap.editorTranslations')) !!});
+jQuery('#{{ $data["name"] }}').sebRichTextHelper({!! FormsBootstrapUtils::validateEditorParams($data['config'], $data['translations']) !!});
 @else
   jQuery('#{{ $data["name"] }}').sebRichTextHelper();
 @endif

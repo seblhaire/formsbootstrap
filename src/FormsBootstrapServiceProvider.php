@@ -52,7 +52,7 @@ class FormsBootstrapServiceProvider extends ServiceProvider
         });
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'formsbootstrap');
         $this->publishes([
-            __DIR__.'/../config/formsbootstrap.php' => config_path('vendor/seblhaire/formsbootstrap'),
+            __DIR__.'/../config' => config_path('vendor/seblhaire'),
             __DIR__.'/../resources/lang' => resource_path('lang/vendor/seblhaire/formsbootstrap'),
             __DIR__.'/../resources/views' => resource_path('views/vendor/seblhaire/formsbootstrap'),
             __DIR__.'/../resources/js' => resource_path('js/vendor/seblhaire/formsbootstrap'),

@@ -11,8 +11,19 @@ return [
   'invalidemail' => 'Email invalide ou absent',
   'checkbox-required' => 'Sélectionnez au moins une des valeurs ci-dessus',
   'send' => 'Envoyer',
-  'generate' => 'Générer',
   'generate_long' => 'Générer nouveau mot de passe',
   'display_pwd' => 'Afficher mot de passe',
-  'rangevalueprefix' => 'Sélectionné'
+  "colorpicker" => 'Cliquez pour choisir une couleur',
+  'rangevalueprefix' => 'Sélectionné',
+  'nomatchpassword' => 'La confirmation du mot de passe est manquante ou ne correspond pas au mot de passe',
+  'incorrectoldpass' => 'Ancien mot de passe incorrect ou vide',
+  'showrules' => 'Afficher les règles de mot de passe',
+  'password_rules' => 'Règles de mot de passe',
+  'password_rules_intro' => 'Votre mot de passe doit contenir :',
+  'password_rule_length' =>'min. %s caractères et max. %s caractères',
+  'password_rule_case' => 'au moins un caractère minuscule un caratère majuscule',
+  'password_rule_number' => 'au moins un nombre',
+  'password_rule_special_char' => 'au moins un symbole parmis %s',
+  'close_rules' => 'Fermer',
+  'modified_on_reset_confirm_text' => 'Ce formulaire a été modifié. Etes-vous sûr(e) de vouloir le réinitialiser ?'
 ];

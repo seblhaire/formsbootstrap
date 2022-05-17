@@ -1,18 +1,20 @@
 <?php
 use \Seblhaire\Formsbootstrap\FormsBootstrapUtils;
 $data = is_null($data) ? [] : $data;
-$data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.email'), $data);
+$data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defaults.email'), config('formsbootstrap.classes')),
+  $data);
  ?>
  @if ($data['input_in_div'])
 <div class="{{ $data['divclass'] }}" id="fg-{{ $data['name'] }}">
   @endif
   <?php
   if ($data['required']){
-    $data['inputclass'] .= ' ' . config('formsbootstrap.class-required');
+    $data['inputclass'] .= ' ' . $data['requiredclass'];
   }
   if ($data['verify']){
-    $data['inputclass'] .= ' ' .config('formsbootstrap.class-verifymail');
+    $data['inputclass'] .= ' ' . $data['verifymailclass'];
   }
+  $data['inputclass'] .= ' ' . $data['resettextclass'];
   ?>
     {{ Form::label($data['name'], FormsBootstrapUtils::translateOrPrint($data['labeltext']), array_merge(['class' => $data['labelclass']], $data['labelattributes'])) }}
     {{ Form::email($data['name'], $data['value'], array_merge([
@@ -28,4 +30,9 @@ $data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.email')
     @endif
     @if ($data['input_in_div'])
 </div>
+@endif
+@if ($data['verify'])
+<script>
+  jQuery('#{{ $data['name']}}').sebEmailHelper({emailregex : {!! $data['regex'] !!}});
+</script>
 @endif
