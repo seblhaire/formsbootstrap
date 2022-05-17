@@ -3,7 +3,7 @@
 
 [By Sébastien L'haire](http://sebastien.lhaire.org)
 
-A Laravel library to generate forms based on Laravel Collective [Forms & HTML](https://laravelcollective.com/docs/6.0/html), [Boostrap](https://getbootstrap.com/) 5 CSS Framework. RichText editor, and  Icons provided by [FontAwesome](https://fontawesome.com/). Manages also results inputs of packages [DateRangePickerHelper](https://github.com/seblhaire/daterangepickerhelper), [Uploader](https://github.com/seblhaire/uploader), and [Tags input](https://github.com/seblhaire/tagsinput). Package demo available [here](https://sebastien.lhaire.org/formsbootstrap)
+A Laravel library to generate forms based on Laravel Collective [Forms & HTML](https://laravelcollective.com/docs/6.0/html), [Boostrap](https://getbootstrap.com/) 5 CSS Framework. RichText editor, and  Icons provided by [FontAwesome](https://fontawesome.com/). Manages also results inputs of packages [DateRangePickerHelper](https://github.com/seblhaire/daterangepickerhelper), [Uploader](https://github.com/seblhaire/uploader), and [Tags input](https://github.com/seblhaire/tagsinput). Package demo available [here](https://sebastien.lhaire.org/formsbootstrap). Includes form management and validation.
 
 ![Formsbootstrap example image](formsbs.png)
 
@@ -152,6 +152,7 @@ Forms::bsTextarea(array $data)
 ### Example
 
 `{!! Form::bsTextarea(['name' => 'notes', 'labeltext' =>  'Notes', 'required' => true]) !!}`
+
 ![Formsbootstrap textarea](textarea.png)
 
 ## Editor
@@ -420,6 +421,7 @@ if (jQuery('#email').data('sebemailhelper').check()){
 ```
 ### Example
 `{!! Form::bsEmail[) !!}`
+
 ![Formsbootstrap email](email.png)
 
 ## INPUT PASSWORD
@@ -554,9 +556,11 @@ Object functions are called by input buttons or form validation but you can call
 
 ### Examples
 `{!! Form::bsPassword(['required' => true, 'validate' => false]) !!}`
+
 ![Formsbootstrap password](password.png)
 
 `{!! Form::bsPasswordWithConfirm(['checkoldpassurl' => route('formsbootstrap_checkoldpass')]) !!}`
+
 ![Formsbootstrap password confirm](password_confirm.png)
 
 ## SELECT
@@ -591,11 +595,13 @@ Forms::bsSelect(array $data)
 `{!! Form::bsSelect(['name' => 'priority', 'labeltext' => 'Priority',
 'values' => ['lowest' => 'Lowest','low' => 'Low', 'medium' => 'Medium','high' => 'High','highest' => 'Highest'],
 'default' => 'medium']) !!}`
+
 ![Formsbootstrap select](select.png)
 
 `{!! Form::bsSelect(['name' => 'os', 'labeltext' => 'Operating system',
 'values' => ['mac' => 'MacOs','windows' => 'Windows', 'linux' => 'Linux', 'vms' => 'Vms','unix' => 'Unix'],
 'default' => 'linux', 'multiple' => true]) !!}`
+
 ![Formsbootstrap select multiple](select-multiples.png)
 
 ## INPUT CHECKBOX
@@ -627,12 +633,15 @@ Forms::bsCheckbox(array $data)
 
 ### Examples
 `{!! Form::bsCheckbox(['name' => 'os', 'values' => ['mac' => 'MacOs','windows' => 'Windows', 'linux' => 'Linux', 'vms' => 'Vms','unix' => 'Unix'], 'checkedvalues' => ['vms', 'mac'],'mainlabel' => 'Operating system']) !!}`
+
 ![Formsbootstrap checkbox](checkbox.png)
 
 `{!! Form::bsCheckbox(['name' => 'languages', 'values' => ['en' => 'English', 'fr' => 'Français', 'de' => 'Deutsch', 'it' => 'Italiano', 'es' => 'Español', 'pt' => 'Português'], 'mainlabel' => 'Languages', 'switch' => true, 'required' => true]) !!}`
+
 ![Formsbootstrap checkbox switch](checkbox-switch.png)
 
 `{!! Form::bsCheckbox(['name' => 'conditions', 'values' => ['accepted' => 'I agree to terms and conditions'], 'required' => true, 'invalid-feedback' => "You must agree before submitting."]) !!}`
+
 ![Formsbootstrap checkbox valid](checkbox-valid.png)
 
 ## INPUT RADIO
@@ -661,6 +670,7 @@ Forms::bsRadio(array $data)
 
 ### Examples
 `{!! Form::bsRadio(['name' => 'priority', 'values' => ['lowest' => 'Lowest','low' => 'Low', 'medium' => 'Medium', 'high' => 'High','highest' => 'Highest'], 'checkedvalue' => 'medium', 'mainlabel' => 'Priority']) !!}`
+
 ![Formsbootstrap radio](radio.png)
 
 ## COLOR PICKER
@@ -714,6 +724,7 @@ Forms::bsSelect(array $data)
 
 ### Example
 `{!! Form::bsRange(['name' => 'range', 'labeltext' => 'Range', 'min' => 0, 'max' => 10, 'value' => "3", 'required' => true]); !!}`
+
 ![Formsbootstrap range](range.png)
 
 ## INPUT SUBMIT
@@ -732,6 +743,7 @@ Forms::bsSubmit(array $data)
 
 ### Example
 `{!! Form::bsSubmit([]) !!}`
+
 ![Formsbootstrap send](send.png)
 
 ## INPUT BUTTON
@@ -751,6 +763,7 @@ Forms::bsButton(array $data)
 
 ### Example
 `{!! Form::bsButton(['id' => 'cancel', 'action' => 'alert("cancel clicked");', 'label' => 'Cancel']) !!}`
+
 ![Formsbootstrap cancel](cancel.png)
 
 
