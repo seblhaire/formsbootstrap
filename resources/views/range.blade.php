@@ -1,7 +1,7 @@
 <?php
 use \Seblhaire\Formsbootstrap\FormsBootstrapUtils;
 
-$mandatory = config('formsbootstrap.mandatory.select');
+$mandatory = config('formsbootstrap.mandatory.range');
 foreach ($mandatory as $param){
     if (!isset($data[$param])) throw new Exception('missing mandatory parameter ' . $param);
 }
@@ -10,18 +10,20 @@ if (!is_null($data['value'])){
   $data['placeholder'] = $data['value'];
 }
 $data['inputclass'] .= ' ' . $data['resettextclass'];
-
+if (!isset($data['name']) || strlen($data['name']) == 0){
+  $data['name'] = $data['id']. '-input';
+}
 ?>
 @if ($data['input_in_div'])
-<div class="{{ $data['divclass'] }}" id="fg-{{ $data['name'] }}">
+<div class="{{ $data['divclass'] }}" id="fg-{{ $data['id'] }}">
 @endif
-{{ Form::label($data['name'], $data['labeltext'], array_merge(['class' => $data['labelclass']], $data['labelattributes'])) }}
+{{ Form::label($data['id'], $data['labeltext'], array_merge(['class' => $data['labelclass']], $data['labelattributes'])) }}
 @if ($data['showvalue'] || $data['show_bounds'])
 <div class="{{ $data['groupclass'] }}">
   @if (!is_null($data['min']) && $data['show_bounds'])
   <span class="{{ $data['groupeltclass'] }}">{{ $data['min'] }}</span>
   @endif
-  <input type="range" class="{{ $data['inputclass'] }}" id="{{ $data['name'] }}" name="{{ $data['name'] }}" value="{{ $data['value'] }}"
+  <input type="range" class="{{ $data['inputclass'] }}" id="{{ $data['id'] }}" name="{{ $data['name'] }}" value="{{ $data['value'] }}"
     @if (!is_null($data['min']))
       min="{{ $data['min'] }}"
     @endif
@@ -40,12 +42,12 @@ $data['inputclass'] .= ' ' . $data['resettextclass'];
   @endif
   @if ($data['showvalue'])
   <span class="{{ $data['groupeltresclass'] }}">
-    {{ FormsBootstrapUtils::translateOrPrint($data['valueprefix']) }}:&nbsp;<span id="{{ $data['name'] }}_val"></span>
+    {{ FormsBootstrapUtils::translateOrPrint($data['valueprefix']) }}:&nbsp;<span id="{{ $data['id'] }}_val"></span>
   </span>
   @endif
 </div>
 @else
-<input type="range" class="{{ $data['inputclass'] }}" id="{{ $data['name'] }}" name="{{ $data['name'] }}" value="{{ $data['value'] }}"
+<input type="range" class="{{ $data['inputclass'] }}" id="{{ $data['id'] }}" name="{{ $data['name'] }}" value="{{ $data['value'] }}"
   @if (!is_null($data['min']))
     min="{{ $data['min'] }}"
   @endif
@@ -65,9 +67,9 @@ $data['inputclass'] .= ' ' . $data['resettextclass'];
 @endif
 @if ($data['showvalue'])
 <script>
-  jQuery('#{{ $data['name']}}').on('input', function(){
-    jQuery('#{{ $data['name']}}_val').html(jQuery('#{{ $data['name']}}').val());
+  jQuery('#{{ $data['id']}}').on('input', function(){
+    jQuery('#{{ $data['id']}}_val').html(jQuery('#{{ $data['id']}}').val());
   });
-  jQuery('#{{ $data['name']}}_val').html(jQuery('#{{ $data['name']}}').val());
+  jQuery('#{{ $data['id']}}_val').html(jQuery('#{{ $data['id']}}').val());
 </script>
 @endif

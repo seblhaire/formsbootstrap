@@ -21,14 +21,14 @@ if (count($data['password_rules_list']) == 0){
 $data['oldpass']['inputclass'] .= ' ' . $data['resettextclass'];
 $data['newpass']['inputclass'] .= ' ' . $data['resettextclass'];
 $data['confirmpass']['inputclass'] .= ' ' . $data['resettextclass'];
-$data['oldpass']['attributes']['data-maininput'] = '#' . $data['newpass']['name'];
-$data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['name'];
+$data['oldpass']['attributes']['data-maininput'] = '#' . $data['newpass']['id'];
+$data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['id'];
 ?>
 @if($data['show_old'])
   @if ($data['input_in_div'])
-      <div class="{{ $data['divclass'] }}" id="fg-{{ $data['oldpass']['name'] }}">
+      <div class="{{ $data['divclass'] }}" id="fg-{{ $data['oldpass']['id'] }}">
   @endif
-  {{ Form::label($data['oldpass']['name'], FormsBootstrapUtils::translateOrPrint($data['oldpass']['labeltext']), array_merge(['class' => $data['oldpass']['labelclass']], $data['oldpass']['labelattributes'])) }}
+  {{ Form::label($data['oldpass']['id'], FormsBootstrapUtils::translateOrPrint($data['oldpass']['labeltext']), array_merge(['class' => $data['oldpass']['labelclass']], $data['oldpass']['labelattributes'])) }}
   {{ Form::pass($data['oldpass']) }}
   @if (strlen($data['oldpass-validfeedback']) > 0)
     <div class="valid-feedback">{{ FormsBootstrapUtils::translateOrPrint($data['oldpass-validfeedback']) }}</div>
@@ -41,18 +41,18 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['n
   @endif
 @endif
 @if ($data['input_in_div'])
-      <div class="{{ $data['divclass'] }}" id="fg-{{ $data['newpass']['name'] }}">
+      <div class="{{ $data['divclass'] }}" id="fg-{{ $data['newpass']['id'] }}">
 @endif
-     {{ Form::label($data['newpass']['name'], FormsBootstrapUtils::translateOrPrint($data['newpass']['labeltext']), array_merge(['class' => $data['newpass']['labelclass']], $data['newpass']['labelattributes'])) }}
+     {{ Form::label($data['newpass']['id'], FormsBootstrapUtils::translateOrPrint($data['newpass']['labeltext']), array_merge(['class' => $data['newpass']['labelclass']], $data['newpass']['labelattributes'])) }}
 @if($data['show_generate'])
-      <div id="{{ $data['pwdhiddenzone-id'] }}" class="{{ $data['pwdbtngroup-class'] }} {{ $data['newpass']['name']}}-div">
+      <div id="{{ $data['pwdhiddenzone-id'] }}" class="{{ $data['pwdbtngroup-class'] }} {{ $data['newpass']['id']}}-div">
         {{ Form::pass($data['newpass']) }}
-          <button class="{{ $data['togglebtn-class'] }} {{$data['newpass']['name']}}-btn" title="{{ FormsBootstrapUtils::translateOrPrint($data['toggledbtn-title']) }}"
+          <button class="{{ $data['togglebtn-class'] }} {{$data['newpass']['id']}}-btn" title="{{ FormsBootstrapUtils::translateOrPrint($data['toggledbtn-title']) }}"
           type="button">{!! $data['toggledbtn-icon-on'] !!}</button>
-          <button class="{{ $data['generatepwdbtn-class'] }} {{$data['newpass']['name']}}-gen" title="{{ FormsBootstrapUtils::translateOrPrint($data['generatepwdbtn-title']) }}"
+          <button class="{{ $data['generatepwdbtn-class'] }} {{$data['newpass']['id']}}-gen" title="{{ FormsBootstrapUtils::translateOrPrint($data['generatepwdbtn-title']) }}"
           type="button">{!! $data['generatebtn-icon'] !!}</button>
           @if ($data['show_rules'])
-            <button class="{{ $data['generatepwdbtn-class'] }}" type="button" data-bs-toggle="modal" data-bs-target="#{{$data['newpass']['name']}}-rule-modal" title="{{ formsbootstrapUtils::translateOrPrint($data['showrulesbtntext']) }}"><i class="fa-solid fa-ruler"></i></button>
+            <button class="{{ $data['generatepwdbtn-class'] }}" type="button" data-bs-toggle="modal" data-bs-target="#{{$data['newpass']['id']}}-rule-modal" title="{{ formsbootstrapUtils::translateOrPrint($data['showrulesbtntext']) }}"><i class="fa-solid fa-ruler"></i></button>
           @endif
         @if (strlen($data['valid-feedback']) > 0)
           <div class="valid-feedback">{{ FormsBootstrapUtils::translateOrPrint($data['valid-feedback']) }}</div>
@@ -61,24 +61,24 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['n
           <div class="invalid-feedback">{{ FormsBootstrapUtils::translateOrPrint($data['invalid-feedback']) }}</div>
         @endif
       </div>
-      <div id="{{ $data['pwdclearzone-id'] }}" class="{{ $data['pwdbtngroup-class'] }} {{ $data['newpass']['name']}}-div" style="display:none">
-         {{ Form::text($data['newpassclear']['name'], '', array_merge(['id' => $data['newpassclear']['name'],'class' => $data['newpassclear']['inputclass']], $data['newpassclear']['attributes'])) }}
-          <button class="{{ $data['togglebtn-class'] }} {{$data['newpass']['name']}}-btn" title="{{ FormsBootstrapUtils::translateOrPrint($data['toggledbtn-title']) }}"
+      <div id="{{ $data['pwdclearzone-id'] }}" class="{{ $data['pwdbtngroup-class'] }} {{ $data['newpass']['id']}}-div" style="display:none">
+         {{ Form::text($data['newpassclear']['name'], '', array_merge(['id' => $data['newpassclear']['id'],'class' => $data['newpassclear']['inputclass']], $data['newpassclear']['attributes'])) }}
+          <button class="{{ $data['togglebtn-class'] }} {{$data['newpass']['id']}}-btn" title="{{ FormsBootstrapUtils::translateOrPrint($data['toggledbtn-title']) }}"
           type="button">{!! $data['toggledbtn-icon-off'] !!}</button>
-          <button class="{{ $data['generatepwdbtn-class'] }} {{$data['newpass']['name']}}-gen" title="{{ FormsBootstrapUtils::translateOrPrint($data['generatepwdbtn-title']) }}"
+          <button class="{{ $data['generatepwdbtn-class'] }} {{$data['newpass']['id']}}-gen" title="{{ FormsBootstrapUtils::translateOrPrint($data['generatepwdbtn-title']) }}"
           type="button">{!! $data['generatebtn-icon'] !!}</button>
           @if ($data['show_rules'])
-            <button class="{{ $data['generatepwdbtn-class'] }}" type="button" data-bs-toggle="modal" data-bs-target="#{{$data['newpass']['name']}}-rule-modal" title="{{ formsbootstrapUtils::translateOrPrint($data['showrulesbtntext']) }}"><i class="fa-solid fa-ruler"></i></button>
+            <button class="{{ $data['generatepwdbtn-class'] }}" type="button" data-bs-toggle="modal" data-bs-target="#{{$data['newpass']['id']}}-rule-modal" title="{{ formsbootstrapUtils::translateOrPrint($data['showrulesbtntext']) }}"><i class="fa-solid fa-ruler"></i></button>
           @endif
       </div>
 @elseif($data['show_clear'])
-     <div id="{{ $data['pwdhiddenzone-id'] }}" class="{{ $data['pwdbtngroup-class'] }} {{ $data['newpass']['name']}}-div">
+     <div id="{{ $data['pwdhiddenzone-id'] }}" class="{{ $data['pwdbtngroup-class'] }} {{ $data['newpass']['id']}}-div">
        {{ Form::pass($data['newpass']) }}
        <div class="{{ $data['pwdbtn-class']}}">
-         <button class="{{ $data['togglebtn-class'] }} {{$data['newpass']['name']}}-btn" title="{{ FormsBootstrapUtils::translateOrPrint($data['toggledbtn-title']) }}"
+         <button class="{{ $data['togglebtn-class'] }} {{$data['newpass']['id']}}-btn" title="{{ FormsBootstrapUtils::translateOrPrint($data['toggledbtn-title']) }}"
          type="button">{!! $data['toggledbtn-icon-on'] !!}</button>
          @if ($data['show_rules'])
-           <button class="{{ $data['generatepwdbtn-class'] }}" type="button" action="return false" data-bs-toggle="modal" data-bs-target="#{{$data['newpass']['name']}}-rule-modal" title="{{ formsbootstrapUtils::translateOrPrint($data['showrulesbtntext']) }}"><i class="fa-solid fa-ruler"></i></button>
+           <button class="{{ $data['generatepwdbtn-class'] }}" type="button" action="return false" data-bs-toggle="modal" data-bs-target="#{{$data['newpass']['id']}}-rule-modal" title="{{ formsbootstrapUtils::translateOrPrint($data['showrulesbtntext']) }}"><i class="fa-solid fa-ruler"></i></button>
          @endif
        </div>
        @if (strlen($data['valid-feedback']) > 0)
@@ -88,10 +88,10 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['n
          <div class="invalid-feedback">{{ FormsBootstrapUtils::translateOrPrint($data['invalid-feedback']) }}</div>
        @endif
      </div>
-     <div id="{{ $data['pwdclearzone-id'] }}" class="{{ $data['pwdbtngroup-class'] }} {{ $data['newpass']['name']}}-div" style="display:none">
-       {{ Form::text($data['newpassclear']['name'], '', array_merge(['id' => $data['newpassclear']['name'],'class' => $data['newpassclear']['inputclass']], $data['newpassclear']['attributes'])) }}
+     <div id="{{ $data['pwdclearzone-id'] }}" class="{{ $data['pwdbtngroup-class'] }} {{ $data['newpass']['id']}}-div" style="display:none">
+       {{ Form::text($data['newpassclear']['name'], '', array_merge(['id' => $data['newpassclear']['id'],'class' => $data['newpassclear']['inputclass']], $data['newpassclear']['attributes'])) }}
        <div class="{{ $data['pwdbtn-class']}}">
-         <button class="{{ $data['togglebtn-class'] }} {{$data['newpass']['name']}}-btn" title="{{ FormsBootstrapUtils::translateOrPrint($data['toggledbtn-title']) }}"
+         <button class="{{ $data['togglebtn-class'] }} {{$data['newpass']['id']}}-btn" title="{{ FormsBootstrapUtils::translateOrPrint($data['toggledbtn-title']) }}"
          type="button">{!! $data['toggledbtn-icon-off'] !!}</button>
        </div>
      </div>
@@ -107,11 +107,11 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['n
 @if ($data['input_in_div'])
   </div>
 @if ($data['show_rules'])
-  <div class="modal fade" id="{{$data['newpass']['name']}}-rule-modal" tabindex="-1" aria-labelledby="{{$data['newpass']['name']}}-rule-label" aria-hidden="true">
+  <div class="modal fade" id="{{$data['newpass']['id']}}-rule-modal" tabindex="-1" aria-labelledby="{{$data['newpass']['id']}}-rule-label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="{{$data['newpass']['name']}}-rule-label">{{ FormsBootstrapUtils::translateOrPrint($data['password_rules_modal_head']) }}</h5>
+        <h5 class="modal-title" id="{{$data['newpass']['id']}}-rule-label">{{ FormsBootstrapUtils::translateOrPrint($data['password_rules_modal_head']) }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ FormsBootstrapUtils::translateOrPrint($data['close_rules']) }}" title="{{ FormsBootstrapUtils::translateOrPrint($data['close_rules']) }}"></button>
       </div>
       <div class="modal-body">
@@ -126,9 +126,9 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['n
   </div>
 </div>
 @endif
-  <div class="{{ $data['divclass'] }}" id="fg-{{ $data['confirmpass']['name'] }}">
+  <div class="{{ $data['divclass'] }}" id="fg-{{ $data['confirmpass']['id'] }}">
 @endif
-    {{ Form::label($data['confirmpass']['name'], FormsBootstrapUtils::translateOrPrint($data['confirmpass']['labeltext']), array_merge(['class' => $data['confirmpass']['labelclass']], $data['confirmpass']['labelattributes'])) }}
+    {{ Form::label($data['confirmpass']['id'], FormsBootstrapUtils::translateOrPrint($data['confirmpass']['labeltext']), array_merge(['class' => $data['confirmpass']['labelclass']], $data['confirmpass']['labelattributes'])) }}
     {{ Form::pass($data['confirmpass']) }}
     @if ($data['nomatch-validfeedback'])
       <div class="valid-feedback">{{ FormsBootstrapUtils::translateOrPrint($data['nomatch-validfeedback']) }}</div>
@@ -144,14 +144,14 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['n
 @endif
 @if($data['show_generate'] || $data['show_clear'])
 <script>
-  jQuery('#{{ $data['newpass']['name']}}').sebPasswordHelper({
+  jQuery('#{{ $data['newpass']['id']}}').sebPasswordHelper({
     passregex : {!! $data['password_regex'] !!},
     passchars :   '{{ addslashes($data['password_chars']) }}',
     genlength : {{ $data["generated_pass_length"] }},
-    confirminput : '#{{ $data['confirmpass']['name'] }}',
-    clearinput : '#{{ $data['newpassclear']['name'] }}'
+    confirminput : '#{{ $data['confirmpass']['id'] }}',
+    clearinput : '#{{ $data['newpassclear']['id'] }}'
 @if($data['show_old'])
-    , oldinput: '#{{ $data['oldpass']['name']}}',
+    , oldinput: '#{{ $data['oldpass']['id']}}',
     checkoldpassurl: {!! is_null($data['checkoldpassurl']) ? 'null' : '"' . $data['checkoldpassurl'] . '"' !!},
     csrfrefreshroute  : {!! is_null($data['csrfrefreshroute']) ? 'null' : '"' . $data['csrfrefreshroute'] . '"'  !!},
     csrf : '{!! $data['csrf'] !!}'

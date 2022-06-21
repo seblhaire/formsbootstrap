@@ -15,10 +15,13 @@ if (isset($data['value']) && strlen($data['value'])){
 }else{
   $text = '';
 }
+if (!isset($data['name']) || strlen($data['name']) == 0){
+  $data['name'] = $data['id']. '-input';
+}
 ?>
-<div class="{{ $data['divclass'] }}" id="{{ $data['name'] }}">
-    {{ Form::label($data['name'] . '-input', $data['labeltext'], array_merge(['class' => $data['labelclass']], $data['labelattributes'])) }}
-    {{ Form::textarea($data['name']. '-input', '', $data['attributes']) }}
+<div class="{{ $data['divclass'] }}" id="{{ $data['id'] }}">
+    {{ Form::label($data['id'] . '-input', $data['labeltext'], array_merge(['class' => $data['labelclass']], $data['labelattributes'])) }}
+    {{ Form::textarea($data['name'], '', array_merge(['id' => $data['id']. '-input'], $data['attributes'])) }}
     @if ($data['required'] && strlen($data['valid-feedback']) > 0)
     <div class="valid-feedback">{{ FormsBootstrapUtils::translateOrPrint($data['valid-feedback']) }}</div>
     @endif
@@ -31,13 +34,13 @@ if (isset($data['value']) && strlen($data['value'])){
 </div>
 <script>
 @if (!is_null($data['configvar']))
-jQuery('#{{ $data["name"] }}').sebRichTextHelper({{ $data['configvar'] }});
+jQuery('#{{ $data["id"] }}').sebRichTextHelper({{ $data['configvar'] }});
 @elseif (!is_null($data['config']))
-jQuery('#{{ $data["name"] }}').sebRichTextHelper({!! FormsBootstrapUtils::validateEditorParams($data['config'], $data['translations']) !!});
+jQuery('#{{ $data["id"] }}').sebRichTextHelper({!! FormsBootstrapUtils::validateEditorParams($data['config'], $data['translations']) !!});
 @else
-  jQuery('#{{ $data["name"] }}').sebRichTextHelper();
+  jQuery('#{{ $data["id"] }}').sebRichTextHelper();
 @endif
 @if (strlen($text) > 0)
-jQuery('#{{ $data["name"] }}').data('sebrichtexthelper').loadContent('{!! $text !!}');
+jQuery('#{{ $data["id"] }}').data('sebrichtexthelper').loadContent('{!! $text !!}');
 @endif
 </script>

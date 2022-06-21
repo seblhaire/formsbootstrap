@@ -32,6 +32,7 @@ class FormsBootstrapServiceProvider extends ServiceProvider
     public function boot(){
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'formsbootstrap');
         Form::component('bsOpen', 'formsbootstrap::open', ['data']);
+        Form::component('bsHidden', 'formsbootstrap::hidden', ['data']);
         Form::component('bsText', 'formsbootstrap::text', ['data']);
         Form::component('bsNumber', 'formsbootstrap::number', ['data']);
         Form::component('bsRange', 'formsbootstrap::range', ['data']);

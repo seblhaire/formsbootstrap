@@ -7,17 +7,20 @@ foreach ($mandatory as $param){
 }
 $data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defaults.textarea'), config('formsbootstrap.classes')), $data);
 $data['inputclass'] .= ' ' . $data['resettextclass'];
+if (!isset($data['name']) || strlen($data['name']) == 0){
+  $data['name'] = $data['id']. '-input';
+}
 ?>
 @if ($data['input_in_div'])
-<div class="{{ $data['divclass'] }}" id="fg-{{ $data['name'] }}">
+<div class="{{ $data['divclass'] }}" id="fg-{{ $data['id'] }}">
   @endif
   <?php
   if ($data['required']){
     $data['inputclass'] .= ' ' . $data['requiredclass'];
   }
    ?>
-    {{ Form::label($data['name'], $data['labeltext'], array_merge(['class' => $data['labelclass']], $data['labelattributes'])) }}
-    {{ Form::textarea($data['name'], $data['value'], array_merge(['class' => $data['inputclass']], $data['attributes'])) }}
+    {{ Form::label($data['id'], $data['labeltext'], array_merge(['class' => $data['labelclass']], $data['labelattributes'])) }}
+    {{ Form::textarea($data['name'], $data['value'], array_merge(['id' => $data['id'], 'class' => $data['inputclass']], $data['attributes'])) }}
     @if ($data['required'] && strlen($data['valid-feedback']) > 0)
     <div class="valid-feedback">{{ $data['valid-feedback'] }}</div>
     @endif

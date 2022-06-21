@@ -529,7 +529,7 @@ var SebRichTextHelper = {
   init: function(div, options){
     this.div = jQuery(div);
     this.divid = this.div.prop('id');
-    this.textareaid = this.divid + '-input';
+    this.textareaid = this.div.find('textarea').prop('id'); //this.divid + '-input';
     this.options = options;
     this.build();
     this.save();
@@ -567,7 +567,7 @@ if (typeof Object.create !== 'function') {
   jQuery.fn.sebFormHelper = function(options){
     return this.each(function() {
       var element = jQuery(this);
-      if (element.prop('tagName') != 'FORM') throw 'not a FORM';
+      if (element.prop('tagName') != 'FORM') throw '#' + element.prop('id') + ' not a FORM';
       if (element.data('sebformhelper')) return element.data('sebformhelper');
       var sebformhelper = Object.create(SebFormHelper);
       sebformhelper.init(this, options);
@@ -578,7 +578,7 @@ if (typeof Object.create !== 'function') {
   jQuery.fn.sebPasswordHelper = function(options){
     return this.each(function() {
 			var element = jQuery(this);
-			if (element.prop('tagName') != 'INPUT') throw 'not a INPUT';
+			if (element.prop('tagName') != 'INPUT') throw  '#' + element.prop('id') + ' not a INPUT';
       if (element.data('sebpasswordhelper')) return element.data('sebpasswordhelper');
       var sebpasswordhelper = Object.create(SebPasswordHelper);
       sebpasswordhelper.init(this, options);
@@ -588,7 +588,7 @@ if (typeof Object.create !== 'function') {
   jQuery.fn.sebEmailHelper  = function(options){
     return this.each(function() {
 			var element = jQuery(this);
-			if (element.prop('tagName') != 'INPUT') throw 'not a INPUT';
+			if (element.prop('tagName') != 'INPUT') throw '#' + element.prop('id') + ' not a INPUT';
       if (element.data('sebemailhelper')) return element.data('sebemailhelper');
       var sebemailhelper = Object.create(SebEmailHelper);
       sebemailhelper.init(this, options);
@@ -598,7 +598,7 @@ if (typeof Object.create !== 'function') {
 	jQuery.fn.sebRichTextHelper = function(options)  {
 		return this.each(function() {
 			var element = jQuery(this);
-			if (element.prop('tagName') != 'DIV') throw 'not a DIV';
+			if (element.prop('tagName') != 'DIV') throw '#' + element.prop('id') + ' not a DIV';
 			// Return early if this element already has a plugin instance
 			if (element.data('sebrichtexthelper')) return element.data('sebrichtexthelper');
 			var sebrichtexthelper = Object.create(SebRichTextHelper);

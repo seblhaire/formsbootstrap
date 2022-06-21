@@ -18,16 +18,17 @@ return [
   ],
   'mandatory' =>  [
     'open' => ['id'],
+    'hidden' => ['id', 'value'],
     'button' => ['id', 'label'],
     'checkbox' => ['name', 'values'],
     'radio' => ['name', 'values', 'checkedvalue'],
     'select' => ['name'],
-    'text' => ['name', 'labeltext'],
-    'number' => ['name', 'labeltext'],
-    'colorpicker' => ['name', 'labeltext', 'value'],
-    'range' => ['name', 'labeltext'],
-    'textarea' => ['name', 'labeltext'],
-    'editor' => ['name', 'labeltext']
+    'text' => ['id', 'labeltext'],
+    'number' => ['id', 'labeltext'],
+    'colorpicker' => ['id', 'labeltext', 'value'],
+    'range' => ['id', 'labeltext'],
+    'textarea' => ['id', 'labeltext'],
+    'editor' => ['id', 'labeltext']
   ],
   'editorTranslations' => [
       'title' => "#formsbootstrap::editor.title#",
@@ -111,6 +112,9 @@ return [
         'invalid-feedback' => "#formsbootstrap::messages.checkbox-required#",
         'valid-feedback' => '',
       ],
+      'hidden' => [
+        'attributes' => [],
+      ],
       'radio' => [
         'checkedvalue' => null,
         'attributes' => [],
@@ -147,6 +151,7 @@ return [
       ],
       'password-with-confirm' => [
         'oldpass' => [
+            'id' => 'old_password',
             'name' => 'old_password',
             'labeltext' => "#formsbootstrap::messages.old_password#",
             'inputclass' => 'form-control',
@@ -156,6 +161,7 @@ return [
         ],
         'newpass' =>[
           'name' => 'password',
+          'id' => 'password',
           'labeltext' => "#formsbootstrap::messages.new_password#",
           'inputclass' => 'form-control',
           'labelclass' => 'form-label',
@@ -164,11 +170,13 @@ return [
         ],
         'newpassclear' => [
           'name' => 'password-clear',
+          'id' => 'password-clear',
           'inputclass' => 'form-control',
           'attributes' => [],
         ],
         'confirmpass' => [
-          'name' => 'password_confirmation',
+          'name' => 'password-confirmation',
+          'id' => 'password-confirmation',
           'labeltext' => "#formsbootstrap::messages.confirm_password#",
           'inputclass' => 'form-control',
           'labelclass' => 'form-label',
@@ -342,6 +350,7 @@ return [
       ],
       'email' => [
         'name' => 'email',
+        'id' => 'email',
         'labeltext' => "#formsbootstrap::messages.email#",
         'value' => null,
         'required' => false,

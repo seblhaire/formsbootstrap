@@ -86,14 +86,15 @@ Templates have been defined in order to build forms rapidly in Laravel Blade tem
 
 ## INPUT HIDDEN
 ```php
-Form::hidden(string $id, int|string $value, (int|string[] $options))
+Form::bsHidden(array $data)
 ```
 
 ### Parameters:
-
-* `id`: **mandatory** name of field.
-* `value`: **mandatory** string or numeral values.
-* `options`: array of values to be added to input.
+* `data`: array parameter. Content:
+	* `id`: **mandatory** id of field.
+	* `value`: **mandatory** string or numeral values.
+	* `name`: name of field, if different from id.
+	* `attributes`: array of values to be added to input.
 
 ## INPUT TEXT
 
@@ -104,8 +105,9 @@ Forms::bsText(array $data)
 ### Parameters
 
 * `data`: array parameter. Content:
-  * `name`: **mandatory** id and name of input.
+  * `id`: **mandatory** id of input.
   * `labeltext`: **mandatory** label of input.
+	* `name`: name of field, if different from id.
   * `value`: prefilled value in input. Default `null`.
   * `required`: the input must be filled to validate form. Default `false`.
   * `input_in_div`: sets if label and input should be contained in a `<div>`. Default `true`.
@@ -120,7 +122,7 @@ Forms::bsText(array $data)
 
 ### Example
 
-`{!! Form::bsText(['name' => 'title', 'labeltext' => 'Title', 'required' => true]) !!}`
+`{!! Form::bsText(['id' => 'title', 'labeltext' => 'Title', 'required' => true]) !!}`
 
 ![Formsbootstrap text](text.png)
 
@@ -135,8 +137,9 @@ Forms::bsTextarea(array $data)
 ### Parameters
 
 * `data`: array parameter. Content:
-  * `name`: **mandatory** id and name of input.
+  * `id`: **mandatory** id of input.
   * `labeltext`: **mandatory** label of input.
+	* `name`: name of field, if different from id.
   * `value`: prefilled value in input. Default `null`.
   * `required`: the input must be filled to validate form. Default `false`.
   * `input_in_div`: sets if label and input should be contained in a `<div>`. Default `true`.
@@ -151,7 +154,7 @@ Forms::bsTextarea(array $data)
 
 ### Example
 
-`{!! Form::bsTextarea(['name' => 'notes', 'labeltext' =>  'Notes', 'required' => true]) !!}`
+`{!! Form::bsTextarea(['id' => 'notes', 'labeltext' =>  'Notes', 'required' => true]) !!}`
 
 ![Formsbootstrap textarea](textarea.png)
 
@@ -162,8 +165,9 @@ Forms::bsEditor(array $data)
 ### Parameters
 
 * `data`: array parameter. Content:
-  * `name`: **mandatory** id and name of input.
+  * `id`: **mandatory** id of input.
   * `labeltext`: **mandatory** label of input.
+	* `name`: name of field, if different from id.
   * `value` : text to display in editor. Default: `null`.
   * `required`: the input must be filled to validate form. Default `false`.
   * `helptext`: text to help, to be inserted above field. Default: empty string.
@@ -359,7 +363,7 @@ Better use [Uploader](https://github.com/seblhaire/uploader)
 
 ### Example
 ```
-Form::bsEditor(['name' => 'text', 'labeltext' => 'Text', 'value' => $content]);
+Form::bsEditor(['id' => 'text', 'labeltext' => 'Text', 'value' => $content]);
 ```
 ![Formsbootstrap editor](editor.png)
 
@@ -373,7 +377,8 @@ Forms::bsEmail(array $data)
 
 
 * `data`: array parameter. Content:
-  * `name`: id and name of input. Default `"email"`.
+  * `id`: id of input. Default `"email"`.
+	* `name`: name of field, if different from id.
   * `labeltext`:  label of input. Default, content of translation key `formsbootstrap::messages.email`: "E-mail". Text can be string or translation key.  Cf [below](#translation_keys).
   * `value`: prefilled value in input. Default `null`.
   * `required`: the input must be filled to validate form. Default `false`.
@@ -454,7 +459,8 @@ Form::bsPasswordWithConfirm(array $data)
 
 ### Parameters of password alone
 `config('formsbootstrap.defaults.password')`  contains options for the unique password field:
-* `name`: field name and id. Default : `"password"`.
+* `id`: field id. Default : `"password"`.
+* `name`: name of field, if different from id.
 * `labeltext`:  label of input. By default: translation key `formsbootstrap::messages.password`: "Password".   Cf [below](#translation_keys).
 * `required`: the input must be filled to validate form. Default `false`.
 *  `validate`: password must validate the password rules before the form is sent. Default `false`,
@@ -467,25 +473,29 @@ Form::bsPasswordWithConfirm(array $data)
 ### Parameters of password with confirm
 `config('formsbootstrap.defaults.password-with-confirm')`  contains options for the password validation group:
 * `oldpass`: parameters for old password field. Content:
-  * `name`: field name and id. Default: `"old_password"`.
+  * `id`: field id. Default: `"old_password"`.
+	* `name`: name of field, if different from id.
   * `labeltext`:  label of input. By default, translation key `formsbootstrap::messages.old_password`: "Old password". Cf [below](#translation_keys).
   * `inputclass`: class of input tag. Default `"form-control"`.
   * `labelclass`: class of label tag. Default `"form-label"`.
   * `attributes`: array of input tag attributes to be added to default ones, Default: `['autocomplete' => "current-password"]` which is required by password vaults.
   * `labelattributes`: array of label tag attributes to be added to default ones. Default: empty array.
 * `newpass`: parameters for new password field. Content:
-  * `name`: field name and id. Default: `"password"`.
+  * `id`: field id. Default: `"password"`.
+	* `name`: name of field, if different from id.
   * `labeltext`:  label of input. By default, translation key `formsbootstrap::messages.new_password`: "New password". Cf [below](#translation_keys).
   * `inputclass`: class of input tag. Default `"form-control"`.
   * `labelclass`: class of label tag. Default `"form-label"`.
   * `attributes`: array of input tag attributes to be added to default ones, Default: `['autocomplete' => "new-password"]`  which is required by password vaults.
   * `labelattributes`: array of label tag attributes to be added to default ones. Default: empty array.
 * `newpassclear`: parameters for new password field in clear. Content:
-  * `name`: field name and id. Default: `"password-clear"`.
+  * `id`: field id. Default: `"password-clear"`.
+	* `name`: name of field, if different from id.
   * `inputclass`: class of input tag. Default `"form-control"`.
   * `attributes`: array of input tag attributes to be added to default ones, Default: empty array.
 * `confirmpass`: parameters for confirm password field. Content:
-  * `name`: field name and id. Default: `"password_confirmation"`.
+  * `id`: field id. Default: `"password_confirmation"`.
+	* `name`: name of field, if different from id.
   * `labeltext`:  label of input. By default, translation key `formsbootstrap::messages.confirm_password`: "Confirm Password". Cf [below](#translation_keys).
   * `inputclass`: class of input tag. Default `"form-control"`.
   * `labelclass`: class of label tag. Default `"form-label"`.
@@ -680,7 +690,8 @@ Forms::bsColorpicker(array $data)
 ### Parameters
 
 * `data`: array parameter. Content:
-  * `name`: **mandatory** id and name of input.
+  * `name`: **mandatory** id of input.
+	* `name`: name of field, if different from id.
   * `labeltext` **mandatory** Label of input
   * `value`: HTML color code. Eg: ##ffaa94
   * `input_in_div`: sets if label and input should be contained in a `<div>`. Default `true`.
@@ -693,7 +704,7 @@ Forms::bsColorpicker(array $data)
 
 
 ### Example
-`{!! Form::bsColorpicker(['name' => 'color', 'labeltext' => 'Color', 'value' => '#ff0000']) !!}`
+`{!! Form::bsColorpicker(['id' => 'color', 'labeltext' => 'Color', 'value' => '#ff0000']) !!}`
 
 ![Formsbootstrap color picker](colorpicker.png)
 
@@ -703,8 +714,9 @@ Forms::bsSelect(array $data)
 ```
 ### Parameters
 * `data`: array parameter. Content:
-  * `name`: **mandatory** id and name of input.
+  * `name`: **mandatory** id  of input.
   * `labeltext`: **mandatory** label of input.
+	* `name`: name of field, if different from id.
   * `value`: default value. Default: null,
   * `input_in_div`: sets if label and input should be contained in a `<div>`. Default `true`.
   * `inputclass`: class of input tag. Default: `"form-control form-range formsbootstrap-range"`
@@ -723,7 +735,7 @@ Forms::bsSelect(array $data)
    * `step`:  increment value when you slide this element. Default `null` or `1`.
 
 ### Example
-`{!! Form::bsRange(['name' => 'range', 'labeltext' => 'Range', 'min' => 0, 'max' => 10, 'value' => "3", 'required' => true]); !!}`
+`{!! Form::bsRange(['id' => 'range', 'labeltext' => 'Range', 'min' => 0, 'max' => 10, 'value' => "3", 'required' => true]); !!}`
 
 ![Formsbootstrap range](range.png)
 

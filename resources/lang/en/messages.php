@@ -12,7 +12,7 @@ return [
   'checkbox-required' => 'Select at least one of the above values',
   'send' => 'Send',
   'generate_long' => 'Generate new password',
-  'display_pwd' => 'Display password',
+  'display_pwd' => 'Display / Hide password',
   "colorpicker" => 'Click to chose a color',
   'rangevalueprefix' => 'Selected',
   'incorrectoldpass' => 'Old password incorrect or empty',

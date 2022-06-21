@@ -12,7 +12,7 @@ return [
   'checkbox-required' => 'Sélectionnez au moins une des valeurs ci-dessus',
   'send' => 'Envoyer',
   'generate_long' => 'Générer nouveau mot de passe',
-  'display_pwd' => 'Afficher mot de passe',
+  'display_pwd' => 'Afficher / Cacher mot de passe',
   "colorpicker" => 'Cliquez pour choisir une couleur',
   'rangevalueprefix' => 'Sélectionné',
   'nomatchpassword' => 'La confirmation du mot de passe est manquante ou ne correspond pas au mot de passe',
