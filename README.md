@@ -18,7 +18,7 @@ See package documentations if you want to use related packages DateRangePickerHe
 ```php
 'providers' => [
 	Collective\Html\HtmlServiceProvider::class,
-	Seb\FormsBootstrap\FormsBootstrapServiceProvider::class,
+	Seblhaire\FormsBootstrap\FormsBootstrapServiceProvider::class,
 ]
 ```
 

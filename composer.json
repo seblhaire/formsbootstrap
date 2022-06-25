@@ -1,6 +1,8 @@
 {
     "name": "seblhaire/formsbootstrap",
     "type": "library",
+    "description" : "A Laravel library to generate forms based on Laravel Collective Forms & HTML, Boostrap 5 CSS Framework, RichText editor, and Icons provided by FontAwesome. Includes form management and validation.",
+    "license": "MIT",  
     "authors": [
         {
             "name": "Sébastien L'haire",
