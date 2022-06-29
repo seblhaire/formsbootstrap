@@ -6,7 +6,7 @@ foreach ($mandatory as $param){
 }
 $data = FormsBootstrapUtils::mergeValues(config('formsbootstrap.defaults.colorpicker'), $data);
 if (!isset($data['name']) || strlen($data['name']) == 0){
-  $data['name'] = $data['id']. '-input';
+  $data['name'] = $data['id'];
 }
 ?>
 @if ($data['input_in_div'])

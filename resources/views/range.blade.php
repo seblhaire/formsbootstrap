@@ -11,7 +11,7 @@ if (!is_null($data['value'])){
 }
 $data['inputclass'] .= ' ' . $data['resettextclass'];
 if (!isset($data['name']) || strlen($data['name']) == 0){
-  $data['name'] = $data['id']. '-input';
+  $data['name'] = $data['id'];
 }
 ?>
 @if ($data['input_in_div'])

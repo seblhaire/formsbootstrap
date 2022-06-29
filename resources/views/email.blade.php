@@ -4,7 +4,7 @@ $data = is_null($data) ? [] : $data;
 $data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defaults.email'), config('formsbootstrap.classes')),
   $data);
   if (!isset($data['name']) || strlen($data['name']) == 0){
-    $data['name'] = $data['id']. '-input';
+    $data['name'] = $data['id'];
   }
  ?>
  @if ($data['input_in_div'])

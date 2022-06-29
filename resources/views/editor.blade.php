@@ -16,7 +16,7 @@ if (isset($data['value']) && strlen($data['value'])){
   $text = '';
 }
 if (!isset($data['name']) || strlen($data['name']) == 0){
-  $data['name'] = $data['id']. '-input';
+  $data['name'] = $data['id'];
 }
 ?>
 <div class="{{ $data['divclass'] }}" id="{{ $data['id'] }}">

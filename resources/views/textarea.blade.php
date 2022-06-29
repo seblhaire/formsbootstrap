@@ -8,7 +8,7 @@ foreach ($mandatory as $param){
 $data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defaults.textarea'), config('formsbootstrap.classes')), $data);
 $data['inputclass'] .= ' ' . $data['resettextclass'];
 if (!isset($data['name']) || strlen($data['name']) == 0){
-  $data['name'] = $data['id']. '-input';
+  $data['name'] = $data['id'];
 }
 ?>
 @if ($data['input_in_div'])
