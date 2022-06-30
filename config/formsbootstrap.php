@@ -25,7 +25,7 @@ return [
     'select' => ['name'],
     'text' => ['id', 'labeltext'],
     'number' => ['id', 'labeltext'],
-    'colorpicker' => ['id', 'name', 'labeltext', 'value'],
+    'colorpicker' => ['id', 'labeltext', 'value'],
     'range' => ['id', 'labeltext'],
     'textarea' => ['id', 'labeltext'],
     'editor' => ['id', 'labeltext']
