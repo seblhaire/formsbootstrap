@@ -25,7 +25,7 @@ return [
     'select' => ['name'],
     'text' => ['id', 'labeltext'],
     'number' => ['id', 'labeltext'],
-    'colorpicker' => ['id', 'labeltext', 'value'],
+    'colorpicker' => ['id', 'name', 'labeltext', 'value'],
     'range' => ['id', 'labeltext'],
     'textarea' => ['id', 'labeltext'],
     'editor' => ['id', 'labeltext']
@@ -218,7 +218,6 @@ return [
         'csrf' => null,
       ],
       'password' => [
-        'name' => 'password',
         'labeltext' => "#formsbootstrap::messages.password#",
         'required' => false,
         'validate' => false,
