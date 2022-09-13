@@ -106,6 +106,7 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['i
 @endif
 @if ($data['input_in_div'])
   </div>
+@endif
 @if ($data['show_rules'])
   <div class="modal fade" id="{{$data['newpass']['id']}}-rule-modal" tabindex="-1" aria-labelledby="{{$data['newpass']['id']}}-rule-label" aria-hidden="true">
   <div class="modal-dialog">
@@ -126,6 +127,7 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['i
   </div>
 </div>
 @endif
+@if ($data['input_in_div'])
   <div class="{{ $data['divclass'] }}" id="fg-{{ $data['confirmpass']['id'] }}">
 @endif
     {{ Form::label($data['confirmpass']['id'], FormsBootstrapUtils::translateOrPrint($data['confirmpass']['labeltext']), array_merge(['class' => $data['confirmpass']['labelclass']], $data['confirmpass']['labelattributes'])) }}
