@@ -169,14 +169,14 @@ return [
           'labelattributes' => [],
         ],
         'newpassclear' => [
-          'name' => 'password-clear',
-          'id' => 'password-clear',
+          'name' => 'password_clear',
+          'id' => 'password_clear',
           'inputclass' => 'form-control',
           'attributes' => [],
         ],
         'confirmpass' => [
-          'name' => 'password-confirmation',
-          'id' => 'password-confirmation',
+          'name' => 'password_confirmation',
+          'id' => 'password_confirmation',
           'labeltext' => "#formsbootstrap::messages.confirm_password#",
           'inputclass' => 'form-control',
           'labelclass' => 'form-label',
