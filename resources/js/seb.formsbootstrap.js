@@ -43,7 +43,7 @@ var SebFormHelper = {
           }
           result = {
             ok: true,
-            baseurl: '',
+            infos: {baseurl: ''},
             files: ar
           };
           jQuery('#' + key).data('uploader').getresultprocessor().process(result);
