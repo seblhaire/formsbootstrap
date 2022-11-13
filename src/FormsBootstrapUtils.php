@@ -15,7 +15,7 @@ class FormsBootstrapUtils
   public static function translateOrPrint($key)
   {
     if (preg_match('/^\#(.+)\#$/', $key, $matches)){
-      return __($matches[1]);
+      return addslashes(__($matches[1]));
     }
     return $key;
   }
