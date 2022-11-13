@@ -25,7 +25,7 @@ return [
   'password_rule_number' => 'au moins un nombre',
   'password_rule_special_char' => 'au moins un symbole parmis %s',
   'close_rules' => 'Fermer',
-  'modified_on_reset_confirm_text' => 'Ce formulaire a été modifié. Etes-vous sûr(e) de vouloir le réinitialiser ?'
+  'modified_on_reset_confirm_text' => "Ce formulaire a été modifié. Etes-vous sûr(e) de vouloir le réinitialiser ?",
   'resultok' => 'Résultat OK',
   'resultfalse' => 'Erreur de traitement',
 ];
