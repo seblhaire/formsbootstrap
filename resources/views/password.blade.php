@@ -35,5 +35,7 @@ if (!isset($data['name']) || strlen($data['name']) == 0){
 </div>
 @endif
 <script>
-  jQuery('#{{ $data['id']}}').sebPasswordHelper({passregex : {!! $data['password_regex'] !!}});
+  jQuery(document).ready(function() {
+    jQuery('#{{ $data['id']}}').sebPasswordHelper({passregex : {!! $data['password_regex'] !!}});
+  });
 </script>

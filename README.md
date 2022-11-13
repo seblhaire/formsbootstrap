@@ -1,4 +1,5 @@
 
+
 # FormsBootstrap
 
 [By Sébastien L'haire](http://sebastien.lhaire.org)
@@ -186,7 +187,7 @@ Forms::bsEditor(array $data)
 
 RichTextEditor can be parametrized by above config values. Editor can be initialized by several ways:
  * use `configvar` with a variable name, which contains a Javascript config variable:
- ```
+ ```js
  <script type="text/javascript">
   var editorConfig = {!! FormsBootstrapUtils::validateEditorParams([
 	  'imageUpload' => false,
@@ -199,7 +200,7 @@ RichTextEditor can be parametrized by above config values. Editor can be initial
 ```
 Default value is `null`
  * use `config` parameter. Default:
- ```
+ ```js
  'config' => [
           'useParagraph' => true,
           'imageUpload' => false,
@@ -297,7 +298,7 @@ Better use [Uploader](https://github.com/seblhaire/uploader)
 
  #### Translations
 
- * `translations`: array of translations. Replace default translations by using keys in list above. Default value are defined in `config('formsbootstrap.editorTranslations')`. Default texts are listed next to keys. Text can be string or translation key. Cf [below](https://stackedit.io/app#translation_keys).
+ * `translations`: array of translations. Replace default translations by using keys in list above. Default value are defined in `config('formsbootstrap.editorTranslations')`. Default texts are listed next to keys. Text can be string or translation key. Cf [below](#translation_keys).
    * `title` : `formsbootstrap::editor.title` "Title"
    * `white` : `formsbootstrap::editor.white` "White"
    * `black` : `formsbootstrap::editor.black` "Black"
@@ -431,7 +432,11 @@ if (jQuery('#email').data('sebemailhelper').check()){
 
 ## INPUT PASSWORD
 
-Two tag methods are available. The first one provides a simple `<input type="password">` whereas the second outputs a complete password change procedure, with (optional) old password, new password and password confirmation. Two options also allow passwords to be displayed in clear and to generate a new password.
+Two tag methods are available.
+* first method provides a simple `<input type="password">` and optionally validates password rules;
+* second method outputs a complete password change procedure, with (optional) old password, new password and password confirmation.
+	* two options also allow passwords to be displayed in clear and to generate a new password.
+	* old password can be verified either by a special route called before main form is submitted, or in main route itself.
 
 Default password rules are:
 -   min. 8 characters and max. 80 characters
@@ -531,10 +536,19 @@ if `show_generate` option is also `false`.
 * `nomatch-feedback`: feedback displayed when password and confirmation don't match or when confirmation is missing. Default translation key: `formsbootstrap::messages.nomatchpassword`, "Confirmation missing or does not match with password". Cf [below](#translation_keys).
 * `nomatch-validfeedback`: feedback to be displayed if password matches with confirmation. Default: empty string,
  * `valid-feedback`: feedback to be displayed when all verifications have been passed.
- * `checkoldpassurl`: route to check old password, Must return result in a Json object with key `correct_password` and a boolean value like this:
- ```php
- return response()->json(['correct_password' => true]);
- ```
+ * `checkoldpassurl`: old password can either be validated in an ad-hoc route, or in the form processing method itself. Default is `null`. If you want the old password to be validated before submitting whole form and to alter password, set this option with a route that accepts POST method and returns json result. Password validity can be returned to our password processing class either:
+	 * by using our standard callback method that checks values of two json values return by our route:
+		 * `ok` must be `true` or `false` to assert that password verification has been completed or not.
+		 *  `password_ok` must be `true` or `false` to assert that password is correct or not.
+	* by defininingy your own function that verfies password and by setting `checkoldpass_callback` with its name. Eg:
+		```js
+				<script>
+					var chkpass = function(res){
+						return res.password_checked == 'done';
+					}
+				</script>
+				```
+
  *  `'csrfrefreshroute`: route to refresh csrf in case of security error. Add this route in your project:
    ```
   Route::get('/refresh-csrf', function(){
@@ -557,9 +571,7 @@ Object functions are called by input buttons or form validation but you can call
 * `jQuery('#password').data('sebpasswordhelper').clearpass()` empties password input(s);
 * `jQuery('#password').data('sebpasswordhelper').checkStrength()`  verifies if new password passes rules;
 *  `jQuery('#password').data('sebpasswordhelper').checkIdentity()` verifies that new password and confirm password are the same:
-* ` jQuery('#password').data('sebpasswordhelper').checkOldPass()` verifies that old password is not empty; if you specify a route in `config('formsbootstrap.defaults.password-with-confirm.checkoldpassurl')`, this method also checks that old password is correct. The route must:
-   * accept POST method;
-   * return a json value with a boolean field `correct_password`.
+* ` jQuery('#password').data('sebpasswordhelper').checkOldPass()` verifies that old password is not empty; if you specify a route in `config('formsbootstrap.defaults.password-with-confirm.checkoldpassurl')`, this method also checks that old password is correct. Cf above.
 
 
 
@@ -788,6 +800,10 @@ Form::bsOpen(array $data)
 Form::bsClose();
 ```
 
+Form automatically inserts a hidden input that contains CSRF token. It also can insert automaticallly the submit button and optionally other buttons. And it can build
+a hidden alert div to contain form submit results.
+
+
 ### Parameters
 
 * `data` array parameter
@@ -798,15 +814,16 @@ Form::bsClose();
 	* `class`: css class(es). Default: empty.
 	* `options`: additional options. Default: `[]`
     * `checkonleave` : verifies whether form has been submited when values have been modified and user clicks to leave the page.
-    * `ajaxcallback`: name of callback function that can be called after form has been processed. Default `null`.  For instance in the following lines, return values are simply listed in your browser debugging console (`F12` key  for Firefox or Chrome). Your form processing controller method must return aja results, for instance with `return response()->json(['res' => $res]);`
+    * `ajaxcallback`: **mandatory** name of callback function that can be called after form has been processed. The function must return a string that will be displayed as result message.
 
 	```
 	<script>
 	var processform = function(data){
-	  console.log(data.res);
+		return data.success + ' ' + data.formcontent;
 	}
 	</script>
 	```
+	For this function, your form processing controller method should return json results `return response()->json(['ok' => true, 'message' => 'Success!', 'formcontent' => ...form content...]`. In more sophisticated applications, callback method can refresh other elements on page, display a new page etc. See [below](#submit).
     * `filldatacallback` : callback function called after form has been filled with values. Default `null`. Cf [below](#Javascript_form_processing_object).
     * `data_build_function`: function to build data send to form processing. Default `null`. In most cases, the [below](#Javascript_form_processing_object)-mentionned Javascript object builds data for us. But if you include form fields that are not listed in the top of this document and not processed by this form package, you can define a custom function like:
    ```
@@ -826,6 +843,41 @@ Form::bsClose();
      * `clear_function`: calback function if you empty your form by the `reset()` function, se this fuction if your form contains fields that are not listed in the top of this document and not processed by this form package.  Default: `null`.
    * `check_modified_on_reset`: on form resetting, sets whether user has to confirm the erasing of modified values. Default:  `true`.
   *  `modified_on_reset_confirm_text`: text to be displayed in the confirmation box  if form user wants to reset a modified form. Default: translation key `formsbootstrap::messages.modified_on_reset_confirm_text`: "This form has been modified. Are you sure you want to reset it ?".  Cf [below](#translation_keys).
+	* `buildbuttons`: automatically insert submit button and optionally other buttons. Default: `true`.
+			* `buttondivclass`: class for div containing buttons. Default: `mb-3 btngroup`.
+			* `submitbtnclass`: class of submit button. Default: `btn btn-primary`.
+			* `submitbtnlbl`: label for submit button. Default: translation key `formsbootstrap::messages.send`: "Send".  Cf [below](#translation_keys).
+			* `additionalbuttons`: list of additional buttons contained in array. Default: `[]`. In above example, we have 2 buttons, identified with parameter `id`, Button class is in `class` and button value in `value`.
+			```
+				[['id' => 'cancelBtn', 'class' => 'btn btn-secondary', 'value' => 'Cancel'],
+				['id' => 'filldata', 'class' => 'btn btn-warning', 'value' => 'Fill form with example data']]
+			```
+		* `evalajaxres_callback`: form result succes evaluation function. Default `null`.
+				```
+				<script>
+					var evalres = function(res){
+						return res.formresult == 'success';
+					}
+				</script>
+				```
+			Here we define a function that checks value `formresult` returned by a form. See [below](#submit).
+		* `evalajaxres_resultmessage`: retrieves error message returned by form processing method. Default `null`.
+				```
+				<script>
+					var resmsg = function(res){
+						return res.msg;
+					}
+				</script>
+				```
+			Here we define a function that checks value `msg` returned by a form. See [below](#submit).
+	* `buildresultalert`: build a hidden resut div just before buttons, that is used to display form result. Default: `true`.
+			* `alertcommonclass`: div class to use both with error and success result. Default: `alert`.
+			* `alertsuccessclass`: class added to div in case of success result. Default: `alert-success`.
+			* `alerterrorclass`: class added to div in case of error result. Default: `alert-danger`.
+			* `alertdisplaytimeok` : time in ms to keep success message displayed. Default: 4000.
+			* `alertdisplaytimefalse` : time in ms to keep error message displayed. Default: 8000.
+			* `resultok`: message to display on form success result if another message has not been defined. Default: translation key `formsbootstrap::messages.resultok`: "Result OK".  Cf [below](#translation_keys).
+			* `resultfalse`message to display on form error result if another message has not been defined. Default: translation key `formsbootstrap::messages.resultfalse`: "Processing error".  Cf [below](#translation_keys).
 
 ### Form select classes
 With jQuery, you can use classes to select elements. Eg `jQuery('.verify')` select all items in the current page that contain this class. You don't have to define CSS properties but you can.
@@ -850,13 +902,26 @@ With this package, we have built a Javascript object that processes form events,
 
 Usually you don't have to call this object methods by yourself. Here we describe the *public* methods, though Javascrip does not allow to distinguish private, protected and public methods:
 
-#### submit()
+#### submit
 
-This function can be used to submit form without pushing the usual submit button. This method validates the form before submitting it and then sends data to the callback function defined in `ajaxcallback` parameter if it has been defined.
+This function can be used to submit form without pushing the usual submit button. This method validates the form before submitting it and then processes result:
 ```
 jQuery('#form_complete').data('sebformhelper').submit()
 ```
- #### validate()
+
+Form success is evaluated first to see if we display an error message or go on with success callback actions.
+
+* if a function is defined in option `evalajaxres_callback`, we use the return value;
+* otherwise, we check values returned by form and check `ok` parameter, which must be `true` of `false`.
+
+##### Errors messages
+
+* If form processing launches an exception, the default error message will be displayed.
+* If form processing returns error messages (eg. Laravel form validation errors), we try retrieve the message: please make sure every necessary field is filed.
+  * If a function is defined in `evalajaxres_resultmessage`, we use the returned value.
+	* If not, we return the string contained in `message` parameter.
+
+#### validate
 
  Validates the form, usually called by the submit function. Returns `true` when validation has passed but `false` if it  fails. If you have defined the `validate_function` parameter, this callback function will also be called.
 
@@ -864,20 +929,21 @@ jQuery('#form_complete').data('sebformhelper').submit()
 jQuery('#form_complete').data('sebformhelper').validate()
 ```
 
-#### save()
+#### save
 
 This method stores all fields content in an object property that is used to check if form values have been saved before the form user leaves the page.
 ```
 jQuery('#form_complete').data('sebformhelper').save()
 ```
-#### isModified()
+#### isModified
 This method checks if form data has been modified since last call of `save()` method.  Returns `true` or `false`.
-```
+```js
 if (jQuery('#form_complete').data('sebformhelper').save()){
 ...
+}
 ```
 
-#### fillwithdata(res)
+#### fillwithdata
 
 You will probaly need to fill  your form with existing  data in your database that the form user needs to modify. First write a controller method linked to a route that returns the values you need in a Json object. Object keys  must be the same as your form name and values must be compatible.
 ```php
@@ -895,7 +961,7 @@ public function loadData(Request $request){
 ```
 Then call  this controller method  with Ajax:
 
-```Javascript
+```js
 jQuery.ajax({
     url: '{!! route('loaddata') !!},
     encoding: 'utf8',
@@ -911,17 +977,19 @@ jQuery.ajax({
       jQuery('#form_complete').data('sebformhelper').fillwithdata(res.data);
     }
   });
+
 ```
+
 Then fields in your form with id corresponding with result keys will be filled. It also works with other compatible packages mentioned on this document top. If you have defined a function for the parameter `filldatacallback`, this callback will be used to fill other fields. Method `save()` is called after form has been filled.
 
- #### removevalidation()
+#### removevalidation
 
  This method just erases all validation messages.
- ```
+ ```php
 jQuery('#form_complete').data('sebformhelper').removevalidation()
 ```
 
-#### reset()
+#### reset
 
 Resets the form, i.e. empties all values and reset the default ones. If parameter `check_modified_on_reset` is  `true`, a confirmation box is displayed with tthe text of parameter `modified_on_reset_confirm_text`.
 If you have defined a callback function with parameter  `clear_function`, it will be called as well.

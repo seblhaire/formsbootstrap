@@ -1,11 +1,19 @@
 var SebFormHelper = {
     form : null,
+    divalert : null,
+    buttonsdiv: null,
     options :  null,
     savedData : null,
     init : function(form, options){
       this.form = jQuery(form);
       this.options = options;
       this.clearonclick();
+      if (this.options.buildresultalert){
+        this.insertAlert();
+      }
+      if (this.options.buildbuttons && jQuery('#form_form').children('input[type=submit]').length ==0){
+        this.insertButtons();
+      }
       this.form.on('submit',  {self: this}, this.submit);
       this.save();
       if (this.options.checkonleave){
@@ -104,6 +112,20 @@ var SebFormHelper = {
       }
       this.save();
     },
+    getResultErrorMessage: function(res){
+      if (this.options.evalajaxres_resultmessage(res)){
+        return this.options.evalajaxres_resultmessage(res);
+      }else{
+        return res.message;
+      }
+    },
+    checkformresult: function(res){
+      if (this.options.evalajaxres_callback != null){
+        return this.options.evalajaxres_callback(res);
+      }else{
+        return res.ok;
+      }
+    },
     submit : function(event){
       event.preventDefault();
       var self = event.data.self;
@@ -126,10 +148,27 @@ var SebFormHelper = {
           },
           cache: false
         })
-        .done(self.options.ajaxcallback)
+        .done(function(res){
+          if (self.checkformresult(res)){
+            var message = self.options.ajaxcallback(res);
+            if (message == undefined || message == null || message.length == undefined || message.length == 0){
+              message = self.options.resultok;
+            }
+            self.alertresult(message, true, self.options.alertdisplaytimeok);
+          }else{
+            var message = self.getResultErrorMessage(res);
+            if (message == undefined || message == null || message.length == undefined || message.length == 0){
+              message = self.options.resultfalse;
+            }
+            self.alertresult(message, false, self.options.alertdisplaytimefalse);
+          }
+        })
         .fail(function(jqXHR, textStatus, errorThrown) {
           if (jqXHR.status == 419){
             self.refreshToken();
+            self.form.submit();
+          }else{
+            self.alertresult(self.options.resultfalse, false, self.options.alertdisplaytimefalse);
           }
         });
       }
@@ -380,6 +419,53 @@ var SebFormHelper = {
         isValid = this.options.clear_function();
       }
       this.save();
+    },
+    insertButtons : function(){
+      this.buttonsdiv = jQuery('<div></div>')
+          .attr('id', this.form.attr('id') + '_buttons')
+          .addClass(this.options.buttondivclass)
+      jQuery('<input/>')
+          .attr('id', this.form.attr('id') + '_submit')
+          .attr('type','submit')
+          .addClass(this.options.submitbtnclass)
+          .attr('value', this.options.submitbtnlbl)
+          .on('click', {self: this}, function(e){
+            e.data.self.submit(e);
+          })
+          .appendTo(this.buttonsdiv);
+      if (this.options.additionalbuttons.length > 0){
+        for (var i in this.options.additionalbuttons){
+          var btn = jQuery('<input/>')
+                .attr('type','button');
+          jQuery.map(this.options.additionalbuttons[i], function(value,key){
+            btn.attr(key, value);
+          });
+          btn.appendTo(this.buttonsdiv);
+        }
+      }
+      this.buttonsdiv
+          .appendTo(this.form);
+    },
+    insertAlert: function(){
+      this.divalert = jQuery('<div></div>')
+          .attr('id', this.form.attr('id') + '_result_container')
+          .attr('role', 'alert')
+          .addClass(this.options.alertcommonclass)
+          .hide();
+        this.divalert
+          .appendTo(this.form);
+    },
+    alertresult: function(message, isok, delay){
+      if (this.options.buildresultalert){
+        if (isok){
+          this.divalert.removeClass(this.options.alerterrorclass).
+            addClass(this.options.alertsuccessclass);
+        }else{
+          this.divalert.removeClass(this.options.alertsuccessclass).
+            addClass(this.options.alerterrorclass);
+        }
+        this.divalert.html(message).fadeIn( "slow" ).delay(delay).fadeOut('slow');
+      }
     }
 }
 
@@ -472,20 +558,35 @@ var SebPasswordHelper = {
         return false;
       }
       if (this.options.checkoldpassurl != null){
-        return jQuery.ajax({
-          url : this.options.checkoldpassurl,
-          data: {
-            old_password: this.oldinput.val()
-          },
+        var mydata = {};
+        mydata[this.oldinput.attr('name')] = this.oldinput.val();
+        var self = this;
+        returnval = false;
+        jQuery.ajax({
+          url : self.options.checkoldpassurl,
+          data: mydata,
           type: 'post',
           dataType: 'json',
           headers: {
-            'X-CSRF-Token': this.options.csrf
+            'X-CSRF-Token': self.options.csrf
           },
           async:false,
           cache: false
-        }).responseJSON.correct_password;
+        }).done(function(res){
+          if (self.options.checkoldpass_callback != null){
+            returnval = self.options.checkoldpass_callback(res);
+          }else{
+            returnval = self.checkpass_callback(res);
+          }
+        });
+        return returnval;
       }
+    },
+    checkpass_callback: function(res){
+      if (res.ok){
+        return res.password_ok;
+      }
+      return false;
     },
     copyval: function(source, dest){
       dest.val(source.val());

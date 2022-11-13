@@ -25,5 +25,7 @@ return [
   'password_rule_number' => 'at least one number',
   'password_rule_special_char' => 'at least one symbol character among %s',
   'close_rules' => 'Close',
-  'modified_on_reset_confirm_text' => 'This form has been modified. Are you sure you want to reset it ?'
+  'modified_on_reset_confirm_text' => 'This form has been modified. Are you sure you want to reset it ?',
+  'resultok' => 'Result OK',
+  'resultfalse' => 'Processing error',
 ];

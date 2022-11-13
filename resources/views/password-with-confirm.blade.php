@@ -146,18 +146,21 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['i
 @endif
 @if($data['show_generate'] || $data['show_clear'])
 <script>
-  jQuery('#{{ $data['newpass']['id']}}').sebPasswordHelper({
-    passregex : {!! $data['password_regex'] !!},
-    passchars :   '{{ addslashes($data['password_chars']) }}',
-    genlength : {{ $data["generated_pass_length"] }},
-    confirminput : '#{{ $data['confirmpass']['id'] }}',
-    clearinput : '#{{ $data['newpassclear']['id'] }}'
-@if($data['show_old'])
-    , oldinput: '#{{ $data['oldpass']['id']}}',
-    checkoldpassurl: {!! is_null($data['checkoldpassurl']) ? 'null' : '"' . $data['checkoldpassurl'] . '"' !!},
-    csrfrefreshroute  : {!! is_null($data['csrfrefreshroute']) ? 'null' : '"' . $data['csrfrefreshroute'] . '"'  !!},
-    csrf : '{!! $data['csrf'] !!}'
-@endif
+  jQuery(document).ready(function() {
+    jQuery('#{{ $data['newpass']['id']}}').sebPasswordHelper({
+      passregex : {!! $data['password_regex'] !!},
+      passchars :   '{{ addslashes($data['password_chars']) }}',
+      genlength : {{ $data["generated_pass_length"] }},
+      confirminput : '#{{ $data['confirmpass']['id'] }}',
+      clearinput : '#{{ $data['newpassclear']['id'] }}'
+  @if($data['show_old'])
+      , oldinput: '#{{ $data['oldpass']['id']}}',
+      checkoldpassurl: {!! is_null($data['checkoldpassurl']) ? 'null' : '"' . $data['checkoldpassurl'] . '"' !!},
+      checkoldpass_callback: {!! is_null($data['checkoldpass_callback']) ? 'null' :  $data['checkoldpass_callback'] !!},
+      csrfrefreshroute  : {!! is_null($data['csrfrefreshroute']) ? 'null' : '"' . $data['csrfrefreshroute'] . '"'  !!},
+      csrf : '{!! $data['csrf'] !!}'
+  @endif
+    });
   });
 </script>
 @endif

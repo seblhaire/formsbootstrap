@@ -18,6 +18,19 @@ $values = [
 $values['action'] = $data['action'];
 $values['method'] = $data['method'];
 $values = array_merge($values, $data['options']);
+if (count($data['additionalbuttons'])){
+  $vals = '';
+  foreach($data['additionalbuttons'] as $btn){
+    $btnval = '';
+    foreach ($btn as $key => $attr){
+      $btnval .= (strlen($btnval) > 0 ? ',' : '') . $key . ':"' . $attr . '"';
+    }
+    $vals .= (strlen($vals) > 0 ? ',{' : '{') . $btnval . '}';
+  }
+  $btns = '[' . $vals . ']';
+}else{
+  $btns = '[]';
+}
 ?>
 <form
 @foreach ($values as $key => $value)
@@ -55,7 +68,22 @@ $values = array_merge($values, $data['options']);
       clear_function : {!! is_null($data['clear_function']) ? 'null' :  $data['clear_function']  !!},
       csrf : '{!! $data['csrf'] !!}',
       check_modified_on_reset : {!! $data['check_modified_on_reset'] ? 'true' : 'false' !!},
-      modified_on_reset_confirm_text : '{{ FormsBootstrapUtils::translateOrPrint($data['modified_on_reset_confirm_text']) }}'
+      modified_on_reset_confirm_text : '{{ FormsBootstrapUtils::translateOrPrint($data['modified_on_reset_confirm_text']) }}',
+      buildbuttons: {!! $data['buildbuttons'] ? 'true' : 'false' !!},
+      buildresultalert: {!! $data['buildresultalert'] ? 'true' : 'false' !!},
+      alertsuccessclass: '{!! $data['alertsuccessclass'] !!}',
+      alerterrorclass: '{!! $data['alerterrorclass'] !!}',
+      alertcommonclass : '{!! $data['alertcommonclass'] !!}',
+      alertdisplaytimeok : {!! $data['alertdisplaytimeok'] !!},
+      alertdisplaytimefalse : {!! $data['alertdisplaytimefalse'] !!},
+      resultok: '{{ FormsBootstrapUtils::translateOrPrint($data['resultok']) }}',
+      resultfalse: '{{ FormsBootstrapUtils::translateOrPrint($data['resultfalse']) }}',
+      buttondivclass: '{!! $data['buttondivclass'] !!}',
+      submitbtnclass: '{!! $data['submitbtnclass'] !!}',
+      additionalbuttons: {!! $btns !!},
+      submitbtnlbl: '{!! FormsBootstrapUtils::translateOrPrint($data['submitbtnlbl']) !!}',
+      evalajaxres_callback: {!! is_null($data['evalajaxres_callback']) ? 'null' :  $data['evalajaxres_callback']  !!},
+      evalajaxres_resultmessage: {!! is_null($data['evalajaxres_resultmessage']) ? 'null' :  $data['evalajaxres_resultmessage']  !!}
     });
   });
 </script>

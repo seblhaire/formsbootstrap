@@ -13,3 +13,9 @@
 .richText{
   padding:0px !important;
 }
+.btngroup input{
+  margin-left: 5px;
+}
+.btngroup input:first-of-type{
+  margin-left: 0px;
+}
