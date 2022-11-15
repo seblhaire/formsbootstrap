@@ -26,7 +26,7 @@ $data['divclass'] .= ' ' . $data['resetradioclass'];
 
         <input type="radio" id="{{$data['name']}}_{{$key}}" class="{{ $data['inputclass'] }}" name="{{$data['name']}}" value="{{$key}}"
             @if($data['checkedvalue'] == $key)
-                checked="checked"
+                checked="checked" defaultchecked="defaultchecked"
             @endif
             @foreach ($data['attributes'] as $attkey => $attvalue)
                 {{$attkey}}="{{$attvalue}}"

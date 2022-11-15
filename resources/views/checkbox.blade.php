@@ -37,11 +37,11 @@ $data['divclass'] .= ' ' . $data['resetcheckclass'];
     <input type="checkbox" id="{{$data['id']}}_{{$key}}" class="{{ $data['inputclass'] }}" name="{{$data['name']}}" value="{{$key}}"
             @if (is_array($data['checkedvalues']))
               @if(in_array($key, $data['checkedvalues']))
-                  checked="checked"
+                  checked="checked" defaultchecked="defaultchecked"
               @endif
             @else
               @if($data['checkedvalues'] == $key)
-                  checked="checked"
+                  checked="checked" defaultchecked="defaultchecked"
               @endif
             @endif
             @foreach ($data['attributes'] as $attkey => $attvalue)

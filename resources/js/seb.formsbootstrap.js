@@ -36,6 +36,9 @@ var SebFormHelper = {
       }
     },
     fillwithdata: function(res){
+      jQuery('input[type=checkbox]').each(function(){ jQuery(this).prop('checked', false)});
+      jQuery('input[type=radio]').each(function(){ jQuery(this).prop('checked', false)});
+      jQuery('option').each(function(){ jQuery(this).prop('selected', false)});
       jQuery.each(res, function(key, value){
         if (jQuery('#' + key).data('sebrichtexthelper') != undefined){
           //console.log('rth ' + key);
@@ -91,20 +94,20 @@ var SebFormHelper = {
           jQuery('#' + key).length > 0 &&
           jQuery('#' + key)[0].tagName == 'SELECT'
         ){
-          jQuery('#' + key).find('option').each(function(j){ jQuery(this).prop('selected', false); });
           if (!Array.isArray(value)){
-            value = Array(value);
+            value = [value];
           }
-          jQuery('#' + key).val(value);
+          for (i in value){
+            jQuery('#' + key + ' option[value=' + value[i].toString() +']').prop('selected', true)
+          }
         }
         else if (jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key +'[]') + ']').length > 0){
-          jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key +'[]') + ']').val(value);
+          for (i in value){
+            jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key +'[]') + '][value=' + value[i].toString() + ']').prop('checked', true);
+          }
         }
         else if (jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + ']').length > 0){
-          if (!Array.isArray(value)){
-            value = Array(value);
-          }
-          jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + ']').val(value);
+          jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + '][value='+ value +']').prop('checked', true);
         }
       });
       if (this.options.filldatacallback != null){
@@ -369,37 +372,29 @@ var SebFormHelper = {
       }
     },
     _reset : function(){
+      jQuery('select option').each(function(e){ $(this).prop('selected', false)});
+      jQuery('input[type=radio]').each(function(e){ $(this).prop('checked', false)});
+      jQuery('input[type=checkbox]').each(function(e){ $(this).prop('checked', false)});
       jQuery("#" + this.form.attr('id') + " ." + this.options.resettextclass).each(function(i){
         jQuery(this).val('').trigger('input');
       });
       jQuery("#" + this.form.attr('id') + " ." + this.options.resetselectclass).each(function(i){
-        var haspreselect = false;
-        jQuery(this).find('option').each(function(j){ jQuery(this).prop('selected', false); });
         jQuery(this).find('option').each(function(j){
-          if (jQuery(this).attr('selected') == 'selected'){
+          if (jQuery(this).attr('defaultchecked') == 'defaultchecked'){
             jQuery(this).prop('selected', true);
-            haspreselect = true;
           }
         });
-        if (!haspreselect){
-          jQuery(this).find('option').first().prop('selected', true);
-        }
       });
       jQuery("#" + this.form.attr('id') + " ." + this.options.resetradioclass).each(function(i){
-        var haspreselect = false;
         jQuery(this).find('input').each(function(j){
-          if (jQuery(this).attr('checked') == 'checked'){
+          if (jQuery(this).attr('defaultchecked') == 'defaultchecked'){
             jQuery(this).prop('checked', true);
-            haspreselect = true;
           }
         });
-        if (!haspreselect){
-          jQuery(this).find('option').first().prop('checked', true);
-        }
       });
       jQuery("#" + this.form.attr('id') + " ." + this.options.resetcheckclass).each(function(i){
         jQuery(this).find('input').each(function(j){
-          if (jQuery(this).attr('checked') == 'checked'){
+          if (jQuery(this).attr('defaultchecked') == 'defaultchecked'){
             jQuery(this).prop('checked', true);
           }
         });

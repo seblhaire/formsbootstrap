@@ -22,12 +22,13 @@ if ($data['multiple']){
 }else{
   $data['id'] = $data['name'];
 }
+$data['default'] = explode(',', $data['default']);
 ?>
 @if ($data['input_in_div'])
 <div class="{{ $data['divclass'] }}" id="fg-{{ $data['id'] }}">
 @endif
 {{ Form::label($data['id'], $data['labeltext'], array_merge(['class' => $data['labelclass']], $data['labelattributes'])) }}
-{{ Form::select($data['name'], $data['values'], $data['default'], array_merge(['class' => $data['inputclass']], $data['attributes'])) }}
+<select name="{!! $data['name'] !!}" class="{!! $data['inputclass'] !!}"@foreach($data['attributes'] as $attrkey => $attrvalue) {!! $attrkey !!}="{{ $attrvalue }}"@endforeach>@foreach($data['values'] as $valkey => $value)<option value="{!! $valkey !!}"@if(in_array($valkey, $data['default'])) defaultchecked="defaultchecked" selected="selected"@endif>{{ $value }}</option>@endforeach</select>
 @if ($data['feedback'] &&  strlen($data['valid-feedback']) > 0)
 <div class="valid-feedback">{{ $data['valid-feedback'] }}</div>
 @endif
