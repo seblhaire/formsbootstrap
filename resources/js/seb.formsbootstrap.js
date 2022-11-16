@@ -11,7 +11,7 @@ var SebFormHelper = {
       if (this.options.buildresultalert){
         this.insertAlert();
       }
-      if (this.options.buildbuttons && jQuery('#form_form').children('input[type=submit]').length ==0){
+      if (this.options.buildbuttons && this.form.children('input[type=submit]').length ==0){
         this.insertButtons();
       }
       this.form.on('submit',  {self: this}, this.submit);
