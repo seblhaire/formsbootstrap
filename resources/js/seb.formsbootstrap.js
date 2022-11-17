@@ -575,6 +575,8 @@ var SebPasswordHelper = {
           }
         });
         return returnval;
+      }else{
+        return true;
       }
     },
     checkpass_callback: function(res){
