@@ -116,7 +116,7 @@ var SebFormHelper = {
       this.save();
     },
     getResultErrorMessage: function(res){
-      if (this.options.evalajaxres_resultmessage(res)){
+      if (this.options.evalajaxres_resultmessage != null){
         return this.options.evalajaxres_resultmessage(res);
       }else{
         return res.message;
