@@ -23,7 +23,7 @@ if (count($data['additionalbuttons'])){
   foreach($data['additionalbuttons'] as $btn){
     $btnval = '';
     foreach ($btn as $key => $attr){
-      $btnval .= (strlen($btnval) > 0 ? ',' : '') . $key . ':"' . $attr . '"';
+      $btnval .= (strlen($btnval) > 0 ? ',' : '') . '"'. $key .'":"' . $attr . '"';
     }
     $vals .= (strlen($vals) > 0 ? ',{' : '{') . $btnval . '}';
   }
