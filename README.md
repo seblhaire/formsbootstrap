@@ -1,5 +1,6 @@
 
 
+
 # FormsBootstrap
 
 [By Sébastien L'haire](http://sebastien.lhaire.org)
@@ -994,6 +995,32 @@ jQuery('#form_complete').data('sebformhelper').removevalidation()
 Resets the form, i.e. empties all values and reset the default ones. If parameter `check_modified_on_reset` is  `true`, a confirmation box is displayed with tthe text of parameter `modified_on_reset_confirm_text`.
 If you have defined a callback function with parameter  `clear_function`, it will be called as well.
 
+ ```php
+jQuery('#form_complete').data('sebformhelper').removevalidation()
+```
+
+#### errormessage
+Displays error message in div before buttons.
+ ```php
+jQuery('#form_complete').data('sebformhelper').errormessage(message);
+```
+#### successmessage
+Displays success message in div before buttons.
+ ```php
+jQuery('#form_complete').data('sebformhelper').successmessage(message);
+```
+
+#### alertresult
+
+Display message in div before buttons, by overriding default values.
+* `message` contains message to display
+* `isok` is a boolean value to set if we display error or success message.
+* `delay` to display message before hiding it
+* `classok` class(es) for succes message
+* `classerror` class(es) for error message
+ ```php
+jQuery('#form_complete').data('sebformhelper').alertresult(message, isok, delay, classok, classerror)
+```
 ### Example
 ```php
 Form::bsOpen([

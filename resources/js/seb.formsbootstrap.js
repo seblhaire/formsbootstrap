@@ -157,13 +157,13 @@ var SebFormHelper = {
             if (message == undefined || message == null || message.length == undefined || message.length == 0){
               message = self.options.resultok;
             }
-            self.alertresult(message, true, self.options.alertdisplaytimeok);
+            self.successmessage(message);
           }else{
             var message = self.getResultErrorMessage(res);
             if (message == undefined || message == null || message.length == undefined || message.length == 0){
               message = self.options.resultfalse;
             }
-            self.alertresult(message, false, self.options.alertdisplaytimefalse);
+            self.erromessage(message);
           }
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
@@ -171,7 +171,7 @@ var SebFormHelper = {
             self.refreshToken();
             self.form.submit();
           }else{
-            self.alertresult(self.options.resultfalse, false, self.options.alertdisplaytimefalse);
+            self.erromessage(self.options.resultfalse);
           }
         });
       }
@@ -445,19 +445,36 @@ var SebFormHelper = {
       this.divalert = jQuery('<div></div>')
           .attr('id', this.form.attr('id') + '_result_container')
           .attr('role', 'alert')
-          .addClass(this.options.alertcommonclass)
           .hide();
         this.divalert
           .appendTo(this.form);
     },
-    alertresult: function(message, isok, delay){
+    successmessage: function(message){
+      this.alertresult(
+        message,
+        true,
+        this.options.alertdisplaytimeok,
+        this.options.alertcommonclass + ' ' + this.options.alertsuccessclass,
+        this.options.alertcommonclass + ' ' + this.options.alerterrorclass
+      );
+    },
+    errormessage: function(message){
+      this.alertresult(
+        message,
+        false,
+        this.options.alertdisplaytimefalse,
+        this.options.alertcommonclass + ' ' + this.options.alertsuccessclass,
+        this.options.alertcommonclass + ' ' + this.options.alerterrorclass
+      );
+    },
+    alertresult: function(message, isok, delay, classok, classerror){
       if (this.options.buildresultalert){
         if (isok){
-          this.divalert.removeClass(this.options.alerterrorclass).
-            addClass(this.options.alertsuccessclass);
+          this.divalert.removeClass(classerror).
+            addClass(classok);
         }else{
-          this.divalert.removeClass(this.options.alertsuccessclass).
-            addClass(this.options.alerterrorclass);
+          this.divalert.removeClass(classok).
+            addClass(classerror);
         }
         this.divalert.html(message).fadeIn( "slow" ).delay(delay).fadeOut('slow');
       }
