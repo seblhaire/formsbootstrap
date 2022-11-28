@@ -171,7 +171,7 @@ var SebFormHelper = {
             self.refreshToken();
             self.form.submit();
           }else{
-            self.erromessage(self.options.resultfalse);
+            self.errormessage(self.options.resultfalse);
           }
         });
       }
@@ -372,6 +372,9 @@ var SebFormHelper = {
       }
     },
     _reset : function(){
+      for (var obj of this.options.resetvalues){
+        jQuery('#' + obj.key).val(obj.value);
+      }
       jQuery('select option').each(function(e){ $(this).prop('selected', false)});
       jQuery('input[type=radio]').each(function(e){ $(this).prop('checked', false)});
       jQuery('input[type=checkbox]').each(function(e){ $(this).prop('checked', false)});

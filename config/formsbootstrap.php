@@ -161,7 +161,8 @@ return [
         'resultok' => "#formsbootstrap::messages.resultok#",
         'resultfalse' => "#formsbootstrap::messages.resultfalse#",
         "evalajaxres_callback" => null,
-        "evalajaxres_resultmessage" => null
+        "evalajaxres_resultmessage" => null,
+        'resetvalues' => [],
       ],
       'password-with-confirm' => [
         'oldpass' => [

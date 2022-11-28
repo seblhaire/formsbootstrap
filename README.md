@@ -1,6 +1,4 @@
 
-
-
 # FormsBootstrap
 
 [By Sébastien L'haire](http://sebastien.lhaire.org)
@@ -842,6 +840,7 @@ a hidden alert div to contain form submit results.
     * `clearonclick_function`: if you have validation message on your form and click on a field that has a message, this message is removed. Use this fuction if your form contains fields that are not listed in the top of this document and not processed by this form package. Default: `null`.
      * `validate_function` callback function called when form is validated. Use this fuction if your form contains fields that are not listed in the top of this document and not processed by this form package. The function must return `true` when all fields are valid, `false` otherwise. Default: `null`.
      * `clear_function`: calback function if you empty your form by the `reset()` function, se this fuction if your form contains fields that are not listed in the top of this document and not processed by this form package.  Default: `null`.
+     * `resetvalues`: values to be used on form reset to fill hidden values. Eg: `['id' => 0, 'type' => 'article']`. Default: `[]`.
    * `check_modified_on_reset`: on form resetting, sets whether user has to confirm the erasing of modified values. Default:  `true`.
   *  `modified_on_reset_confirm_text`: text to be displayed in the confirmation box  if form user wants to reset a modified form. Default: translation key `formsbootstrap::messages.modified_on_reset_confirm_text`: "This form has been modified. Are you sure you want to reset it ?".  Cf [below](#translation_keys).
 	* `buildbuttons`: automatically insert submit button and optionally other buttons. Default: `true`.

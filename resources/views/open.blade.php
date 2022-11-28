@@ -31,6 +31,15 @@ if (count($data['additionalbuttons'])){
 }else{
   $btns = '[]';
 }
+if (count($data['resetvalues'])){
+  $vals = '';
+  foreach($data['resetvalues'] as $key => $val){
+    $vals .= (strlen($vals) > 0 ? ',{"' : '{"key": "') . $key . '","value":"' . $val .'"}';
+  }
+  $resetvalues = '[' . $vals . ']';
+}else{
+  $resetvalues = '[]';
+}
 ?>
 <form
 @foreach ($values as $key => $value)
@@ -83,7 +92,8 @@ if (count($data['additionalbuttons'])){
       additionalbuttons: {!! $btns !!},
       submitbtnlbl: '{!! FormsBootstrapUtils::translateOrPrint($data['submitbtnlbl']) !!}',
       evalajaxres_callback: {!! is_null($data['evalajaxres_callback']) ? 'null' :  $data['evalajaxres_callback']  !!},
-      evalajaxres_resultmessage: {!! is_null($data['evalajaxres_resultmessage']) ? 'null' :  $data['evalajaxres_resultmessage']  !!}
+      evalajaxres_resultmessage: {!! is_null($data['evalajaxres_resultmessage']) ? 'null' :  $data['evalajaxres_resultmessage']  !!},
+      resetvalues: {!! $resetvalues !!}
     });
   });
 </script>
