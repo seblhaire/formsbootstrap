@@ -15,6 +15,7 @@ return [
     'resetselectclass' => 'resetselect',
     'resetcheckclass' => 'resetcheck',
     'resetradioclass' => 'resetradio',
+    'resetspecialclass' => 'resetspecial'
   ],
   'mandatory' =>  [
     'open' => ['id', 'ajaxcallback'],
@@ -350,6 +351,7 @@ return [
         'helptext' => '',
         'inputclass' =>'form-control',
         'labelclass' => 'form-label',
+        'addresetclass' => true,
         'attributes' => [],
         'labelattributes' => [],
         'invalid-feedback' => "#formsbootstrap::messages.required#",

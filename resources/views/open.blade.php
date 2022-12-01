@@ -69,6 +69,7 @@ if (count($data['resetvalues'])){
       resetselectclass : '{!! $data['resetselectclass'] !!}',
       resetcheckclass : '{!! $data['resetcheckclass'] !!}',
       resetradioclass : '{!! $data['resetradioclass'] !!}',
+      resetspecialclass: '{!! $data['resetspecialclass'] !!}',
       csrfrefreshroute  : {!! is_null($data['csrfrefreshroute']) ? 'null' : '"' . $data['csrfrefreshroute'] . '"'  !!},
       data_build_function : {!! is_null($data['data_build_function']) ? 'null' :  $data['data_build_function']  !!},
       remove_validation_function : {!! is_null($data['remove_validation_function']) ? 'null' :  $data['remove_validation_function']  !!},

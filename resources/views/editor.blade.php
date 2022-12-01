@@ -10,6 +10,9 @@ $data = FormsBootstrapUtils::mergeValues(array_merge(config('formsbootstrap.defa
 if ($data['required']){
   $data['divclass'] .= ' ' . $data['requiredspecialclass'];
 }
+if ($data['addresetclass']){
+  $data['divclass'] .= ' ' . $data['resetspecialclass'];
+}
 if (isset($data['value']) && strlen($data['value'])){
   $text = addslashes(S::create($data['value'])->collapseWhitespace());
 }else{

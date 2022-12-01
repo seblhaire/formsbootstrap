@@ -73,7 +73,7 @@ Accessible through
 config('formsbootstrap')
 ```
 
-Section `formsbootstrap.classes` contains class selectors that will be used for form validation etc. Section `formsbootstrap.mandatory` gives mandatory parameters for each form tag. Section `formsbootstrap.editorTranslations` contains translations for RichTextEditor. Finally section `formsbootstrap.defaults` contains default tag parameters.
+Section `formsbootstrap.classes` contains class selectors that will be used for form validation, form reset etc. Section `formsbootstrap.mandatory` gives mandatory parameters for each form tag. Section `formsbootstrap.editorTranslations` contains translations for RichTextEditor. Finally section `formsbootstrap.defaults` contains default tag parameters.
 
 In case you need change defaut values, use command `php artisan vendor:publish` and chose appropriate package in list. Then config files will be available in file `config/vendor/seblhaire/`.
 
@@ -880,20 +880,35 @@ a hidden alert div to contain form submit results.
 			* `resultfalse`message to display on form error result if another message has not been defined. Default: translation key `formsbootstrap::messages.resultfalse`: "Processing error".  Cf [below](#translation_keys).
 
 ### Form select classes
-With jQuery, you can use classes to select elements. Eg `jQuery('.verify')` select all items in the current page that contain this class. You don't have to define CSS properties but you can.
-* `requiredclass` select all form inputs that do not require a special procedure. Default `"verify"`.
-* `requiredcheckclass`: select all `<input type="checkbox">` `<div>` containers.  Default `"verify-check"`.
-* `selcheckclass`: select `<div>` containing goups of checkboxes. Default: `"selcheck"`.
-* `requiredspecialclass` : select editor inputs, uploaders, daterange and tags fields, that need a special processing. Default: `"verify-special"`
+With jQuery, you can use classes to select elements. Eg `jQuery('.verify')` select all items in the current page that contain this class. You don't have to define CSS styles for these classes, but you can.
+
+#### Required fields verification
+
+ These classes select elements that must not be empty:
+
+* `requiredclass` select all form inputs that do not require a special procedure. Default `"verify"`. This class is inserted automatically by our scripts when required.
+* `requiredcheckclass`: select all `<input type="checkbox">` `<div>` containers.  Default `"verify-check"`. This class is inserted automatically by our scripts when required.
+* `selcheckclass`: select `<div>` containing goups of checkboxes. Default: `"selcheck"`. This class is inserted automatically by our scripts when required.
+* `requiredspecialclass` : select editor inputs, uploaders, daterange and tags fields, that need a special processing. Default: `"verify-special"`.  NB: this class must be manually added to element that must be checked.
+
+#### Elements special verifications
+
+Some form elements have special verification rules that verify well-formedness. These classes are automatically inserted when needed:
+
 * `verifymailclass`: select all `<input type="email">`. Default: `"verify-email"`.
 * `verifypassclass`: select password input groups. Default: `"verify-pass"`.
 * `verifypassmatchclass` : select password confirmation input. Default: `"verify-pass-match"`.
 * `verifypassold`: select old password input. Default: `"verify-pass-old"`.
+
+#### Form reset class
+
+When form reset function is called, we select fields by following classes. These classes are automatically added to elements, except the last one:
+
 * `resettextclass`: class to select  `<input>` field that can be reset.. Default: `"resettext"`.
 * `resetselectclass`: class to select `<select>` that can be reset. Default: `"resetselect"'`.
 * `resetcheckclass` : class to select `<input type="check">`. Default: `"resetcheck"`.
 * `resetradioclass`: class to select `<input type="radio">`. Default: `"resetradio"`.
-
+* `resetspecialclass`:  select editor inputs, uploaders, daterange and tags fields, that need a special processing. Default: `"resetspecial"`.  NB: this class must be manually added to element that must be checked.
 ### Javascript form processing object
 
 With this package, we have built a Javascript object that processes form events, validates form and sends form results to a callback function. It is automatically initiallized with the parameter values.
@@ -995,7 +1010,7 @@ Resets the form, i.e. empties all values and reset the default ones. If paramete
 If you have defined a callback function with parameter  `clear_function`, it will be called as well.
 
  ```php
-jQuery('#form_complete').data('sebformhelper').removevalidation()
+jQuery('#form_complete').data('sebformhelper').reset()
 ```
 
 #### errormessage

@@ -402,7 +402,7 @@ var SebFormHelper = {
           }
         });
       });
-      jQuery("#" + this.form.attr('id') + " ." + this.options.requiredspecialclass).each(function(i){
+      jQuery("#" + this.form.attr('id') + " ." + this.options.resetspecialclass).each(function(i){
         if (jQuery(this).data('sebrichtexthelper') != undefined){
           jQuery(this).data('sebrichtexthelper').loadContent('');
         }
@@ -411,6 +411,9 @@ var SebFormHelper = {
         }
         if (jQuery(this).data('tagsinput') != undefined){
           jQuery(this).data('tagsinput').reset();
+        }
+        if (jQuery(this).data('sebdaterangepicker') != undefined){
+          jQuery(this).data('sebdaterangepicker').reset();
         }
       });
       if (this.options.clear_function != null){
