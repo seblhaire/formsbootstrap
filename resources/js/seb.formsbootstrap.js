@@ -60,7 +60,7 @@ var SebFormHelper = {
           jQuery('#' + key).data('uploader').getresultprocessor().process(result);
         }
         else if (jQuery('#' + key).data('tagsinput') != undefined){
-          //console.log('tag ' + key);
+          jQuery('#' + key).data('tagsinput').reset();
           jQuery('#' + key).data('tagsinput').addtolist(value);
         }
         else if (jQuery('#' + key).data('sebdaterangepicker') != undefined){
