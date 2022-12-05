@@ -163,7 +163,7 @@ var SebFormHelper = {
             if (message == undefined || message == null || message.length == undefined || message.length == 0){
               message = self.options.resultfalse;
             }
-            self.erromessage(message);
+            self.errormessage(message);
           }
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
