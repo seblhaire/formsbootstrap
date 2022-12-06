@@ -168,8 +168,7 @@ var SebFormHelper = {
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
           if (jqXHR.status == 419){
-            self.refreshToken();
-            self.form.submit();
+            location.refresh();
           }else{
             self.alertresult(self.options.resultfalse, false, self.options.alertdisplaytimefalse);
           }
@@ -196,14 +195,6 @@ var SebFormHelper = {
         }
       }
     },
-    refreshToken: function(){
-  		var self = this;
-      if (self.options.csrfrefreshroute != null){
-  	    jQuery.get(self.options.csrfrefreshroute, function(data){
-  	        self.options.csrf = data;
-  	    });
-      }
-  	},
     removevalidation: function(){
       jQuery("#" + this.form.attr('id') + " ." + this.options.requiredclass).each(function(i){
         jQuery(this).removeClass('is-invalid').removeClass('is-valid');
@@ -595,15 +586,7 @@ var SebPasswordHelper = {
     toggleInputs: function(){
       var sel = '.' + this.input.attr('id') + '-div';
       jQuery(sel).each(function(){ jQuery(this).toggle();});
-    },
-    refreshToken: function(){
-  		var self = this;
-      if (self.options.csrfrefreshroute != null){
-  	    jQuery.get(self.options.csrfrefreshroute, function(data){
-  	        self.options.csrf = data;
-  	    });
-      }
-  	}
+    }
 };
 
 var SebEmailHelper = {

@@ -157,7 +157,6 @@ $data['confirmpass']['attributes']['data-maininput'] = '#' . $data['newpass']['i
       , oldinput: '#{{ $data['oldpass']['id']}}',
       checkoldpassurl: {!! is_null($data['checkoldpassurl']) ? 'null' : '"' . $data['checkoldpassurl'] . '"' !!},
       checkoldpass_callback: {!! is_null($data['checkoldpass_callback']) ? 'null' :  $data['checkoldpass_callback'] !!},
-      csrfrefreshroute  : {!! is_null($data['csrfrefreshroute']) ? 'null' : '"' . $data['csrfrefreshroute'] . '"'  !!},
       csrf : '{!! $data['csrf'] !!}'
   @endif
     });

@@ -139,7 +139,6 @@ return [
         'validate' => true,
         'filldatacallback' => null,
         'data_build_function' => null,
-        'csrfrefreshroute' => null,
         'csrf' => null,
         'remove_validation_function' => null,
         'clearonclick_function' => null,
@@ -161,6 +160,7 @@ return [
         'alertdisplaytimefalse' => 8000,
         'resultok' => "#formsbootstrap::messages.resultok#",
         'resultfalse' => "#formsbootstrap::messages.resultfalse#",
+        'tokenexpired' => "#formsbootstrap::messages.tokenexpired#",
         "evalajaxres_callback" => null,
         "evalajaxres_resultmessage" => null,
         'resetvalues' => [],
@@ -231,7 +231,6 @@ return [
         'divclass' => "mb-3",
         'checkoldpassurl' => null,
         'checkoldpass_callback' => null,
-        'csrfrefreshroute' => null,
         'csrf' => null,
       ],
       'password' => [

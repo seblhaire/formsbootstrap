@@ -548,13 +548,6 @@ if `show_generate` option is also `false`.
 				</script>
 				```
 
- *  `'csrfrefreshroute`: route to refresh csrf in case of security error. Add this route in your project:
-   ```
-  Route::get('/refresh-csrf', function(){
-      return csrf_token();
-  })->name('refreshcsrf');
-  ```
-
 ###  Javascript object
 With this package, we provide a simple Javascript object that will be used by form validation.  It is initialized automatically by our package.
 ```
@@ -834,7 +827,6 @@ a hidden alert div to contain form submit results.
 	  );
 	}
    ```
-    * `csrfrefreshroute` _route to a function that refreshes csrf token. Default null.
     * `csrf`: csrf token, automatically initialized on form creation.
     * `remove_validation_function`: callback function used to remove validation messages for custom field. Use this fuction if your form contains fields that are not listed in the top of this document and not processed by this form package. Default: `null`.
     * `clearonclick_function`: if you have validation message on your form and click on a field that has a message, this message is removed. Use this fuction if your form contains fields that are not listed in the top of this document and not processed by this form package. Default: `null`.
@@ -1040,7 +1032,6 @@ jQuery('#form_complete').data('sebformhelper').alertresult(message, isok, delay,
 Form::bsOpen([
   'id' => 'form_complete',
   'action' => route('formsbootstrap_processform'),
-  'csrfrefreshroute' => route('refreshcsrf'),
   'ajaxcallback' => 'processform',
   'filldatacallback' => 'datafill'
 ])

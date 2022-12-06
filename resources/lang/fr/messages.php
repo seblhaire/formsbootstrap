@@ -28,4 +28,5 @@ return [
   'modified_on_reset_confirm_text' => "Ce formulaire a été modifié. Etes-vous sûr(e) de vouloir le réinitialiser ?",
   'resultok' => 'Résultat OK',
   'resultfalse' => 'Erreur de traitement',
+  'tokenexpired' => 'La session a expiré. Veuillez rafraichir le formulaire',
 ];

@@ -28,4 +28,5 @@ return [
   'modified_on_reset_confirm_text' => 'This form has been modified. Are you sure you want to reset it ?',
   'resultok' => 'Result OK',
   'resultfalse' => 'Processing error',
+  'tokenexpired' => 'Token expired. Please reload form',
 ];
