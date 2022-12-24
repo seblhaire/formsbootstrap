@@ -13,7 +13,10 @@
 .richText{
   padding:0px !important;
 }
-.btngroup input{
+.btngroup button{
+  margin-left: 5px;
+}
+.btngroup button i.fa-spinner{
   margin-left: 5px;
 }
 .btngroup input:first-of-type{

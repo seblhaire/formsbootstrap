@@ -140,6 +140,7 @@ var SebFormHelper = {
         }
       }
       if (self.options.ajaxcallback != null){
+        jQuery('#' + self.form.attr('id') +'_submit_spinner').show();
         jQuery.ajax({
           url: self.form.prop('action'),
           encoding: 'utf8',
@@ -152,6 +153,7 @@ var SebFormHelper = {
           cache: false
         })
         .done(function(res){
+          jQuery('#' + self.form.attr('id') +'_submit_spinner').hide();
           if (self.checkformresult(res)){
             var message = self.options.ajaxcallback(res);
             if (message == undefined || message == null || message.length == undefined || message.length == 0){
@@ -416,22 +418,30 @@ var SebFormHelper = {
       this.buttonsdiv = jQuery('<div></div>')
           .attr('id', this.form.attr('id') + '_buttons')
           .addClass(this.options.buttondivclass)
-      jQuery('<input/>')
+      var spinner = jQuery('<i></i>')
+            .attr('id', this.form.attr('id') + '_submit_spinner')
+            .addClass("fa-solid fa-spinner fa-spin-pulse")
+            .hide();
+      jQuery('<button></button>')
           .attr('id', this.form.attr('id') + '_submit')
           .attr('type','submit')
           .addClass(this.options.submitbtnclass)
-          .attr('value', this.options.submitbtnlbl)
+          .html(this.options.submitbtnlbl)
+          .append(spinner)
           .on('click', {self: this}, function(e){
             e.data.self.submit(e);
           })
           .appendTo(this.buttonsdiv);
       if (this.options.additionalbuttons.length > 0){
         for (var i in this.options.additionalbuttons){
-          var btn = jQuery('<input/>')
+          var btn = jQuery('<button></button>')
                 .attr('type','button');
           jQuery.map(this.options.additionalbuttons[i], function(value,key){
-            btn.attr(key, value);
+            if (key != 'value'){
+              btn.attr(key, value);
+            }
           });
+          btn.html(this.options.additionalbuttons[i]['value']);
           btn.appendTo(this.buttonsdiv);
         }
       }
