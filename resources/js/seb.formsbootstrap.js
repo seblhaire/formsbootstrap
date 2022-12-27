@@ -418,6 +418,8 @@ var SebFormHelper = {
       this.buttonsdiv = jQuery('<div></div>')
           .attr('id', this.form.attr('id') + '_buttons')
           .addClass(this.options.buttondivclass)
+      var text = jQuery('<span></span>')
+            .attr('id', this.form.attr('id') + '_submit_text').html(this.options.submitbtnlbl);
       var spinner = jQuery('<i></i>')
             .attr('id', this.form.attr('id') + '_submit_spinner')
             .addClass("fa-solid fa-spinner fa-spin-pulse")
@@ -426,7 +428,7 @@ var SebFormHelper = {
           .attr('id', this.form.attr('id') + '_submit')
           .attr('type','submit')
           .addClass(this.options.submitbtnclass)
-          .html(this.options.submitbtnlbl)
+          .append(text)
           .append(spinner)
           .on('click', {self: this}, function(e){
             e.data.self.submit(e);
