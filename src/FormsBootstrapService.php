@@ -607,9 +607,9 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         'aria-labelledby' => $data['newpass']['id'] . '-rule-label',
                         'aria-hidden' => "true"
                     ]) .
-                    $this->buildDiv("modal-dialog") .
-                    $this->buildDiv("modal-content") .
-                    $this->buildDiv("modal-header") .
+                    $this->buildSimpleDiv("modal-dialog") .
+                    $this->buildSimpleDivbuildSimpleDiv("modal-content") .
+                    $this->buildSimpleDiv("modal-header") .
                     '<h5 class="modal-title" id="' . $data['newpass']['id'] . '-rule-label">' . $this->translateOrPrint($data['password_rules_modal_head']) . '</h5>' . PHP_EOL .
                     $this->builButton("btn-close", '', [
                         'data-bs-dismiss' => "modal",
@@ -617,7 +617,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         "title" => $this->translateOrPrint($data['close_rules'])
                     ]) .
                     $this->buildEndDiv(true) .
-                    $this->buildDiv("modal-body") .
+                    $this->buildSimpleDiv("modal-body") .
                     '<p>' . $this->translateOrPrint($data['password_rules_intro']) . '</p>' . PHP_EOL . '<ul>' . PHP_EOL;
             foreach ($passrules as $rule) {
                 $output .= '<li>' . $rule . '</li>' . PHP_EOL;
