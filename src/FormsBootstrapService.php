@@ -1030,7 +1030,7 @@ class FormsBootstrapService extends FormsBootstrapServiceContract {
         return $output;
     }
 
-    public function buildSimpleDiv($divclass) {
+    private function buildSimpleDiv($divclass) {
         return '<div class="' . $divclass . '">' . PHP_EOL;
     }
 
