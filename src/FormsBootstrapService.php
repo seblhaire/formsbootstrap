@@ -10,7 +10,7 @@ use function Stringy\create as s;
 class FormsBootstrapService implements FormsBootstrapServiceContract {
 
     public function bsOpen($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.open'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.open'), $data);
         $data = $this->mergeValues(
                 array_merge(
                         config('formsbootstrap.defaults.open'),
@@ -160,7 +160,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsHidden($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.hidden'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.hidden'), $data);
         $data = $this->mergeValues(config('formsbootstrap.defaults.hidden'), $data);
         if (!isset($data['name']) || strlen($data['name']) == 0) {
             $data['name'] = $data['id'];
@@ -170,7 +170,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsText($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.text'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.text'), $data);
         $data = $this->mergeValues(
                 array_merge(
                         config('formsbootstrap.defaults.text'),
@@ -203,7 +203,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsNumber($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.number'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.number'), $data);
         $data = $this->mergeValues(
                 array_merge(
                         config('formsbootstrap.defaults.number'),
@@ -242,7 +242,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsRange($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.range'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.range'), $data);
         $data = $this->mergeValues(
                 array_merge(config('formsbootstrap.defaults.range'), config('formsbootstrap.classes')),
                 $data
@@ -323,7 +323,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsTextarea($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.textarea'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.textarea'), $data);
         $data = $this->mergeValues(
                 array_merge(config('formsbootstrap.defaults.textarea'), config('formsbootstrap.classes')),
                 $data
@@ -674,7 +674,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsSelect($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.select'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.select'), $data);
         $data = $this->mergeValues(
                 array_merge(
                         config('formsbootstrap.defaults.select'),
@@ -720,7 +720,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsCheckbox($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.checkbox'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.checkbox'), $data);
         $data = $this->mergeValues(
                 array_merge(
                         config('formsbootstrap.defaults.checkbox'),
@@ -788,7 +788,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsRadio($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.radio'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.radio'), $data);
         $data = $this->mergeValues(
                 array_merge(
                         config('formsbootstrap.defaults.radio'),
@@ -857,7 +857,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsButton($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.button'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.button'), $data);
         $data = $this->mergeValues(config('formsbootstrap.defaults.button'), $data);
         $output = $this->buildButton(
                 $data['class'],
@@ -873,7 +873,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsColorpicker($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.colorpicker'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.colorpicker'), $data);
         $data = $this->mergeValues(config('formsbootstrap.defaults.colorpicker'), $data);
         if (!isset($data['name']) || strlen($data['name']) == 0) {
             $data['name'] = $data['id'];
@@ -901,7 +901,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsEditor($data) {
-        $this->checkMandatory(config('formsbootstrap.mandatory.editor'));
+        $this->checkMandatory(config('formsbootstrap.mandatory.editor'), $data);
         $data = $this->mergeValues(array_merge(config('formsbootstrap.defaults.colorpicker'), config('formsbootstrap.classes')), $data);
         if ($data['required']) {
             $data['divclass'] .= ' ' . $data['requiredspecialclass'];
@@ -1107,7 +1107,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         $output .= '</script>' . PHP_EOL;
     }
 
-    private function checkMandatory($mandatory) {
+    private function checkMandatory($mandatory, $data) {
         foreach ($mandatory as $param) {
             if (!isset($data[$param])) {
                 throw new \Exception('missing mandatory parameter ' . $param);
