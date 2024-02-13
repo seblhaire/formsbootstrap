@@ -432,9 +432,9 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildFeedbacks($data['valid-feedback'], $this->translateOrPrint($data['invalid-feedback']), ($data['required'] || $data['validate']), ($data['required'] || $data['validate'])) .
                 $this->buildHelp($data) .
                 $this->buildEndDiv($data['input_in_div']) .
-                $output .= $this->buildJsCode([
-            'jQuery("#' . $data['id'] . '").sebPasswordHelper({passregex : ' . $data['password_regex'] . '});' => null
-        ]);
+                $this->buildJsCode([
+                    'jQuery("#' . $data['id'] . '").sebPasswordHelper({passregex : ' . $data['password_regex'] . '});' => null
+                ]);
     }
 
     public function bsPasswordWithConfirm($data = []) {
@@ -533,7 +533,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     ]) .
                     $this->buildButton($data['generatepwdbtn-class'] . ' ' . $data['newpass']['id'] . "-gen", $data['generatebtn-icon'], [
                         'title' => $this->translateOrPrint($data['showrulesbtntext'])
-            ]);
+                    ]);
 
             if ($data['show_rules']) {
                 $output .= $this->buildButton($data['generatepwdbtn-class'], '<i class="fa-solid fa-ruler"></i>', [
