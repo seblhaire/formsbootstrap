@@ -1078,7 +1078,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     private function _printTabs($depth) {
         $tabs = '';
         for ($i = 0; $i <= $depth; $i++) {
-            $tabs += '  ';
+            $tabs .= '  ';
         }
         return $tabs;
     }
