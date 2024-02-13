@@ -532,12 +532,12 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         'title' => $this->translateOrPrint($data['toggledbtn-title'])
                     ]) .
                     $this->buildButton($data['generatepwdbtn-class'] . ' ' . $data['newpass']['id'] . "-gen", $data['generatebtn-icon'], [
-                        'title' => $this->translateOrPrint($data['showrulesbtntext'])
+                        'title' => $this->translateOrPrint($data['generatepwdbtn-title'])
                     ]);
 
             if ($data['show_rules']) {
                 $output .= $this->buildButton($data['generatepwdbtn-class'], '<i class="fa-solid fa-ruler"></i>', [
-                    'title' => $this->translateOrPrint($data['generatepwdbtn-title']),
+                    'title' => $this->translateOrPrint($data['showrulesbtntext']),
                     'data-bs-toggle' => "modal",
                     'data-bs-target' => "#" . $data['newpass']['id'] . "-rule-modal"
                 ]);
@@ -586,8 +586,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     . $this->buildSimpleDiv($data['pwdbtn-class'])
                     . $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-off'], [
                         'title' => $this->translateOrPrint($data['toggledbtn-title'])
-                    ])
-                    . $this->buildEndDiv(true);
+                    ]);
         } else {
             $output .= $this->buildInput(
                             'password',
@@ -1000,7 +999,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     private function buildLabel($name, $label, $attributes) {
-        $output = '<label for="' . $name;
+        $output = '<label for="' . $name . '"';
         foreach ($attributes as $key => $value) {
             if (is_null($value)) {
                 $output .= ' ' . $key;
