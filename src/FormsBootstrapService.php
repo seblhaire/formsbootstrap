@@ -83,7 +83,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     'clear_function' => is_null($data['clear_function']) ? 'null' : $data['clear_function'],
                     'csrf' => '"' . $data['csrf'] . '"',
                     'check_modified_on_reset' => $data['check_modified_on_reset'] ? 'true' : 'false',
-                    'modified_on_reset_confirm_text' => $this->translateOrPrint($data['modified_on_reset_confirm_text']),
+                    'modified_on_reset_confirm_text' => '"' . $this->translateOrPrint($data['modified_on_reset_confirm_text']) .'"' ,
                     'buildbuttons' => $data['buildbuttons'] ? 'true' : 'false',
                     'buildresultalert' => $data['buildresultalert'] ? 'true' : 'false',
                     'alertsuccessclass' => '"' . $data['alertsuccessclass'] . '"',
