@@ -422,7 +422,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildInput(
                         'password',
                         $data['name'],
-                        $data['value'],
+                        '',
                         array_merge(
                                 ['id' => $data['id'],
                                     'class' => $data['inputclass']],
