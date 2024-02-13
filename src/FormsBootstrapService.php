@@ -7,7 +7,7 @@ use function Stringy\create as s;
 /**
  * Helpers for package formsbootstrap
  */
-class FormsBootstrapService extends FormsBootstrapServiceContract {
+class FormsBootstrapService implements FormsBootstrapServiceContract {
 
     public function bsOpen($data) {
         $this->checkMandatory(config('formsbootstrap.mandatory.open'));
