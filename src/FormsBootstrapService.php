@@ -608,7 +608,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         'aria-hidden' => "true"
                     ]) .
                     $this->buildSimpleDiv("modal-dialog") .
-                    $this->buildSimpleDivbuildSimpleDiv("modal-content") .
+                    $this->buildSimpleDiv("modal-content") .
                     $this->buildSimpleDiv("modal-header") .
                     '<h5 class="modal-title" id="' . $data['newpass']['id'] . '-rule-label">' . $this->translateOrPrint($data['password_rules_modal_head']) . '</h5>' . PHP_EOL .
                     $this->builButton("btn-close", '', [
