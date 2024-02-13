@@ -1110,7 +1110,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     private function checkMandatory($mandatory) {
         foreach ($mandatory as $param) {
             if (!isset($data[$param])) {
-                throw new Exception('missing mandatory parameter ' . $param);
+                throw new \Exception('missing mandatory parameter ' . $param);
             }
         }
     }
