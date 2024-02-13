@@ -994,7 +994,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
             $output .= '>' . $val . '</option>' . PHP_EOL;
         }
-        $output = '</select>' . PHP_EOL;
+        $output .= '</select>' . PHP_EOL;
         return $output;
     }
 
