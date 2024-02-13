@@ -636,6 +636,7 @@ Forms::bsCheckbox(array $data)
   * `mainlabelclass`: class of main label. Default: `"form-label"`
   * `inputclass`: class of input tag. Default `"form-control"`.
   * `labelclass`: class of label tag. Default `"form-label"`.
+* `labelattributes`: array of label tag attributes to be added to default ones. Default: empty array.
   * `mainattr`: array of attributes of main div. Default: empty array.
   * `invalid-feedback`: text to be displayed if mandatory input is not filled. Default: translation key `formsbootstrap::messages.required`: "This field is required".  Cf [below](#translation_keys).
   * `valid-feedback`: text to be displayed if mandatory input is filled. Default: empty string.
@@ -675,6 +676,7 @@ Forms::bsRadio(array $data)
   * `mainlabelclass`: class of main label. Default: `"form-label"`
   * `inputclass`: class of input tag. Default `"form-control"`.
   * `labelclass`: class of label tag. Default `"form-label"`.
+    * `labelattributes`: array of label tag attributes to be added to default ones. Default: empty array.
   * `mainattr`: array of attributes of main div. Default: empty array.
   *  `helptext`: text to help, to be inserted above field. Default: empty string.
   * `invalid-feedback`: text to be displayed if mandatory input is not filled. Default: translation key `formsbootstrap::messages.required`: "This field is required".  Cf [below](#translation_keys).
