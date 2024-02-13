@@ -56,7 +56,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
         }
         $output .= '>' . PHP_EOL . '<input type="hidden" id="_token" name="_token" value="' . csrf_token() . '" />' . PHP_EOL;
-        $output .= $this->buildJsCode([
+        /*$output .= $this->buildJsCode([
             'jQuery(document).ready(function() {' => [
                 'jQuery("#' . $values["id"] . '").sebFormHelper({' => [
                     'validate' => $data['validate'] ? 'true' : 'false',
@@ -105,7 +105,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 '});' => null
             ],
             '});' => null
-        ]);
+        ]);*/
         /* $output .= '<script>' . PHP_EOL;
           $output .= '  jQuery(document).ready(function() {' . PHP_EOL;
           $output .= '    jQuery("#' . $values["id"] . '").sebFormHelper({' . PHP_EOL;
