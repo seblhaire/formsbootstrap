@@ -1,5 +1,4 @@
 <?php
-
 namespace Seblhaire\Formsbootstrap;
 
 use Illuminate\Support\Facades\Validator;
