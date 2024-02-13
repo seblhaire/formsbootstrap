@@ -56,7 +56,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
         }
         $output .= '>' . PHP_EOL . '<input type="hidden" id="_token" name="_token" value="' . csrf_token() . '" />' . PHP_EOL;
-        /*$output .= $this->buildJsCode([
+        $output .= $this->buildJsCode([
             'jQuery(document).ready(function() {' => [
                 'jQuery("#' . $values["id"] . '").sebFormHelper({' => [
                     'validate' => $data['validate'] ? 'true' : 'false',
@@ -105,7 +105,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 '});' => null
             ],
             '});' => null
-        ]);*/
+        ]);
         /* $output .= '<script>' . PHP_EOL;
           $output .= '  jQuery(document).ready(function() {' . PHP_EOL;
           $output .= '    jQuery("#' . $values["id"] . '").sebFormHelper({' . PHP_EOL;
@@ -944,7 +944,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     public function bsClose() {
-        return '</close>' . PHP_EOL;
+        return '</form>' . PHP_EOL;
     }
 
     private function buildInput($type, $name, $value, $attributes) {
@@ -1083,17 +1083,18 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         return $tabs;
     }
 
-    private function _printJsCode($code = [], &$depth) {
+    private function _printJsCode($code, &$depth) {
         $depth++;
         $output = '';
-        foreach ($code as $left => $right) {
-            if (is_array($right)) {
-                $output .= $this->_printTabs($depth) . $left . PHP_EOL;
-                $output .= $this->_printJsCode($right, $depth);
-            } else if (is_null($right)) {
-                $output .= $this->_printTabs($depth) . $left . PHP_EOL;
-            } else {
-                $output .= $this->_printTabs($depth) . $left . ' : ' . $right . ',' . PHP_EOL;
+        if (count($code) > 0){
+            foreach ($code as $left => $right) {
+                if (is_array($right)) {
+                    $output .= $this->_printTabs($depth) . $left . ' : ' . $this->_printJsCode($right, $depth);
+                } elseif (is_null($right)) {
+                    $output .= $this->_printTabs($depth) . $left . PHP_EOL;
+                } else {
+                    $output .= $this->_printTabs($depth) . $left . ' : ' . $right . ',' . PHP_EOL;
+                }
             }
         }
         $depth--;
@@ -1105,6 +1106,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         $depth = 0;
         $output .= $this->_printJsCode($code, $depth);
         $output .= '</script>' . PHP_EOL;
+        return $output;
     }
 
     private function checkMandatory($mandatory, $data) {
