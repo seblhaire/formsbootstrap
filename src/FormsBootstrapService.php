@@ -488,7 +488,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         array_merge(['class' => $data['newpass']['labelclass']], $data['newpass']['labelattributes'])
         );
         if ($data['show_generate']) {
-            $output .= $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] - '-div', $data['pwdhiddenzone-id']) .
+            $output .= $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdhiddenzone-id']) .
                     $this->buildInput(
                             'password',
                             $data['newpass']['name'],
@@ -515,7 +515,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
             $output .= $this->buildFeedbacks($this->translateOrPrint($data['valid-feedback']), $this->translateOrPrint($data['invalid-feedback']), true, true) .
                     $this->buildEndDiv(true) .
-                    $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] - '-div', $data['pwdclearzone-id'], [
+                    $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdclearzone-id'], [
                         'style' => "display:none"
                     ]) .
                     $this->buildInput(
@@ -570,7 +570,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             $output .= $this->buildEndDiv(true)
                     . $this->buildFeedbacks($data['valid-feedback'], $this->translateOrPrint($data['invalid-feedback']), true, true)
                     . $this->buildEndDiv(true)
-                    . $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] - '-div', $data['pwdclearzone-id'], [
+                    . $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdclearzone-id'], [
                         'style' => "display:none"
                     ])
                     . $this->buildInput(
