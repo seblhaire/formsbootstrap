@@ -978,7 +978,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     }
 
     private function buildSelect($name, $values, $default, $attributes) {
-        $output = '<select name="' . $data['name'] . '"';
+        $output = '<select name="' . $name . '"';
         foreach ($attributes as $key => $val) {
             if (is_null($val)) {
                 $output .= ' ' . $key;
