@@ -1089,7 +1089,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         if (count($code) > 0){
             foreach ($code as $left => $right) {
                 if (is_array($right)) {
-                    $output .= $this->_printTabs($depth) . $left . PHP_EOL; . $this->_printJsCode($right, $depth);
+                    $output .= $this->_printTabs($depth) . $left . PHP_EOL . $this->_printJsCode($right, $depth);
                 } elseif (is_null($right)) {
                     $output .= $this->_printTabs($depth) . $left . PHP_EOL;
                 } else {
