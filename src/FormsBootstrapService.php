@@ -768,7 +768,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                             $value,
                             array_merge(
                                     ['id' => $data['id'] . '_' . $key,
-                                        'class' => $data['confirmpass']['inputclass']],
+                                        'class' => $data['inputclass']],
                                     $data['attributes'],
                                     $additional
                             )
@@ -826,7 +826,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                             array_merge(
                                     [
                                         'id' => $data['id'] . '_' . $key,
-                                        'class' => $data['confirmpass']['inputclass']
+                                        'class' => $data['inputclass']
                                     ],
                                     $data['attributes'],
                                     $additional
