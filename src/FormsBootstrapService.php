@@ -644,7 +644,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         )
                 ) .
                 $this->buildFeedbacks($data['nomatch-validfeedback'], $this->translateOrPrint($data['nomatch-feedback']), true, true) .
-                $this->buildHelp($data['helptext']) .
+                $this->buildHelp($data) .
                 $this->buildEndDiv($data['input_in_div']);
         if ($data['show_generate'] || $data['show_clear']) {
             $passparams = [
