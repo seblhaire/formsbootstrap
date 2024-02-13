@@ -19,7 +19,6 @@ interface FormsBootstrapServiceContract {
     public function bsRange($data);
     public function bsTextarea($data);
     public function bsEmail($data = []);
-    public function pass($data);
     public function bsPassword($data);
     public function bsPasswordWithConfirm($data);
     public function bsSelect($data);
