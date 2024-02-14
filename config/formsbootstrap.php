@@ -287,6 +287,7 @@ return [
             'input_in_div' => true,
             'inputclass' => 'form-control form-control-color',
             'labelclass' => 'form-label',
+            'mainattr' => [],
             'attributes' => [],
             'labelattributes' => [],
             'divclass' => "mb-3",
