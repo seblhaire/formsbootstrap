@@ -1,4 +1,5 @@
 <?php
+
 namespace Seblhaire\Formsbootstrap;
 
 use Illuminate\Support\Facades\Validator;
@@ -83,7 +84,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     'clear_function' => is_null($data['clear_function']) ? 'null' : $data['clear_function'],
                     'csrf' => '"' . $data['csrf'] . '"',
                     'check_modified_on_reset' => $data['check_modified_on_reset'] ? 'true' : 'false',
-                    'modified_on_reset_confirm_text' => '"' . $this->translateOrPrint($data['modified_on_reset_confirm_text']) .'"' ,
+                    'modified_on_reset_confirm_text' => '"' . $this->translateOrPrint($data['modified_on_reset_confirm_text']) . '"',
                     'buildbuttons' => $data['buildbuttons'] ? 'true' : 'false',
                     'buildresultalert' => $data['buildresultalert'] ? 'true' : 'false',
                     'alertsuccessclass' => '"' . $data['alertsuccessclass'] . '"',
@@ -434,7 +435,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildEndDiv($data['input_in_div']) .
                 $this->buildJsCode([
                     'jQuery("#' . $data['id'] . '").sebPasswordHelper({passregex : ' . $data['password_regex'] . '});' => null
-                ]);
+        ]);
     }
 
     public function bsPasswordWithConfirm($data = []) {
@@ -533,7 +534,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     ]) .
                     $this->buildButton($data['generatepwdbtn-class'] . ' ' . $data['newpass']['id'] . "-gen", $data['generatebtn-icon'], [
                         'title' => $this->translateOrPrint($data['generatepwdbtn-title'])
-                    ]);
+            ]);
 
             if ($data['show_rules']) {
                 $output .= $this->buildButton($data['generatepwdbtn-class'], '<i class="fa-solid fa-ruler"></i>', [
@@ -586,7 +587,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     . $this->buildSimpleDiv($data['pwdbtn-class'])
                     . $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-off'], [
                         'title' => $this->translateOrPrint($data['toggledbtn-title'])
-                    ]);
+            ]);
         } else {
             $output .= $this->buildInput(
                             'password',
@@ -916,25 +917,25 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         if (!isset($data['name']) || strlen($data['name']) == 0) {
             $data['name'] = $data['id'];
         }
-        if (!is_null($data['configvar'])){
+        if (!is_null($data['configvar'])) {
             $jscode = [
                 'jQuery("#' . $data["id"] . '").sebRichTextHelper(' . $data['configvar'] . ');' => null
             ];
-        }elseif (!is_null($data['config'])){
+        } elseif (!is_null($data['config'])) {
             $jscode = [
-                'jQuery("#' . $data["id"] . '").sebRichTextHelper(' . 
-                $this->validateEditorParams($data['config'], $data['translations']) 
+                'jQuery("#' . $data["id"] . '").sebRichTextHelper(' .
+                $this->validateEditorParams($data['config'], $data['translations'])
                 . ');' => null
             ];
-        } else{
+        } else {
             $jscode = ['jQuery("#' . $data["id"] . '").sebRichTextHelper();' => null];
         }
-        if (strlen($text) > 0){
+        if (strlen($text) > 0) {
             $jscode = array_merge(
-                $jscode, 
-                [
-                    'jQuery("#' . $data["id"] . '").data("sebrichtexthelper").loadContent(\'' . $text . '\');' => null
-                ]
+                    $jscode,
+                    [
+                        'jQuery("#' . $data["id"] . '").data("sebrichtexthelper").loadContent(\'' . $text . '\');' => null
+                    ]
             );
         }
         return $this->buildStartDiv(true, $data['divclass'], $data['name']) .
@@ -944,12 +945,12 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         array_merge(['class' => $data['labelclass']], $data['labelattributes'])
                 ) .
                 $this->buildTextarea($data['name'], '', array_merge([
-                    'id' => $data['id']. '-input'], 
-                     $data['attributes']
-                )) .
+                    'id' => $data['id'] . '-input'],
+                                $data['attributes']
+                        )) .
                 $this->buildFeedbacks($data['valid-feedback'], $this->translateOrPrint($data['invalid-feedback']), $data['required'], $data['required']) .
                 $this->buildHelp($data) .
-                $this->buildEndDiv(true) . 
+                $this->buildEndDiv(true) .
                 $this->buildJsCode($jscode);
     }
 
@@ -1096,7 +1097,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
     private function _printJsCode($code, &$depth) {
         $depth++;
         $output = '';
-        if (count($code) > 0){
+        if (count($code) > 0) {
             foreach ($code as $left => $right) {
                 if (is_array($right)) {
                     $output .= $this->_printTabs($depth) . $left . PHP_EOL . $this->_printJsCode($right, $depth);
