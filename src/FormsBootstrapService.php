@@ -1176,7 +1176,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         ];
     }
 
-    private function validateEditorParams($params = null, $addTranslations = null) {
+    public function validateEditorParams($params = null, $addTranslations = null) {
         if (!is_array($params) && !is_null($params)) {
             throw new \Exception('no array');
         }

@@ -19,4 +19,5 @@ interface FormsBootstrapServiceContract {
     public function bsColorpicker($data);
     public function bsEditor($data);
     public function bsClose();
+    public function validateEditorParams($params = null, $addTranslations = null);
 }
