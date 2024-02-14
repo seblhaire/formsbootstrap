@@ -901,7 +901,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
 
     public function bsEditor($data) {
         $this->checkMandatory(config('formsbootstrap.mandatory.editor'), $data);
-        $data = $this->mergeValues(array_merge(config('formsbootstrap.defaults.colorpicker'), config('formsbootstrap.classes')), $data);
+        $data = $this->mergeValues(array_merge(config('formsbootstrap.defaults.editor'), config('formsbootstrap.classes')), $data);
         if ($data['required']) {
             $data['divclass'] .= ' ' . $data['requiredspecialclass'];
         }
@@ -929,14 +929,14 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         } else{
             $jscode = ['jQuery("#' . $data["id"] . '").sebRichTextHelper();' => null];
         }
-        if (strlen($text) > 0){
+        /*if (strlen($text) > 0){
             $jscode = array_merge(
                 $jscode, 
                 [
                     'jQuery("#' . $data["id"] . '").data("sebrichtexthelper").loadContent("' . $text . '");' => null
                 ]
             );
-        }
+        }*/
         return $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['name']) .
                 $this->buildLabel(
                         $data['id'],
