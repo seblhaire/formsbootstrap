@@ -810,7 +810,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             $output .= $this->buildLabel('', $data['mainlabel'], ['class' => $data['mainlabelclass']]);
         }
         foreach ($data['values'] as $key => $value) {
-            if ($data['checkedvalues'] == $key) {
+            if ($data['checkedvalue'] == $key) {
                 $additional = [
                     'checked' => "checked",
                     'defaultchecked' => "defaultchecked"
