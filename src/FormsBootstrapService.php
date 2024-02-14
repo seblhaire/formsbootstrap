@@ -293,7 +293,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
             if ($data['showvalue']) {
                 $output .= '<span class="' . $data['groupeltresclass'] . '">' .
-                        $this - translateOrPrint($data['valueprefix']) . ':&nbsp;<span id="' .
+                        $this->translateOrPrint($data['valueprefix']) . ':&nbsp;<span id="' .
                         $data['id'] . '_val"></span></span>' . PHP_EOL;
             }
             $output .= '</div>' . PHP_EOL;
