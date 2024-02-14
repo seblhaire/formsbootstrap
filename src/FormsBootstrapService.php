@@ -917,14 +917,25 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             $data['name'] = $data['id'];
         }
         if (!is_null($data['configvar'])){
-            $jscode = ['jQuery("#' . $data["id"] . '").sebRichTextHelper(' . $data['configvar'] . ');' => null];
+            $jscode = [
+                'jQuery("#' . $data["id"] . '").sebRichTextHelper(' . $data['configvar'] . ');' => null
+            ];
         }elseif (!is_null($data['config'])){
-            $jscode = ['jQuery("#' . $data["id"] . '").sebRichTextHelper(' . $this->validateEditorParams($data['config'], $data['translations']) . ');' => null];
+            $jscode = [
+                'jQuery("#' . $data["id"] . '").sebRichTextHelper(' . 
+                $this->validateEditorParams($data['config'], $data['translations']) 
+                . ');' => null
+            ];
         } else{
             $jscode = ['jQuery("#' . $data["id"] . '").sebRichTextHelper();' => null];
         }
         if (strlen($text) > 0){
-            $jscode = array_merge($jscode, ['jQuery("#' . $data["id"] . '")..data("sebrichtexthelper").loadContent("' . $text . '")' => null]);
+            $jscode = array_merge(
+                $jscode, 
+                [
+                    'jQuery("#' . $data["id"] . '").data("sebrichtexthelper").loadContent("' . $text . '");' => null
+                ]
+            );
         }
         return $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['name']) .
                 $this->buildLabel(
@@ -1173,52 +1184,53 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             $params = config('formsbootstrap.defaults.editor.config');
         }
         $stringarray = function ($attribute, $a, $fail) {
-            foreach ($a as $v)
+            foreach ($a as $v){
                 if (!is_string($v)) {
                     $fail('array must contain strings');
                 }
+            }
         };
         $validator = Validator::make($params, [
-                    'bold' => 'boolean',
-                    'italic' => 'boolean',
-                    'underline' => 'boolean',
-                    'leftAlign' => 'boolean',
-                    'centerAlign' => 'boolean',
-                    `rightAlign` => 'boolean',
-                    `justify` => 'boolean',
-                    `ol` => 'boolean',
-                    'ul' => 'boolean',
-                    'heading' => 'boolean',
-                    'fonts' => 'boolean',
-                    'fontList' => [
-                        'array',
-                        $stringarray
-                    ],
-                    'fontColor' => 'boolean',
-                    'fontSize' => 'boolean',
-                    'imageUpload' => 'boolean',
-                    'fileUpload' => 'boolean',
-                    'videoEmbed' => 'boolean',
-                    'urls' => 'boolean',
-                    'table' => 'boolean',
-                    'removeStyles' => 'boolean',
-                    'code' => 'boolean',
-                    'colors' => [
-                        'array',
-                        $stringarray
-                    ],
-                    'fileHTML' => 'string',
-                    'imageHTML' => 'string',
-                    'youtubeCookies' => 'boolean',
-                    'useSingleQuotes' => 'boolean',
-                    'height' => 'integer',
-                    'heightPercentage' => 'integer',
-                    'id' => "string",
-                    'class' => "string",
-                    'useParagraph' => 'boolean',
-                    'maxlength' => 'integer',
-                    'callback' => 'string',
-                    'useTabForNext' => 'boolean'
+            'bold' => 'boolean',
+            'italic' => 'boolean',
+            'underline' => 'boolean',
+            'leftAlign' => 'boolean',
+            'centerAlign' => 'boolean',
+            `rightAlign` => 'boolean',
+            `justify` => 'boolean',
+            `ol` => 'boolean',
+            'ul' => 'boolean',
+            'heading' => 'boolean',
+            'fonts' => 'boolean',
+            'fontList' => [
+                'array',
+                $stringarray
+            ],
+            'fontColor' => 'boolean',
+            'fontSize' => 'boolean',
+            'imageUpload' => 'boolean',
+            'fileUpload' => 'boolean',
+            'videoEmbed' => 'boolean',
+            'urls' => 'boolean',
+            'table' => 'boolean',
+            'removeStyles' => 'boolean',
+            'code' => 'boolean',
+            'colors' => [
+                'array',
+                $stringarray
+            ],
+            'fileHTML' => 'string',
+            'imageHTML' => 'string',
+            'youtubeCookies' => 'boolean',
+            'useSingleQuotes' => 'boolean',
+            'height' => 'integer',
+            'heightPercentage' => 'integer',
+            'id' => "string",
+            'class' => "string",
+            'useParagraph' => 'boolean',
+            'maxlength' => 'integer',
+            'callback' => 'string',
+            'useTabForNext' => 'boolean'
         ]);
         $defaults = [
             // text formatting
