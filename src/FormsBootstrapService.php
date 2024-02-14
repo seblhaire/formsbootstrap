@@ -933,7 +933,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             $jscode = array_merge(
                 $jscode, 
                 [
-                    'jQuery("#' . $data["id"] . '").data("sebrichtexthelper").loadContent("' . $text . '");' => null
+                    'jQuery("#' . $data["id"] . '").data("sebrichtexthelper").loadContent(\'' . $text . '\');' => null
                 ]
             );
         }
