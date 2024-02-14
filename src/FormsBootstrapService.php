@@ -937,7 +937,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 ]
             );
         }*/ $jscode = [];
-        return $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['name']) .
+        return $this->buildStartDiv(true, $data['divclass'], 'fg-' . $data['name']) .
                 $this->buildLabel(
                         $data['id'],
                         $this->translateOrPrint($data['labeltext']),
@@ -949,7 +949,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 )) .
                 $this->buildFeedbacks($data['valid-feedback'], $this->translateOrPrint($data['invalid-feedback']), $data['required'], $data['required']) .
                 $this->buildHelp($data) .
-                $this->buildEndDiv($data['input_in_div']) . 
+                $this->buildEndDiv(true) . 
                 $this->buildJsCode($jscode);
     }
 
