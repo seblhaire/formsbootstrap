@@ -916,7 +916,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         if (!isset($data['name']) || strlen($data['name']) == 0) {
             $data['name'] = $data['id'];
         }
-        if (!is_null($data['configvar'])){
+       /* if (!is_null($data['configvar'])){
             $jscode = [
                 'jQuery("#' . $data["id"] . '").sebRichTextHelper(' . $data['configvar'] . ');' => null
             ];
@@ -929,14 +929,14 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         } else{
             $jscode = ['jQuery("#' . $data["id"] . '").sebRichTextHelper();' => null];
         }
-        /*if (strlen($text) > 0){
+        if (strlen($text) > 0){
             $jscode = array_merge(
                 $jscode, 
                 [
                     'jQuery("#' . $data["id"] . '").data("sebrichtexthelper").loadContent("' . $text . '");' => null
                 ]
             );
-        }*/
+        }*/ $jscode = [];
         return $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['name']) .
                 $this->buildLabel(
                         $data['id'],
