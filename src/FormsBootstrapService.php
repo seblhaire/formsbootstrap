@@ -999,6 +999,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
         }
         $output .= '>' . PHP_EOL;
+        var_dump($default);
         foreach ($values as $key => $val) {
             $output .= '<option value="' . $key . '"';
             if (in_array($val, $default)) {
