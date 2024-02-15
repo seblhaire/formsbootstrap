@@ -697,7 +697,6 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         } else {
             $data['id'] = $data['name'];
         }
-        var_dump( $data['default']);
         $default = explode(',', $data['default']);
         return $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['name']) .
                 $this->buildLabel(
@@ -1000,13 +999,10 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
         }
         $output .= '>';
-        var_dump($default);
         foreach ($values as $key => $val) {
             $output .= '<option value="' . $key . '"';
-            echo  ' '. $key;
             if (in_array($key, $default)) {
-                echo ' toto';
-                $output .= ' defaultchecked="defaultchecked" selected="selected"';
+                $output .= ' selected="selected"';
             }
             $output .= '>' . $val . '</option>';
         }
