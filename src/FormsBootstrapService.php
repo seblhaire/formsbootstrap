@@ -999,9 +999,12 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
         }
         $output .= '>';
+        var_dump($default);
         foreach ($values as $key => $val) {
             $output .= '<option value="' . $key . '"';
+            echo  ' '. $key;
             if (in_array($key, $default)) {
+                echo ' toto';
                 $output .= ' defaultchecked="defaultchecked" selected="selected"';
             }
             $output .= '>' . $val . '</option>';
