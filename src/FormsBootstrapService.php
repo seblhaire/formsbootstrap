@@ -697,7 +697,8 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         } else {
             $data['id'] = $data['name'];
         }
-        $data['default'] = explode(',', $data['default']);
+        var_dump( $data['default']);
+        $default = explode(',', $data['default']);
         return $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['name']) .
                 $this->buildLabel(
                         $data['id'],
@@ -707,7 +708,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildSelect(
                         $data['name'],
                         $data['values'],
-                        $data['default'],
+                        $default,
                         array_merge(
                                 ['id' => $data['id'],
                                     'class' => $data['inputclass']],
