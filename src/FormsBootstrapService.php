@@ -492,12 +492,14 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     'data-bs-toggle' => "modal",
                     'data-bs-target' => "#" . $data['newpass']['id'] . "-rule-modal"
                 ]) : '';
-        $toggle_on_btn = $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-on'], [
+        $toggle_on_btn = $data['show_clear'] ?
+                $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-on'], [
                         'title' => $this->translateOrPrint($data['toggledbtn-title'])
-                    ]);
-        $toggle_off_btn = $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-off'], [
+                ]) : '';
+        $toggle_off_btn =  $data['show_clear'] ?
+                $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-off'], [
                         'title' => $this->translateOrPrint($data['toggledbtn-title'])
-                    ]);
+                ]) : '';
         $output .= $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['newpass']['id']) .
                 $this->buildLabel(
                         $data['newpass']['id'],
