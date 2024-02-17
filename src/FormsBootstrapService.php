@@ -589,7 +589,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildFeedbacks($data['nomatch-validfeedback'], $this->translateOrPrint($data['nomatch-feedback']), true, true) .
                 $this->buildHelp($data) .
                 $this->buildEndDiv($data['input_in_div']);
-        if ($data['show_generate'] || $data['show_clear']) {
+        //if ($data['show_generate'] || $data['show_clear']) {
             $passparams = [
                 'passregex' => $data['password_regex'],
                 'passchars' => '"' . addslashes($data['password_chars']) . '"',
@@ -612,7 +612,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 ],
                 '});' => null
             ]);
-        }
+        //}
         return $output;
     }
 
