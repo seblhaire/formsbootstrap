@@ -998,13 +998,13 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $output .= ' ' . $key . '="' . $val . '"';
             }
         }
-        $output .= '>';
+        $output .= '>' . PHP_EOL;
         foreach ($values as $key => $val) {
             $output .= '<option value="' . $key . '"';
             if (in_array($key, $default)) {
                 $output .= ' defaultchecked="defaultchecked" selected="selected"';
             }
-            $output .= '>' . $val . '</option>';
+            $output .= '>' . $val . '</option>' . PHP_EOL;
         }
         $output .= '</select>' . PHP_EOL;
         return $output;
