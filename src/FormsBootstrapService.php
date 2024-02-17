@@ -589,30 +589,30 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildFeedbacks($data['nomatch-validfeedback'], $this->translateOrPrint($data['nomatch-feedback']), true, true) .
                 $this->buildHelp($data) .
                 $this->buildEndDiv($data['input_in_div']);
-        //if ($data['show_generate'] || $data['show_clear']) {
-            $passparams = [
-                'passregex' => $data['password_regex'],
-                'passchars' => '"' . addslashes($data['password_chars']) . '"',
-                'genlength' => $data["generated_pass_length"],
-                'confirminput' => '"#' . $data['confirmpass']['id'] . '"',
-                'clearinput' => '"#' . $data['newpassclear']['id'] . '"'
-            ];
-            if ($data['show_old']) {
-                $passparams = array_merge($passparams, [
-                    'oldinput' => '"#' . $data['oldpass']['id'] . '"',
-                    'checkoldpassurl' => is_null($data['checkoldpassurl']) ? 'null' : '"' . $data['checkoldpassurl'] . '"',
-                    'checkoldpass_callback' => is_null($data['checkoldpass_callback']) ? 'null' : $data['checkoldpass_callback'],
-                    'csrf' => '"' . $data['csrf'] . '"'
-                ]);
-            }
-            $output .= $this->buildJsCode([
-                'jQuery(document).ready(function() {' => [
-                    'jQuery("#' . $data['newpass']['id'] . '").sebPasswordHelper({' => $passparams,
-                    '});' => null
-                ],
-                '});' => null
+        $passparams = [
+            'passregex' => $data['password_regex'],
+            'passchars' => '"' . addslashes($data['password_chars']) . '"',
+            'genlength' => $data["generated_pass_length"],
+            'confirminput' => '"#' . $data['confirmpass']['id'] . '"',
+        ];
+        if ($data['show_clear']){
+            $passparams = array_merge($passparams, ['clearinput' => '"#' . $data['newpassclear']['id'] . '"']);
+        }
+        if ($data['show_old']) {
+            $passparams = array_merge($passparams, [
+                'oldinput' => '"#' . $data['oldpass']['id'] . '"',
+                'checkoldpassurl' => is_null($data['checkoldpassurl']) ? 'null' : '"' . $data['checkoldpassurl'] . '"',
+                'checkoldpass_callback' => is_null($data['checkoldpass_callback']) ? 'null' : $data['checkoldpass_callback'],
+                'csrf' => '"' . $data['csrf'] . '"'
             ]);
-        //}
+        }
+        $output .= $this->buildJsCode([
+            'jQuery(document).ready(function() {' => [
+                'jQuery("#' . $data['newpass']['id'] . '").sebPasswordHelper({' => $passparams,
+                '});' => null
+            ],
+            '});' => null
+        ]);
         return $output;
     }
 
