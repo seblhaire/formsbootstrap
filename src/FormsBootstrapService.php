@@ -594,10 +594,8 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             'passchars' => '"' . addslashes($data['password_chars']) . '"',
             'genlength' => $data["generated_pass_length"],
             'confirminput' => '"#' . $data['confirmpass']['id'] . '"',
+            'clearinput' => $data['show_clear'] ? '"#' . $data['newpassclear']['id'] . '"' : ''
         ];
-        if ($data['show_clear']){
-            $passparams = array_merge($passparams, ['clearinput' => '"#' . $data['newpassclear']['id'] . '"']);
-        }
         if ($data['show_old']) {
             $passparams = array_merge($passparams, [
                 'oldinput' => '"#' . $data['oldpass']['id'] . '"',
