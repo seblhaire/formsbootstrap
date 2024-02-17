@@ -504,12 +504,11 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         'title' => $this->translateOrPrint($data['toggledbtn-title'])
                     ]) .
                     $this->buildButton($data['generatepwdbtn-class'] . ' ' . $data['newpass']['id'] . "-gen", $data['generatebtn-icon'], [
-                        'title' => $this->translateOrPrint($data['showrulesbtntext'])
+                        'title' => $this->translateOrPrint($data['generatepwdbtn-title'])
             ]);
-
             if ($data['show_rules']) {
                 $output .= $this->buildButton($data['generatepwdbtn-class'], '<i class="fa-solid fa-ruler"></i>', [
-                    'title' => $this->translateOrPrint($data['generatepwdbtn-title']),
+                    'title' => $this->translateOrPrint($data['showrulesbtntext']),
                     'data-bs-toggle' => "modal",
                     'data-bs-target' => "#" . $data['newpass']['id'] . "-rule-modal"
                 ]);
@@ -623,6 +622,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $output .= '<li>' . $rule . '</li>' . PHP_EOL;
             }
             $output .= '</ul>' . PHP_EOL .
+                    $this->buildEndDiv(true) .
                     $this->buildEndDiv(true) .
                     $this->buildEndDiv(true) .
                     $this->buildEndDiv(true);
