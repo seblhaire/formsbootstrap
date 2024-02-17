@@ -521,7 +521,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $generate_btn .
                 $rules_btn .
                 $this->buildFeedbacks($this->translateOrPrint($data['valid-feedback']), $this->translateOrPrint($data['invalid-feedback']), true, true) .
-                    $this->buildEndDiv($data['input_in_div']);
+                $this->buildEndDiv(true);    
             
         if ($data['show_clear']) {
             $output .=  $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdclearzone-id'], [
@@ -542,6 +542,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     $rules_btn .
                     $this->buildEndDiv(true);
         }  
+        $output .= $this->buildEndDiv($data['input_in_div']);
         if ($data['show_rules']) {
             $output .= $this->buildStartDiv(true, "modal fade", $data['newpass']['id'] . '-rule-modal', [
                         'tabindex' => "-1",
