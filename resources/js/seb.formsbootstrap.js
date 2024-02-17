@@ -517,10 +517,10 @@ var SebPasswordHelper = {
       var self = this;
       if (this.clearinput != null){
         this.input.on('change', function(){
-          self.copyval(this, self.clearinput);
+          self.copyval(self.input, self.clearinput);
         });
         this.clearinput.on('change', function(){
-          self.copyval(this, self.input);
+          self.copyval(self.clearinput, self.input);
         });
       }
       var sel1 = '.' + this.input.attr('id') + '-btn';
