@@ -515,7 +515,7 @@ var SebPasswordHelper = {
         this.oldinput = oldinput;
       }
       var self = this;
-      if (this.clearinput != undefined){
+      if (this.clearinput != null){
         this.input.on('change', function(){
           self.copyval(this, self.clearinput);
         });
