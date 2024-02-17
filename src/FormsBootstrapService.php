@@ -482,40 +482,47 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     $this->buildFeedbacks($data['oldpass-validfeedback'], $this->translateOrPrint($data['oldpass-feedback']), true, true) .
                     $this->buildEndDiv($data['input_in_div']);
         }
+        $generate_btn = $data['show_generate'] ?
+                $this->buildButton($data['generatepwdbtn-class'] . ' ' . $data['newpass']['id'] . "-gen", $data['generatebtn-icon'], 
+                    ['title' => $this->translateOrPrint($data['generatepwdbtn-title'])
+                ]) : '';
+        $rules_btn = $data['show_rules'] ? 
+                $this->buildButton($data['generatepwdbtn-class'], '<i class="fa-solid fa-ruler"></i>', [
+                    'title' => $this->translateOrPrint($data['showrulesbtntext']),
+                    'data-bs-toggle' => "modal",
+                    'data-bs-target' => "#" . $data['newpass']['id'] . "-rule-modal"
+                ]) : '';
+        $toggle_on_btn = $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-on'], [
+                        'title' => $this->translateOrPrint($data['toggledbtn-title'])
+                    ]);
+        $toggle_off_btn = $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-off'], [
+                        'title' => $this->translateOrPrint($data['toggledbtn-title'])
+                    ]);
         $output .= $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['newpass']['id']) .
                 $this->buildLabel(
                         $data['newpass']['id'],
                         $this->translateOrPrint($data['newpass']['labeltext']),
                         array_merge(['class' => $data['newpass']['labelclass']], $data['newpass']['labelattributes'])
-        );
-        if ($data['show_generate']) {
-            $output .= $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdhiddenzone-id']) .
-                    $this->buildInput(
-                            'password',
-                            $data['newpass']['name'],
-                            '',
-                            array_merge(
-                                    ['id' => $data['newpass']['id'],
-                                        'class' => $data['newpass']['inputclass']],
-                                    $data['newpass']['attributes']
-                            )
-                    ) .
-                    $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-on'], [
-                        'title' => $this->translateOrPrint($data['toggledbtn-title'])
-                    ]) .
-                    $this->buildButton($data['generatepwdbtn-class'] . ' ' . $data['newpass']['id'] . "-gen", $data['generatebtn-icon'], [
-                        'title' => $this->translateOrPrint($data['generatepwdbtn-title'])
-            ]);
-            if ($data['show_rules']) {
-                $output .= $this->buildButton($data['generatepwdbtn-class'], '<i class="fa-solid fa-ruler"></i>', [
-                    'title' => $this->translateOrPrint($data['showrulesbtntext']),
-                    'data-bs-toggle' => "modal",
-                    'data-bs-target' => "#" . $data['newpass']['id'] . "-rule-modal"
-                ]);
-            }
-            $output .= $this->buildFeedbacks($this->translateOrPrint($data['valid-feedback']), $this->translateOrPrint($data['invalid-feedback']), true, true) .
-                    $this->buildEndDiv(true) .
-                    $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdclearzone-id'], [
+                ). 
+                $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdhiddenzone-id']) .
+                $this->buildInput(
+                        'password',
+                        $data['newpass']['name'],
+                        '',
+                        array_merge(
+                                ['id' => $data['newpass']['id'],
+                                    'class' => $data['newpass']['inputclass']],
+                                $data['newpass']['attributes']
+                        )
+                ). 
+                $toggle_on_btn . 
+                $generate_btn .
+                $rules_btn .
+                $this->buildFeedbacks($this->translateOrPrint($data['valid-feedback']), $this->translateOrPrint($data['invalid-feedback']), true, true) .
+                    $this->buildEndDiv($data['input_in_div']);
+            
+        if ($data['show_clear']) {
+            $output .=  $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdclearzone-id'], [
                         'style' => "display:none"
                     ]) .
                     $this->buildInput(
@@ -528,78 +535,11 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                                     $data['newpassclear']['attributes']
                             )
                     ) .
-                    $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-off'], [
-                        'title' => $this->translateOrPrint($data['toggledbtn-title'])
-                    ]) .
-                    $this->buildButton($data['generatepwdbtn-class'] . ' ' . $data['newpass']['id'] . "-gen", $data['generatebtn-icon'], [
-                        'title' => $this->translateOrPrint($data['generatepwdbtn-title'])
-            ]);
-
-            if ($data['show_rules']) {
-                $output .= $this->buildButton($data['generatepwdbtn-class'], '<i class="fa-solid fa-ruler"></i>', [
-                    'title' => $this->translateOrPrint($data['showrulesbtntext']),
-                    'data-bs-toggle' => "modal",
-                    'data-bs-target' => "#" . $data['newpass']['id'] . "-rule-modal"
-                ]);
-            }
-            $output .= $this->buildEndDiv(true);
-        } else if ($data['show_clear']) {
-            $output .= $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdhiddenzone-id']) .
-                    $this->buildInput(
-                            'password',
-                            $data['newpass']['name'],
-                            '',
-                            array_merge(
-                                    ['id' => $data['newpass']['id'],
-                                        'class' => $data['newpass']['inputclass']],
-                                    $data['newpass']['attributes']
-                            )
-                    ) .
-                    $this->buildSimpleDiv($data['pwdbtn-class']) .
-                    $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-off'], [
-                        'title' => $this->translateOrPrint($data['toggledbtn-title'])
-            ]);
-            if ($data['show_rules']) {
-                $output .= $this->buildButton($data['generatepwdbtn-class'], '<i class="fa-solid fa-ruler"></i>', [
-                    'title' => $this->translateOrPrint($data['generatepwdbtn-title']),
-                    'data-bs-toggle' => "modal",
-                    'data-bs-target' => "#" . $data['newpass']['id'] . "-rule-modal",
-                    'action' => "return false"
-                ]);
-            }
-            $output .= $this->buildEndDiv(true)
-                    . $this->buildFeedbacks($data['valid-feedback'], $this->translateOrPrint($data['invalid-feedback']), true, true)
-                    . $this->buildEndDiv(true)
-                    . $this->buildStartDiv(true, $data['pwdbtngroup-class'] . ' ' . $data['newpass']['id'] . '-div', $data['pwdclearzone-id'], [
-                        'style' => "display:none"
-                    ])
-                    . $this->buildInput(
-                            'text',
-                            $data['newpassclear']['name'],
-                            '',
-                            array_merge(
-                                    ['id' => $data['newpassclear']['id'],
-                                        'class' => $data['newpassclear']['inputclass']],
-                                    $data['newpassclear']['attributes']
-                            )
-                    )
-                    . $this->buildSimpleDiv($data['pwdbtn-class'])
-                    . $this->buildButton($data['togglebtn-class'] . ' ' . $data['newpass']['id'] . "-btn", $data['toggledbtn-icon-off'], [
-                        'title' => $this->translateOrPrint($data['toggledbtn-title'])
-            ]);
-        } else {
-            $output .= $this->buildInput(
-                            'password',
-                            $data['newpass']['name'],
-                            '',
-                            array_merge(
-                                    ['id' => $data['newpass']['id'],
-                                        'class' => $data['newpass']['inputclass']],
-                                    $data['newpass']['attributes']
-                            )
-                    ) . $this->buildFeedbacks($data['valid-feedback'], $this->translateOrPrint($data['invalid-feedback']), true, true);
-        }
-        $output .= $this->buildEndDiv($data['input_in_div']);
+                    $toggle_off_btn . 
+                    $generate_btn . 
+                    $rules_btn .
+                    $this->buildEndDiv(true);
+        }  
         if ($data['show_rules']) {
             $output .= $this->buildStartDiv(true, "modal fade", $data['newpass']['id'] . '-rule-modal', [
                         'tabindex' => "-1",
