@@ -3,7 +3,7 @@
 
 [By Sébastien L'haire](http://sebastien.lhaire.org)
 
-A Laravel library to generate forms based on Laravel Collective [Forms & HTML](https://laravelcollective.com/docs/6.0/html), [Boostrap](https://getbootstrap.com/) 5 CSS Framework. RichText editor, and  Icons provided by [FontAwesome](https://fontawesome.com/). Manages also results inputs of packages [DateRangePickerHelper](https://github.com/seblhaire/daterangepickerhelper), [Uploader](https://github.com/seblhaire/uploader), and [Tags input](https://github.com/seblhaire/tagsinput). Package demo available [here](https://sebastien.lhaire.org/formsbootstrap). Includes form management and validation.
+A Laravel library to generate forms based on [Boostrap](https://getbootstrap.com/) 5 CSS Framework. RichText editor, and  Icons provided by [FontAwesome](https://fontawesome.com/). Manages also results inputs of packages [DateRangePickerHelper](https://github.com/seblhaire/daterangepickerhelper), [Uploader](https://github.com/seblhaire/uploader), and [Tags input](https://github.com/seblhaire/tagsinput). Package demo available [here](https://sebastien.lhaire.org/formsbootstrap). Includes form management and validation.
 
 ![Formsbootstrap example image](formsbs.png)
 
@@ -17,8 +17,10 @@ See package documentations if you want to use related packages DateRangePickerHe
 2.  Composer will automatically link the package with Laravel. But you still can explicitely add provider and facade to your `config/app.php`:
 ```php
 'providers' => [
-	Collective\Html\HtmlServiceProvider::class,
 	Seblhaire\FormsBootstrap\FormsBootstrapServiceProvider::class,
+],
+'aliases' => [
+    "Form" => Seblhaire\\Formsbootstrap\\FormFacade::class
 ]
 ```
 
@@ -125,6 +127,41 @@ Forms::bsText(array $data)
 `{!! Form::bsText(['id' => 'title', 'labeltext' => 'Title', 'required' => true]) !!}`
 
 ![Formsbootstrap text](text.png)
+
+
+
+## INPUT NUMBER
+
+```php
+Forms::bsNumber(array $data)
+```
+
+### Parameters
+
+* `data`: array parameter. Content:
+  * `id`: **mandatory** id of input.
+  * `labeltext`: **mandatory** label of input.
+  * `name`: name of field, if different from id.
+  * `value`: prefilled value in input. Default `null`.
+  * `required`: the input must be filled to validate form. Default `false`.
+  * `input_in_div`: sets if label and input should be contained in a `<div>`. Default `true`.
+  * `divclass`: class to be added to div tag containing label and input. Default: `"mb-3"`. Not useful if parameter `input_in_div` is false.
+  * `helptext`: text to help, to be inserted above field. Default: empty string.
+  * `inputclass`: class of input tag. Default `"form-control"`.
+  * `labelclass`: class of label tag. Default `"form-label"`.
+  * `attributes`: array of input tag attributes to be added to default ones, Default: empty array.
+  * `labelattributes`: array of label tag attributes to be added to default ones. Default: empty array.
+  * `invalid-feedback`: text to be displayed if mandatory input is not filled. Default: translation key `formsbootstrap::messages.required`: "This field is required". Text can be string or translation key.  Cf [below](#translation_keys).
+  * `valid-feedback`: text to be displayed if mandatory input is filled. Default: empty string.
+
+
+### Example
+
+`{!! Form::Form::bsNumber([id' => 'number2', 'labeltext' => 'Number 2', 'value'=> 5, 'attributes' => ['min' => 0, 'max' => 10], 'helptext' => 'Please enter a number between 0 and 10', 'required' => true]);!!}`
+
+![Formsbootstrap number](number.png)
+
+
 
 
 
@@ -629,7 +666,7 @@ Forms::bsCheckbox(array $data)
 * `data`: array parameter. Content:
   * `name`: **mandatory** id and name of input.
   * `values`: **mandatory** array of options (key => values).
-  * `checkedvalues`: value to be checked. Default `null`.
+  * `checkedvalues`: value to be checked. Default: empty array.
   * `required`: the input must be filled to validate form. Default `false`.
   * `attributes`: array of input tag attributes to be added to default ones, Default: empty array.
   * `mainlabel`: label including all checkbox inputs
@@ -704,6 +741,7 @@ Forms::bsColorpicker(array $data)
   * `inputclass`: class of input tag. Default: `"form-control form-control-color"`
   * `labelclass`: class of label tag. Default `"form-label"`.
   * `attributes`: array of input tag attributes to be added to default ones, Default: empty array.
+  * `mainattr`: array of main div tag attributes to be added to default ones. Default: empty array.
   * `labelattributes`: array of label tag attributes to be added to default ones. Default: empty array.
   * `divclass`: main `<div>` class. Default: `"mb-3"`
   * `title`: Modal title.  Default: translation key `formsbootstrap::messages.colorpicker` "Click to chose a color".  Cf [below](#translation_keys).
