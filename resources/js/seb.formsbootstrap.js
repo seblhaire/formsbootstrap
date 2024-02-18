@@ -47,7 +47,7 @@ var SebFormHelper = {
         });
         jQuery.each(res, function (key, value) {
             console.log(key);
-            console, log(value);
+            console.log(value);
             if (jQuery('#' + key).data('sebrichtexthelper') != undefined) {
                 //console.log('rth ' + key);
                 jQuery('#' + key).data('sebrichtexthelper').loadContent(value);
