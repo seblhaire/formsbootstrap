@@ -46,9 +46,6 @@ var SebFormHelper = {
             jQuery(this).prop('selected', false)
         });
         jQuery.each(res, function (key, value) {
-            console.log(key + '=' + value);
-            console.log('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + '] ' +jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + ']').length)
-            console.log('input[type=radio][name=' + jQuery.escapeSelector(key) + '] '+ jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + ']').length)
             if (jQuery('#' + key).data('sebrichtexthelper') != undefined) {
                 //console.log('rth ' + key);
                 jQuery('#' + key).data('sebrichtexthelper').loadContent(value);
@@ -105,12 +102,14 @@ var SebFormHelper = {
                     jQuery('#' + key + ' option[value=' + value[i].toString() + ']').prop('selected', true)
                 }
             } else if (jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + ']').length > 0) {
-                console.log('checkbox');
                 for (i in value) {
+                    console.log('checkbox input[type=checkbox][name=' + jQuery.escapeSelector(key+ '[]') + '][value=' + value[i].toString() + '] ' + 
+                        jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + '][value=' + value[i].toString() + ']').length);
                     jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + '][value=' + value[i].toString() + ']').prop('checked', true);
                 }
             } else if (jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + ']').length > 0) {
-                console.log('radio');
+                console.log('radio input[type=radio][name=' + jQuery.escapeSelector(key) + '][value=' + value + '] ' + 
+                        jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + '][value=' + value + ']').length);
                 jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + '][value=' + value + ']').prop('checked', true);
             }
         });
