@@ -639,7 +639,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             $output .= $this->buildLabel('', $data['mainlabel'], ['class' => $data['mainlabelclass']]);
         }
         if (is_string($data['checkedvalues'])){
-            $default = explode(',', $data['default']);
+            $default = explode(',', $data['checkedvalues']);
         }else{
             $default = $data['checkedvalues'];
         }
