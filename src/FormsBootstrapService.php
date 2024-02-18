@@ -685,12 +685,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         config('formsbootstrap.classes')
                 ), $data
         );
-        if (preg_match('/^(\w+)\[\]$/', $data['name'], $m) > 0) {
-            $data['id'] = $m[1];
-        } else {
-            $data['id'] = $data['name'];
-            $data['name'] .= '[]';
-        }
+        $data['id'] = $data['name'];
         if ($data['required']) {
             $data['divelt'] .= ' ' . $data['requiredcheckclass'];
             $data['divclass'] .= ' ' . $data['selcheckclass'];
