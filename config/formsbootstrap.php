@@ -100,7 +100,7 @@ return [
     'defaults' => [
         'button' => ['attributes' => [], 'action' => null, 'class' => 'btn btn-secondary'],
         'checkbox' => [
-            'checkedvalues' => null,
+            'checkedvalues' => [],
             'attributes' => [],
             'mainlabel' => '',
             'mainlabelclass' => 'form-label',
