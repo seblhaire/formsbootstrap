@@ -103,13 +103,9 @@ var SebFormHelper = {
                 }
             } else if (jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + ']').length > 0) {
                 for (i in value) {
-                    console.log('checkbox input[type=checkbox][name=' + jQuery.escapeSelector(key+ '[]') + '][value=' + value[i].toString() + '] ' + 
-                        jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + '][value=' + value[i].toString() + ']').length);
                     jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + '][value=' + value[i].toString() + ']').prop('checked', true);
                 }
             } else if (jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + ']').length > 0) {
-                console.log('radio input[type=radio][name=' + jQuery.escapeSelector(key) + '][value=' + value + '] ' + 
-                        jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + '][value=' + value + ']').length);
                 jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + '][value=' + value + ']').prop('checked', true);
             }
         });
