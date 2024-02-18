@@ -46,8 +46,9 @@ var SebFormHelper = {
             jQuery(this).prop('selected', false)
         });
         jQuery.each(res, function (key, value) {
-            console.log(key);
-            console.log(value);
+            console.log(key + '=' + value);
+            console.log('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + '] ' +jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + ']').length)
+            console.log('input[type=radio][name=' + jQuery.escapeSelector(key) + '] '+ jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + ']').length)
             if (jQuery('#' + key).data('sebrichtexthelper') != undefined) {
                 //console.log('rth ' + key);
                 jQuery('#' + key).data('sebrichtexthelper').loadContent(value);
