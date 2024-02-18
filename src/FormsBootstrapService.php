@@ -656,7 +656,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     $this->buildInput(
                             'checkbox',
                             $data['name'],
-                            $value,
+                            $key,
                             array_merge(
                                     ['id' => $data['id'] . '_' . $key,
                                         'class' => $data['inputclass']],
@@ -708,7 +708,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     $this->buildInput(
                             'radio',
                             $data['name'],
-                            $value,
+                            $key,
                             array_merge(
                                     [
                                         'id' => $data['id'] . '_' . $key,
