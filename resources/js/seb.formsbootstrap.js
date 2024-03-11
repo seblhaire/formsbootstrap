@@ -168,6 +168,7 @@ var SebFormHelper = {
                         }
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
+                        jQuery('#' + self.form.attr('id') + '_submit_spinner').hide();
                         if (jqXHR.status == 419) {
                             self.errormessage(self.options.tokenexpired);
                         } else {
