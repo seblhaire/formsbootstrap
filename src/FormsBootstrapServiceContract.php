@@ -20,4 +20,5 @@ interface FormsBootstrapServiceContract {
     public function bsEditor($data);
     public function bsClose();
     public function validateEditorParams($params = null, $addTranslations = null);
+    public function translateOrPrint($key);
 }

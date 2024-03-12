@@ -225,7 +225,7 @@ RichTextEditor can be parametrized by above config values. Editor can be initial
  * use `configvar` with a variable name, which contains a Javascript config variable:
  ```js
  <script type="text/javascript">
-  var editorConfig = {!! FormsBootstrapUtils::validateEditorParams([
+  var editorConfig = {!! Form::validateEditorParams([
 	  'imageUpload' => false,
 	  'fileUpload' => false,
 	  'fonts' => false
@@ -1080,7 +1080,7 @@ Form::bsOpen([
 
 Laravel loads config files very early in process. Thus config files cannot contain `__('translation.key')`. Therefore, we made an helper either to print directly strings or to send translation key to translation helper. Translation keys can be delimited by character #- Ex: `"#formsbootstrap::messages.required#"`.
 
-In templates, helper is called by eg: `FormsBootstrapUtils::translateOrPrint($data['oldpass']['labeltext']);`
+In templates, helper is called by eg: `Form::translateOrPrint($data['oldpass']['labeltext']);`
 
 Feel free to translate keys in your own language and either to send it to the author or to do a merge request on GitHub.
 

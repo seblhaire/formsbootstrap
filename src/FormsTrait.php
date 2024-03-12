@@ -184,7 +184,7 @@ trait FormsTrait{
      * @param  string $key key to translate
      * @return string      translated key
      */
-    private function translateOrPrint($key) {
+    public function translateOrPrint($key) {
         if (preg_match('/^\#(.+)\#$/', $key, $matches)) {
             return addslashes(__($matches[1]));
         }
