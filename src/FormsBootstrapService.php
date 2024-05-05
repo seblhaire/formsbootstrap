@@ -825,7 +825,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         }
         return $this->buildStartDiv(true, $data['divclass'], $data['id']) .
                 $this->buildLabel(
-                        $data['id'] . '-input'],
+                        $data['id'] . '-input',
                         $this->translateOrPrint($data['labeltext']),
                         array_merge(['class' => $data['labelclass']], $data['labelattributes'])
                 ) .
