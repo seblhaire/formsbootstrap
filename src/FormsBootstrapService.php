@@ -823,6 +823,10 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     ]
             );
         }
+        $jscode = [
+            'jQuery(document).ready(function() {' => $jscode,
+            '});' => null
+            ];
         return $this->buildStartDiv(true, $data['divclass'], $data['name']) .
                 $this->buildLabel(
                         $data['id'],
