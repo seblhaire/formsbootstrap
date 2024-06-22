@@ -173,6 +173,9 @@ var SebFormHelper = {
                             self.errormessage(self.options.tokenexpired);
                         } else if (jqXHR.status == 403){
                             self.errormessage(self.options.nonauthorized);
+                        } else if (jqXHR.status == 422){
+                            var response = jQuery.parseJSON(jqXHR.responseText);
+                            self.errormessage(response.message);
                         } else {
                             self.errormessage(self.options.resultfalse);
                         }
