@@ -876,15 +876,15 @@ a hidden alert div to contain form submit results.
    * `check_modified_on_reset`: on form resetting, sets whether user has to confirm the erasing of modified values. Default:  `true`.
   *  `modified_on_reset_confirm_text`: text to be displayed in the confirmation box  if form user wants to reset a modified form. Default: translation key `formsbootstrap::messages.modified_on_reset_confirm_text`: "This form has been modified. Are you sure you want to reset it ?".  Cf [below](#translation_keys).
 	* `buildbuttons`: automatically insert submit button and optionally other buttons. Default: `true`.
-			* `buttondivclass`: class for div containing buttons. Default: `mb-3 btngroup`.
-			* `submitbtnclass`: class of submit button. Default: `btn btn-primary`.
-			* `submitbtnlbl`: label for submit button. Default: translation key `formsbootstrap::messages.send`: "Send".  Cf [below](#translation_keys).
-			* `additionalbuttons`: list of additional buttons contained in array. Default: `[]`. In above example, we have 2 buttons, identified with parameter `id`, Button class is in `class` and button value in `value`.
+	* `buttondivclass`: class for div containing buttons. Default: `mb-3 btngroup`.
+	* `submitbtnclass`: class of submit button. Default: `btn btn-primary`.
+	* `submitbtnlbl`: label for submit button. Default: translation key `formsbootstrap::messages.send`: "Send".  Cf [below](#translation_keys).
+	* `additionalbuttons`: list of additional buttons contained in array. Default: `[]`. In above example, we have 2 buttons, identified with parameter `id`, Button class is in `class` and button value in `value`.
 			```
 				[['id' => 'cancelBtn', 'class' => 'btn btn-secondary', 'value' => 'Cancel'],
 				['id' => 'filldata', 'class' => 'btn btn-warning', 'value' => 'Fill form with example data']]
 			```
-		* `evalajaxres_callback`: form result succes evaluation function. Default `null`.
+	* `evalajaxres_callback`: form result succes evaluation function. Default `null`.
 				```
 				<script>
 					var evalres = function(res){
@@ -893,7 +893,7 @@ a hidden alert div to contain form submit results.
 				</script>
 				```
 			Here we define a function that checks value `formresult` returned by a form. See [below](#submit).
-		* `evalajaxres_resultmessage`: retrieves error message returned by form processing method. Default `null`.
+  * `evalajaxres_resultmessage`: retrieves error message returned by form processing method. Default `null`.
 				```
 				<script>
 					var resmsg = function(res){
@@ -903,13 +903,15 @@ a hidden alert div to contain form submit results.
 				```
 			Here we define a function that checks value `msg` returned by a form. See [below](#submit).
 	* `buildresultalert`: build a hidden resut div just before buttons, that is used to display form result. Default: `true`.
-			* `alertcommonclass`: div class to use both with error and success result. Default: `alert`.
-			* `alertsuccessclass`: class added to div in case of success result. Default: `alert-success`.
-			* `alerterrorclass`: class added to div in case of error result. Default: `alert-danger`.
-			* `alertdisplaytimeok` : time in ms to keep success message displayed. Default: 4000.
-			* `alertdisplaytimefalse` : time in ms to keep error message displayed. Default: 8000.
-			* `resultok`: message to display on form success result if another message has not been defined. Default: translation key `formsbootstrap::messages.resultok`: "Result OK".  Cf [below](#translation_keys).
-			* `resultfalse`message to display on form error result if another message has not been defined. Default: translation key `formsbootstrap::messages.resultfalse`: "Processing error".  Cf [below](#translation_keys).
+	* `alertcommonclass`: div class to use both with error and success result. Default: `alert`.
+	* `alertsuccessclass`: class added to div in case of success result. Default: `alert-success`.
+	* `alerterrorclass`: class added to div in case of error result. Default: `alert-danger`.
+	* `alertdisplaytimeok` : time in ms to keep success message displayed. Default: 4000.
+	* `alertdisplaytimefalse` : time in ms to keep error message displayed. Default: 8000.
+	* `resultok`: message to display on form success result if another message has not been defined. Default: translation key `formsbootstrap::messages.resultok`: "Result OK".  Cf [below](#translation_keys).
+	* `resultfalse`message to display on form error result if another message has not been defined. Default: translation key `formsbootstrap::messages.resultfalse`: "Processing error".  Cf [below](#translation_keys).
+  * `tokenexpired`: message to display when token has expired (HTTP error `419`) after a long inactivity. Default: translation key `formsbootstrap::messages.tokenexpired`: "Token expired. Please reload form".  Cf [below](#translation_keys).
+  * `nonauthorized`: message to display if a (HTTP error `403`). Default: translation key `formsbootstrap::messages.nonauthorized`: "You are not allowed to perform this action".  Cf [below](#translation_keys).
 
 ### Form select classes
 With jQuery, you can use classes to select elements. Eg `jQuery('.verify')` select all items in the current page that contain this class. You don't have to define CSS styles for these classes, but you can.

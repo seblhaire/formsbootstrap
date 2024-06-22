@@ -171,6 +171,8 @@ var SebFormHelper = {
                         jQuery('#' + self.form.attr('id') + '_submit_spinner').hide();
                         if (jqXHR.status == 419) {
                             self.errormessage(self.options.tokenexpired);
+                        } else if (jqXHR.status == 403){
+                            self.errormessage(self.options.nonauthorized);
                         } else {
                             self.errormessage(self.options.resultfalse);
                         }

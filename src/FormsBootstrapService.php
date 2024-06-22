@@ -96,6 +96,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                     'resultok' => '"' . $this->translateOrPrint($data['resultok']) . '"',
                     'resultfalse' => '"' . $this->translateOrPrint($data['resultfalse']) . '"',
                     'tokenexpired' => '"' . $this->translateOrPrint($data['tokenexpired']) . '"',
+                    'nonauthorized' => '"' . $this->translateOrPrint($data['nonauthorized']) . '"',
                     'buttondivclass' => '"' . $data['buttondivclass'] . '"',
                     'submitbtnclass' => '"' . $data['submitbtnclass'] . '"',
                     'additionalbuttons' => $btns,

@@ -166,6 +166,7 @@ return [
             'resultok' => "#formsbootstrap::messages.resultok#",
             'resultfalse' => "#formsbootstrap::messages.resultfalse#",
             'tokenexpired' => "#formsbootstrap::messages.tokenexpired#",
+            'nonauthorized' => "#formsbootstrap::messages.nonauthorized#",
             "evalajaxres_callback" => null,
             "evalajaxres_resultmessage" => null,
             'resetvalues' => [],

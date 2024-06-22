@@ -29,4 +29,5 @@ return [
   'resultok' => 'Result OK',
   'resultfalse' => 'Processing error',
   'tokenexpired' => 'Token expired. Please reload form',
+  'nonauthorized' => 'You are not allowed to perform this action',
 ];

@@ -29,4 +29,5 @@ return [
   'resultok' => 'Résultat OK',
   'resultfalse' => 'Erreur de traitement',
   'tokenexpired' => 'La session a expiré. Veuillez rafraichir le formulaire',
+  'nonauthorized' => 'Vous n\'êtes pas autorisé à faire cette action',
 ];
