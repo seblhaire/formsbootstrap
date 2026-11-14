@@ -12,7 +12,7 @@ use Seblhaire\Formsbootstrap\Contracts\FormsBootstrapServiceContract;
 class FormsBootstrapService implements FormsBootstrapServiceContract {
     private static array $onloadjs = [];
 
-    use Seblhaire\Formsbootstrap\Traits\FormsTrait;
+    use \Seblhaire\Formsbootstrap\Traits\FormsTrait;
     
     public function bsOpen($data) : string {
         $this->checkMandatory(config('formsbootstrap.mandatory.open'), $data);
