@@ -1,8 +1,10 @@
 <?php
 
-namespace Seblhaire\Formsbootstrap;
+namespace Seblhaire\Formsbootstrap\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Seblhaire\Formsbootstrap\Services\FormsBootstrapService;
+use Seblhaire\Formsbootstrap\Contrats\FormsBootstrapServiceContract;
 
 //use \Collective\Html\FormFacade as Form;
 
@@ -28,18 +30,18 @@ class FormsBootstrapServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'formsbootstrap');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'formsbootstrap');
         $this->publishes([
-            __DIR__ . '/../config' => config_path('vendor/seblhaire'),
-            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/seblhaire/formsbootstrap'),
-            __DIR__ . '/../resources/js' => resource_path('js/vendor/seblhaire/formsbootstrap'),
-            __DIR__ . '/../resources/css' => resource_path('css/vendor/seblhaire/formsbootstrap'),
+            __DIR__ . '/../../config' => config_path('vendor/seblhaire'),
+            __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/seblhaire/formsbootstrap'),
+            __DIR__ . '/../../resources/js' => resource_path('js/vendor/seblhaire/formsbootstrap'),
+            __DIR__ . '/../../resources/css' => resource_path('css/vendor/seblhaire/formsbootstrap'),
         ]);
     }
 
     public function register() {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/formsbootstrap.php', 'formsbootstrap'
+            __DIR__ . '/../../config/formsbootstrap.php', 'formsbootstrap'
         );
         $this->app->singleton('FormsBootstrapService', function ($app) {
             return new FormsBootstrapService();

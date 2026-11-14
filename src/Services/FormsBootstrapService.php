@@ -1,17 +1,20 @@
 <?php
 
-namespace Seblhaire\Formsbootstrap;
+namespace Seblhaire\Formsbootstrap\Services;
 
 use Illuminate\Support\Facades\Validator;
 use function Stringy\create as s;
+use Seblhaire\Formsbootstrap\Contracts\FormsBootstrapServiceContract;
 
 /**
  * Helpers for package formsbootstrap
  */
 class FormsBootstrapService implements FormsBootstrapServiceContract {
-    use FormsTrait;
+    private static array $onloadjs = [];
+
+    use Seblhaire\Formsbootstrap\Traits\FormsTrait;
     
-    public function bsOpen($data) {
+    public function bsOpen($data) : string {
         $this->checkMandatory(config('formsbootstrap.mandatory.open'), $data);
         $data = $this->mergeValues(
                 array_merge(
@@ -32,7 +35,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             foreach ($data['additionalbuttons'] as $btn) {
                 $btnval = '';
                 foreach ($btn as $key => $attr) {
-                    $btnval .= (strlen($btnval) > 0 ? ',' : '') . '"' . $key . '":"' . $attr . '"';
+                    $btnval .= (strlen($btnval) > 0 ? ',' : '') . $key . ':"' . $attr . '"';
                 }
                 $vals .= (strlen($vals) > 0 ? ',{' : '{') . $btnval . '}';
             }
@@ -58,61 +61,53 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
             }
         }
         $output .= '>' . PHP_EOL . '<input type="hidden" id="_token" name="_token" value="' . csrf_token() . '" />' . PHP_EOL;
-        $output .= $this->buildJsCode([
-            'jQuery(document).ready(function() {' => [
-                'jQuery("#' . $values["id"] . '").sebFormHelper({' => [
-                    'validate' => $data['validate'] ? 'true' : 'false',
-                    'checkonleave' => $data['checkonleave'] ? 'true' : 'false',
-                    'ajaxcallback' => is_null($data['ajaxcallback']) ? 'null' : $data['ajaxcallback'],
-                    'filldatacallback' => is_null($data['filldatacallback']) ? 'null' : $data['filldatacallback'],
-                    'requiredclass' => '"' . $data['requiredclass'] . '"',
-                    'requiredcheckclass' => '"' . $data['requiredcheckclass'] . '"',
-                    'selcheckclass' => '"' . $data['selcheckclass'] . '"',
-                    'requiredspecialclass' => '"' . $data['requiredspecialclass'] . '"',
-                    'verifymailclass' => '"' . $data['verifymailclass'] . '"',
-                    'verifypassclass' => '"' . $data['verifypassclass'] . '"',
-                    'verifypassmatchclass' => '"' . $data['verifypassmatchclass'] . '"',
-                    'verifypassold' => '"' . $data['verifypassold'] . '"',
-                    'resettextclass' => '"' . $data['resettextclass'] . '"',
-                    'resetselectclass' => '"' . $data['resetselectclass'] . '"',
-                    'resetcheckclass' => '"' . $data['resetcheckclass'] . '"',
-                    'resetradioclass' => '"' . $data['resetradioclass'] . '"',
-                    'resetspecialclass' => '"' . $data['resetspecialclass'] . '"',
-                    'data_build_function' => is_null($data['data_build_function']) ? 'null' : $data['data_build_function'],
-                    'remove_validation_function' => is_null($data['remove_validation_function']) ? 'null' : $data['remove_validation_function'],
-                    'clearonclick_function' => is_null($data['clearonclick_function']) ? 'null' : $data['clearonclick_function'],
-                    'validate_function' => is_null($data['validate_function']) ? 'null' : $data['validate_function'],
-                    'clear_function' => is_null($data['clear_function']) ? 'null' : $data['clear_function'],
-                    'csrf' => '"' . $data['csrf'] . '"',
-                    'check_modified_on_reset' => $data['check_modified_on_reset'] ? 'true' : 'false',
-                    'modified_on_reset_confirm_text' => '"' . $this->translateOrPrint($data['modified_on_reset_confirm_text']) . '"',
-                    'buildbuttons' => $data['buildbuttons'] ? 'true' : 'false',
-                    'buildresultalert' => $data['buildresultalert'] ? 'true' : 'false',
-                    'alertsuccessclass' => '"' . $data['alertsuccessclass'] . '"',
-                    'alerterrorclass' => '"' . $data['alerterrorclass'] . '"',
-                    'alertcommonclass' => '"' . $data['alertcommonclass'] . '"',
-                    'alertdisplaytimeok' => $data['alertdisplaytimeok'],
-                    'alertdisplaytimefalse' => $data['alertdisplaytimefalse'],
-                    'resultok' => '"' . $this->translateOrPrint($data['resultok']) . '"',
-                    'resultfalse' => '"' . $this->translateOrPrint($data['resultfalse']) . '"',
-                    'tokenexpired' => '"' . $this->translateOrPrint($data['tokenexpired']) . '"',
-                    'nonauthorized' => '"' . $this->translateOrPrint($data['nonauthorized']) . '"',
-                    'buttondivclass' => '"' . $data['buttondivclass'] . '"',
-                    'submitbtnclass' => '"' . $data['submitbtnclass'] . '"',
-                    'additionalbuttons' => $btns,
-                    'submitbtnlbl' => '"' . $this->translateOrPrint($data['submitbtnlbl']) . '"',
-                    'evalajaxres_callback' => is_null($data['evalajaxres_callback']) ? 'null' : $data['evalajaxres_callback'],
-                    'evalajaxres_resultmessage' => is_null($data['evalajaxres_resultmessage']) ? 'null' : $data['evalajaxres_resultmessage'],
-                    'resetvalues' => $resetvalues
-                ],
-                '});' => null
-            ],
-            '});' => null
-        ]);
+        self::$onloadjs[$values["id"]] = '$("#' . $values["id"] . '").sebFormHelper({validate: ' . ($data['validate'] ? 'true' : 'false') . 
+                    ', checkonleave: ' . ($data['checkonleave'] ? 'true' : 'false')  .
+                    ', ajaxcallback: ' . (is_null($data['ajaxcallback']) ? 'null' : $data['ajaxcallback']) .
+                    ', filldatacallback: ' . (is_null($data['filldatacallback']) ? 'null' : $data['filldatacallback']) . 
+                    ', requiredclass: "' . $data['requiredclass'] . '"' . 
+                    ', requiredcheckclass: "' . $data['requiredcheckclass'] . '"' .
+                    ', selcheckclass: "' . $data['selcheckclass'] . '"' .
+                    ', requiredspecialclass: "' . $data['requiredspecialclass'] . '"' .
+                    ', verifymailclass: "' . $data['verifymailclass'] . '"' .
+                    ', verifypassclass: "' . $data['verifypassclass'] . '"' .
+                    ', verifypassmatchclass: "' . $data['verifypassmatchclass'] . '"' .
+                    ', verifypassold: "' . $data['verifypassold'] . '"' .
+                    ', resettextclass: "' . $data['resettextclass'] . '"' .
+                    ', resetselectclass: "' . $data['resetselectclass'] . '"' . 
+                    ', resetcheckclass: "' . $data['resetcheckclass'] . '"' .
+                    ', resetradioclass: "' . $data['resetradioclass'] . '"' . 
+                    ', resetspecialclass: "' . $data['resetspecialclass'] . '"' .
+                    ', data_build_function: '.  (is_null($data['data_build_function']) ? 'null' : $data['data_build_function']) . 
+                    ', remove_validation_function: ' . (is_null($data['remove_validation_function']) ? 'null' : $data['remove_validation_function']) .
+                    ', clearonclick_function: ' . (is_null($data['clearonclick_function']) ? 'null' : $data['clearonclick_function']) . 
+                    ', validate_function: ' . (is_null($data['validate_function']) ? 'null' : $data['validate_function']) .
+                    ', clear_function: ' . (is_null($data['clear_function']) ? 'null' : $data['clear_function']) . 
+                    ', csrf: "' . $data['csrf'] . '"' .
+                    ', check_modified_on_reset: ' .  ($data['check_modified_on_reset'] ? 'true' : 'false') .
+                    ', modified_on_reset_confirm_text: ' . '"' . $this->translateOrPrint($data['modified_on_reset_confirm_text']) . '"' . 
+                    ', buildbuttons: ' .  ($data['buildbuttons'] ? 'true' : 'false') .
+                    ', buildresultalert: ' . ($data['buildresultalert'] ? 'true' : 'false') . 
+                    ', alertsuccessclass: "' . $data['alertsuccessclass'] . '"' . 
+                    ', alerterrorclass: "' . $data['alerterrorclass'] . '"' . 
+                    ', alertcommonclass: "' . $data['alertcommonclass'] . '"' .
+                    ', alertdisplaytimeok: ' . $data['alertdisplaytimeok'] .
+                    ', alertdisplaytimefalse: ' .  $data['alertdisplaytimefalse'] .
+                    ', resultok: "' . $this->translateOrPrint($data['resultok']) . '"' .
+                    ', resultfalse: "' . $this->translateOrPrint($data['resultfalse']) . '"' .
+                    ', tokenexpired: "' . $this->translateOrPrint($data['tokenexpired']) . '"' .
+                    ', nonauthorized: "' . $this->translateOrPrint($data['nonauthorized']) . '"' . 
+                    ', buttondivclass: "' . $data['buttondivclass'] . '"' .
+                    ', submitbtnclass: "' . $data['submitbtnclass'] . '"' .
+                    ', additionalbuttons: ' . $btns . 
+                    ', submitbtnlbl: "' . $this->translateOrPrint($data['submitbtnlbl']) . '"' . 
+                    ', evalajaxres_callback: ' . (is_null($data['evalajaxres_callback']) ? 'null' : $data['evalajaxres_callback']) . 
+                    ', evalajaxres_resultmessage: ' . (is_null($data['evalajaxres_resultmessage']) ? 'null' : $data['evalajaxres_resultmessage']) . 
+                    ', resetvalues: ' . $resetvalues . '});';
         return $output;
     }
 
-    public function bsHidden($data) {
+    public function bsHidden($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.hidden'), $data);
         $data = $this->mergeValues(config('formsbootstrap.defaults.hidden'), $data);
         if (!isset($data['name']) || strlen($data['name']) == 0) {
@@ -122,7 +117,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         return $this->buildInput('hidden', $data['name'], $data['value'], $attributes);
     }
 
-    public function bsText($data) {
+    public function bsText($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.text'), $data);
         $data = $this->mergeValues(
                 array_merge(
@@ -155,7 +150,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildEndDiv($data['input_in_div']);
     }
 
-    public function bsNumber($data) {
+    public function bsNumber($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.number'), $data);
         $data = $this->mergeValues(
                 array_merge(
@@ -194,7 +189,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildEndDiv($data['input_in_div']);
     }
 
-    public function bsRange($data) {
+    public function bsRange($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.range'), $data);
         $data = $this->mergeValues(
                 array_merge(config('formsbootstrap.defaults.range'), config('formsbootstrap.classes')),
@@ -264,18 +259,13 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         }
         $output .= $this->buildEndDiv($data['input_in_div']);
         if ($data['showvalue']) {
-            $output .= $this->buildJsCode([
-                'jQuery("#' . $data['id'] . '").on("input", function(){' => [
-                    'jQuery("#' . $data['id'] . '_val").html(jQuery("#' . $data['id'] . '").val())' => null
-                ],
-                '});' => null,
-                'jQuery("#' . $data['id'] . '_val").html(jQuery("#' . $data['id'] . '").val())' => null
-            ]);
+            self::$onloadjs[$data["id"]] ='$("#' . $data['id'] . '").on("input", function(){ $("#' . $data['id'] . '_val").html($("#' . $data['id'] . 
+                '").val())});' . PHP_EOL . '$("#' . $data['id'] . '_val").html($("#' . $data['id'] . '").val());';
         }
         return $output;
     }
 
-    public function bsTextarea($data) {
+    public function bsTextarea($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.textarea'), $data);
         $data = $this->mergeValues(
                 array_merge(config('formsbootstrap.defaults.textarea'), config('formsbootstrap.classes')),
@@ -308,7 +298,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildEndDiv($data['input_in_div']);
     }
 
-    public function bsEmail($data = []) {
+    public function bsEmail($data = []): string {
         $data = $this->mergeValues(
                 array_merge(
                         config('formsbootstrap.defaults.email'),
@@ -342,14 +332,12 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildHelp($data) .
                 $this->buildEndDiv($data['input_in_div']);
         if ($data['verify']) {
-            $output .= $this->buildJsCode([
-                'jQuery("#' . $data['id'] . '").sebEmailHelper({emailregex : ' . $data['regex'] . '});' => null
-            ]);
+            self::$onloadjs[$data["id"]] = '$("#' . $data['id'] . '").sebEmailHelper({emailregex : ' . $data['regex'] . '});';
         }
         return $output;
     }
 
-    public function bsPassword($data = []) {
+    public function bsPassword($data = []) : string{
         $data = $this->mergeValues(
                 array_merge(
                         config('formsbootstrap.defaults.password'),
@@ -366,6 +354,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         if (!isset($data['name']) || strlen($data['name']) == 0) {
             $data['name'] = $data['id'];
         }
+        self::$onloadjs[$data["id"]] = '$("#' . $data['id'] . '").sebPasswordHelper({passregex : ' . $data['password_regex'] . '});';
         return $this->buildStartDiv($data['input_in_div'], $data['divclass'], 'fg-' . $data['name']) .
                 $this->buildLabel(
                         $data['id'],
@@ -384,13 +373,10 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 ) .
                 $this->buildFeedbacks($data['valid-feedback'], $this->translateOrPrint($data['invalid-feedback']), ($data['required'] || $data['validate']), ($data['required'] || $data['validate'])) .
                 $this->buildHelp($data) .
-                $this->buildEndDiv($data['input_in_div']) .
-                $this->buildJsCode([
-                    'jQuery("#' . $data['id'] . '").sebPasswordHelper({passregex : ' . $data['password_regex'] . '});' => null
-        ]);
+                $this->buildEndDiv($data['input_in_div']);
     }
 
-    public function bsPasswordWithConfirm($data = []) {
+    public function bsPasswordWithConfirm($data = []): string {
         $data = $this->mergeValues(array_merge(
                         config('formsbootstrap.defaults.password-with-confirm'),
                         config('formsbootstrap.defaults.password_common'),
@@ -541,32 +527,22 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildFeedbacks($data['nomatch-validfeedback'], $this->translateOrPrint($data['nomatch-feedback']), true, true) .
                 $this->buildHelp($data) .
                 $this->buildEndDiv($data['input_in_div']);
-        $passparams = [
-            'passregex' => $data['password_regex'],
-            'passchars' => '"' . addslashes($data['password_chars']) . '"',
-            'genlength' => $data["generated_pass_length"],
-            'confirminput' => '"#' . $data['confirmpass']['id'] . '"',
-            'clearinput' => $data['show_clear'] ? '"#' . $data['newpassclear']['id'] . '"' : ''
-        ];
+        $passparams = 'passregex: ' .  $data['password_regex'] .
+            ', passchars: "' . addslashes($data['password_chars']) . '"' .
+            ', genlength: ' . $data["generated_pass_length"] . 
+            ', confirminput: "#' . $data['confirmpass']['id'] . '"' . 
+            ', clearinput: ' .  ($data['show_clear'] ? '"#' . $data['newpassclear']['id'] . '"' : 'null');
         if ($data['show_old']) {
-            $passparams = array_merge($passparams, [
-                'oldinput' => '"#' . $data['oldpass']['id'] . '"',
-                'checkoldpassurl' => is_null($data['checkoldpassurl']) ? 'null' : '"' . $data['checkoldpassurl'] . '"',
-                'checkoldpass_callback' => is_null($data['checkoldpass_callback']) ? 'null' : $data['checkoldpass_callback'],
-                'csrf' => '"' . $data['csrf'] . '"'
-            ]);
+            $passparams .= 
+                ', oldinput: "#' . $data['oldpass']['id'] . '"' .
+                ', checkoldpassurl: ' . (is_null($data['checkoldpassurl']) ? 'null' : '"' . $data['checkoldpassurl'] . '"') .
+                ', checkoldpass_callback: '  . (is_null($data['checkoldpass_callback']) ? 'null' : $data['checkoldpass_callback']);
         }
-        $output .= $this->buildJsCode([
-            'jQuery(document).ready(function() {' => [
-                'jQuery("#' . $data['newpass']['id'] . '").sebPasswordHelper({' => $passparams,
-                '});' => null
-            ],
-            '});' => null
-        ]);
+        self::$onloadjs[$data["newpass"]["id"]] ='$("#' . $data['newpass']['id'] . '").sebPasswordHelper({' . $passparams . '});';
         return $output;
     }
 
-    public function bsSelect($data) {
+    public function bsSelect($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.select'), $data);
         $data = $this->mergeValues(
                 array_merge(
@@ -612,7 +588,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildEndDiv($data['input_in_div']);
     }
 
-    public function bsCheckbox($data) {
+    public function bsCheckbox($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.checkbox'), $data);
         $data = $this->mergeValues(
                 array_merge(
@@ -678,7 +654,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         return $output;
     }
 
-    public function bsRadio($data) {
+    public function bsRadio($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.radio'), $data);
         $data = $this->mergeValues(
                 array_merge(
@@ -732,7 +708,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         return $output;
     }
 
-    public function bsSubmit($data) {
+    public function bsSubmit($data) : string{
         $data = $this->mergeValues(config('formsbootstrap.defaults.submit'), $data);
         return $this->buildButton(
                         $data['class'],
@@ -742,7 +718,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         );
     }
 
-    public function bsButton($data) {
+    public function bsButton($data) : string{
         $this->checkMandatory(config('formsbootstrap.mandatory.button'), $data);
         $data = $this->mergeValues(config('formsbootstrap.defaults.button'), $data);
         $output = $this->buildButton(
@@ -751,14 +727,12 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 array_merge(['id' => $data['id']], $data['attributes'])
         );
         if ($data['action'] != null) {
-            $output .= $this->buildJsCode([
-                'jQuery("#' . $data['id'] . '").on("click", function(e){ ' . $data['action'] . ' });' => null
-            ]);
+            self::$onloadjs[$data['id']] = '$("#' . $data['id'] . '").on("click", function(e){ ' . $data['action'] . ' });';
         }
         return $output;
     }
 
-    public function bsColorpicker($data) {
+    public function bsColorpicker($data): string {
         $this->checkMandatory(config('formsbootstrap.mandatory.colorpicker'), $data);
         $data = $this->mergeValues(config('formsbootstrap.defaults.colorpicker'), $data);
         if (!isset($data['name']) || strlen($data['name']) == 0) {
@@ -786,7 +760,7 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                 $this->buildEndDiv($data['input_in_div']);
     }
 
-    public function bsEditor($data) {
+    public function bsEditor($data) : string{
         $this->checkMandatory(config('formsbootstrap.mandatory.editor'), $data);
         $data = $this->mergeValues(array_merge(config('formsbootstrap.defaults.editor'), config('formsbootstrap.classes')), $data);
         if ($data['required']) {
@@ -803,27 +777,19 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
         if (!isset($data['name']) || strlen($data['name']) == 0) {
             $data['name'] = $data['id'];
         }
+        $scripts = '';
         if (!is_null($data['configvar'])) {
-            $jscode = [
-                'jQuery("#' . $data["id"] . '").sebRichTextHelper(' . $data['configvar'] . ');' => null
-            ];
+             $scripts .= '$("#' . $data["id"] . '").sebRichTextHelper(' . $data['configvar'] . ');' . PHP_EOL;
         } elseif (!is_null($data['config'])) {
-            $jscode = [
-                'jQuery("#' . $data["id"] . '").sebRichTextHelper(' .
-                $this->validateEditorParams($data['config'], $data['translations'])
-                . ');' => null
-            ];
+            $scripts .= '$("#' . $data["id"] . '").sebRichTextHelper(' .
+                $this->validateEditorParams($data['config'], $data['translations']) . ');' . PHP_EOL;
         } else {
-            $jscode = ['jQuery("#' . $data["id"] . '").sebRichTextHelper();' => null];
+            $scripts  = '$("#' . $data["id"] . '").sebRichTextHelper();' . PHP_EOL;
         }
         if (strlen($text) > 0) {
-            $jscode = array_merge(
-                    $jscode,
-                    [
-                        'jQuery("#' . $data["id"] . '").data("sebrichtexthelper").loadContent(\'' . $text . '\');' => null
-                    ]
-            );
+            $scripts .= '$("#' . $data["id"] . '").data("sebrichtexthelper").loadContent(\'' . $text . '\');' . PHP_EOL;
         }
+        self::$onloadjs[$data["id"]] = $scripts;
         return $this->buildStartDiv(true, $data['divclass'], $data['id']) .
                 $this->buildLabel(
                         $data['id'] . '-input',
@@ -836,11 +802,23 @@ class FormsBootstrapService implements FormsBootstrapServiceContract {
                         )) .
                 $this->buildFeedbacks($data['valid-feedback'], $this->translateOrPrint($data['invalid-feedback']), $data['required'], $data['required']) .
                 $this->buildHelp($data) .
-                $this->buildEndDiv(true) .
-                $this->buildJsCode($jscode);
+                $this->buildEndDiv(true); 
     }
 
-    public function bsClose() {
+    public function bsClose(): string {
         return '</form>' . PHP_EOL;
+    }
+
+    public function printJs(): string {
+        $js = '';
+        foreach(self::$onloadjs as $line){
+            $js .= $line . PHP_EOL;
+        }
+        self::$onloadjs = [];
+        return $js;
+    }
+
+    public function printJsById(string $id): string {
+        return self::$onloadjs[$id] . PHP_EOL;
     }
 }

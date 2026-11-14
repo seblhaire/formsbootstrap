@@ -1,3 +1,5 @@
+import $ from 'jquery';
+import './jquery.richtext.js';
 var SebFormHelper = {
     form: null,
     divalert: null,
@@ -5,7 +7,7 @@ var SebFormHelper = {
     options: null,
     savedData: null,
     init: function (form, options) {
-        this.form = jQuery(form);
+        this.form = $(form);
         this.options = options;
         this.clearonclick();
         if (this.options.buildresultalert) {
@@ -17,7 +19,7 @@ var SebFormHelper = {
         this.form.on('submit', {self: this}, this.submit);
         this.save();
         if (this.options.checkonleave) {
-            jQuery(window).bind('beforeunload', {self: this}, this.pageleave);
+            $(window).bind('beforeunload', {self: this}, this.pageleave);
         }
     },
     save: function () {
@@ -36,22 +38,22 @@ var SebFormHelper = {
         }
     },
     fillwithdata: function (res) {
-        jQuery('input[type=checkbox]').each(function () {
-            jQuery(this).prop('checked', false)
+        $('input[type=checkbox]').each(function () {
+            $(this).prop('checked', false)
         });
-        jQuery('input[type=radio]').each(function () {
-            jQuery(this).prop('checked', false)
+        $('input[type=radio]').each(function () {
+            $(this).prop('checked', false)
         });
-        jQuery('option').each(function () {
-            jQuery(this).prop('selected', false)
+        $('option').each(function () {
+            $(this).prop('selected', false)
         });
-        jQuery.each(res, function (key, value) {
-            if (jQuery('#' + key).data('sebrichtexthelper') != undefined) {
+        $.each(res, function (key, value) {
+            if ($('#' + key).data('sebrichtexthelper') != undefined) {
                 //console.log('rth ' + key);
-                jQuery('#' + key).data('sebrichtexthelper').loadContent(value);
-            } else if (jQuery('#' + key).data('uploader') != undefined) {
+                $('#' + key).data('sebrichtexthelper').loadContent(value);
+            } else if ($('#' + key).data('uploader') != undefined) {
                 //console.log('upl ' + key);
-                jQuery('#' + key).data('uploader').reset();
+                $('#' + key).data('uploader').reset();
                 if (Array.isArray(value)) {
                     var ar = value;
                 } else {
@@ -62,51 +64,51 @@ var SebFormHelper = {
                     infos: {baseurl: ''},
                     files: ar
                 };
-                jQuery('#' + key).data('uploader').getresultprocessor().process(result);
-            } else if (jQuery('#' + key).data('tagsinput') != undefined) {
-                jQuery('#' + key).data('tagsinput').reset();
-                jQuery('#' + key).data('tagsinput').addtolist(value);
-            } else if (jQuery('#' + key).data('sebdaterangepicker') != undefined) {
+                $('#' + key).data('uploader').getresultprocessor().process(result);
+            } else if ($('#' + key).data('tagsinput') != undefined) {
+                $('#' + key).data('tagsinput').reset();
+                $('#' + key).data('tagsinput').addtolist(value);
+            } else if ($('#' + key).data('sebdaterangepicker') != undefined) {
                 //console.log('date ' + key);
                 if (Array.isArray(value)) {
-                    jQuery('#' + key).data('sebdaterangepicker').setDoubleCalendar(moment(value[0]), moment(value[1]));
+                    $('#' + key).data('sebdaterangepicker').setDoubleCalendar(moment(value[0]), moment(value[1]));
                 } else {
-                    jQuery('#' + key).data('sebdaterangepicker').setSingleCalendar(moment(value));
+                    $('#' + key).data('sebdaterangepicker').setSingleCalendar(moment(value));
                 }
             } else if (
-                    jQuery('#' + key).length > 0 && (
-                    jQuery('#' + key)[0].tagName == 'TEXTAREA' ||
+                    $('#' + key).length > 0 && (
+                    $('#' + key)[0].tagName == 'TEXTAREA' ||
                     (
-                            jQuery('#' + key)[0].tagName == 'INPUT' &&
+                            $('#' + key)[0].tagName == 'INPUT' &&
                             (
-                                    jQuery('#' + key)[0].type == 'text' ||
-                                    jQuery('#' + key)[0].type == 'hidden' ||
-                                    jQuery('#' + key)[0].type == 'number' ||
-                                    jQuery('#' + key)[0].type == 'color' ||
-                                    jQuery('#' + key)[0].type == 'range' ||
-                                    jQuery('#' + key)[0].type == 'email'
+                                    $('#' + key)[0].type == 'text' ||
+                                    $('#' + key)[0].type == 'hidden' ||
+                                    $('#' + key)[0].type == 'number' ||
+                                    $('#' + key)[0].type == 'color' ||
+                                    $('#' + key)[0].type == 'range' ||
+                                    $('#' + key)[0].type == 'email'
                                     )
                             )
                     )
                     ) {
                 //console.log('in ' + key);
-                jQuery('#' + key).val(value).trigger('input');
+                $('#' + key).val(value).trigger('input');
             } else if (
-                    jQuery('#' + key).length > 0 &&
-                    jQuery('#' + key)[0].tagName == 'SELECT'
+                    $('#' + key).length > 0 &&
+                    $('#' + key)[0].tagName == 'SELECT'
                     ) {
                 if (!Array.isArray(value)) {
                     value = [value];
                 }
                 for (i in value) {
-                    jQuery('#' + key + ' option[value=' + value[i].toString() + ']').prop('selected', true)
+                    $('#' + key + ' option[value=' + value[i].toString() + ']').prop('selected', true)
                 }
-            } else if (jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + ']').length > 0) {
+            } else if ($('input[type=checkbox][name=' + $.escapeSelector(key + '[]') + ']').length > 0) {
                 for (i in value) {
-                    jQuery('input[type=checkbox][name=' + jQuery.escapeSelector(key + '[]') + '][value=' + value[i].toString() + ']').prop('checked', true);
+                    $('input[type=checkbox][name=' + $.escapeSelector(key + '[]') + '][value=' + value[i].toString() + ']').prop('checked', true);
                 }
-            } else if (jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + ']').length > 0) {
-                jQuery('input[type=radio][name=' + jQuery.escapeSelector(key) + '][value=' + value + ']').prop('checked', true);
+            } else if ($('input[type=radio][name=' + $.escapeSelector(key) + ']').length > 0) {
+                $('input[type=radio][name=' + $.escapeSelector(key) + '][value=' + value + ']').prop('checked', true);
             }
         });
         if (this.options.filldatacallback != null) {
@@ -139,8 +141,8 @@ var SebFormHelper = {
             }
         }
         if (self.options.ajaxcallback != null) {
-            jQuery('#' + self.form.attr('id') + '_submit_spinner').show();
-            jQuery.ajax({
+            $('#' + self.form.attr('id') + '_submit_spinner').show();
+            $.ajax({
                 url: self.form.prop('action'),
                 encoding: 'utf8',
                 data: self.getData(),
@@ -152,7 +154,7 @@ var SebFormHelper = {
                 cache: false
             })
                     .done(function (res) {
-                        jQuery('#' + self.form.attr('id') + '_submit_spinner').hide();
+                        $('#' + self.form.attr('id') + '_submit_spinner').hide();
                         if (self.checkformresult(res)) {
                             var message = self.options.ajaxcallback(res);
                             if (message == undefined || message == null || message.length == undefined || message.length == 0) {
@@ -168,13 +170,13 @@ var SebFormHelper = {
                         }
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
-                        jQuery('#' + self.form.attr('id') + '_submit_spinner').hide();
+                        $('#' + self.form.attr('id') + '_submit_spinner').hide();
                         if (jqXHR.status == 419) {
                             self.errormessage(self.options.tokenexpired);
                         } else if (jqXHR.status == 403){
                             self.errormessage(self.options.nonauthorized);
                         } else if (jqXHR.status == 422){
-                            var response = jQuery.parseJSON(jqXHR.responseText);
+                            var response = $.parseJSON(jqXHR.responseText);
                             self.errormessage(response.message);
                         } else {
                             self.errormessage(self.options.resultfalse);
@@ -187,7 +189,7 @@ var SebFormHelper = {
             data = this.options.data_build_function();
             if (serialize) {
                 var str = '';
-                jQuery(data).each(function (i, elt) {
+                $(data).each(function (i, elt) {
                     str += (str.length > 0 ? '&' : '') + elt.name + '=' + encodeURIComponent(elt.value);
                 });
                 return str;
@@ -203,65 +205,65 @@ var SebFormHelper = {
         }
     },
     removevalidation: function () {
-        jQuery("#" + this.form.attr('id') + " ." + this.options.requiredclass).each(function (i) {
-            jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.requiredclass).each(function (i) {
+            $(this).removeClass('is-invalid').removeClass('is-valid');
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.requiredcheckclass).each(function (i) {
-            jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.requiredcheckclass).each(function (i) {
+            $(this).removeClass('is-invalid').removeClass('is-valid');
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.verifymailclass).each(function (i) {
-            jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.verifymailclass).each(function (i) {
+            $(this).removeClass('is-invalid').removeClass('is-valid');
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.verifypassclass).each(function (i) {
-            jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.verifypassclass).each(function (i) {
+            $(this).removeClass('is-invalid').removeClass('is-valid');
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.verifypassmatchclass).each(function (i) {
-            jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.verifypassmatchclass).each(function (i) {
+            $(this).removeClass('is-invalid').removeClass('is-valid');
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.verifypassold).each(function (i) {
-            jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.verifypassold).each(function (i) {
+            $(this).removeClass('is-invalid').removeClass('is-valid');
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.requiredspecialclass).each(function (i) {
-            jQuery(this).find('.is-invalid').removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.requiredspecialclass).each(function (i) {
+            $(this).find('.is-invalid').removeClass('is-invalid').removeClass('is-valid');
         });
         if (this.options.remove_validation_function != null) {
             this.options.remove_validation_function();
         }
     },
     clearonclick: function () {
-        jQuery("#" + this.form.attr('id') + " ." + this.options.requiredclass).each(function (i) {
-            jQuery(this).on("click", function () {
-                jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.requiredclass).each(function (i) {
+            $(this).on("click", function () {
+                $(this).removeClass('is-invalid').removeClass('is-valid');
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.requiredcheckclass).each(function (i) {
-            jQuery(this).on("click", function () {
-                jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.requiredcheckclass).each(function (i) {
+            $(this).on("click", function () {
+                $(this).removeClass('is-invalid').removeClass('is-valid');
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.verifymailclass).each(function (i) {
-            jQuery(this).on("click", function () {
-                jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.verifymailclass).each(function (i) {
+            $(this).on("click", function () {
+                $(this).removeClass('is-invalid').removeClass('is-valid');
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.verifypassclass).each(function (i) {
-            jQuery(this).on("click", function () {
-                jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.verifypassclass).each(function (i) {
+            $(this).on("click", function () {
+                $(this).removeClass('is-invalid').removeClass('is-valid');
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.verifypassmatchclass).each(function (i) {
-            jQuery(this).on("click", function () {
-                jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.verifypassmatchclass).each(function (i) {
+            $(this).on("click", function () {
+                $(this).removeClass('is-invalid').removeClass('is-valid');
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.verifypassold).each(function (i) {
-            jQuery(this).on("click", function () {
-                jQuery(this).removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.verifypassold).each(function (i) {
+            $(this).on("click", function () {
+                $(this).removeClass('is-invalid').removeClass('is-valid');
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.requiredspecialclass).each(function (i) {
-            jQuery(this).on("click", function () {
-                jQuery(this).find('.is-invalid').removeClass('is-invalid').removeClass('is-valid');
+        $("#" + this.form.attr('id') + " ." + this.options.requiredspecialclass).each(function (i) {
+            $(this).on("click", function () {
+                $(this).find('.is-invalid').removeClass('is-invalid').removeClass('is-valid');
             });
         });
         if (this.options.clearonclick_function != null) {
@@ -271,83 +273,83 @@ var SebFormHelper = {
     validate: function () {
         var self = this;
         var isValid = true;
-        jQuery("#" + self.form.attr('id') + " ." + self.options.requiredclass).each(function (i) {
-            if (jQuery(this).val() == '') {
+        $("#" + self.form.attr('id') + " ." + self.options.requiredclass).each(function (i) {
+            if ($(this).val() == '') {
                 isValid = false;
-                jQuery(this).addClass('is-invalid');
+                $(this).addClass('is-invalid');
             } else {
-                jQuery(this).addClass('is-valid');
+                $(this).addClass('is-valid');
             }
         });
-        jQuery("#" + self.form.attr('id') + " ." + self.options.selcheckclass).each(function (i) {
+        $("#" + self.form.attr('id') + " ." + self.options.selcheckclass).each(function (i) {
             var checked = false;
-            jQuery(this).find('input').each(function (j) {
-                if (jQuery(this).prop('checked')) {
+            $(this).find('input').each(function (j) {
+                if ($(this).prop('checked')) {
                     checked = true;
                 }
             });
             if (checked) {
-                jQuery(this).find('.' + self.options.requiredcheckclass).first().addClass('is-valid');
+                $(this).find('.' + self.options.requiredcheckclass).first().addClass('is-valid');
             } else {
                 isValid = false;
-                jQuery(this).find('.' + self.options.requiredcheckclass).first().addClass('is-invalid');
+                $(this).find('.' + self.options.requiredcheckclass).first().addClass('is-invalid');
             }
         });
-        jQuery("#" + self.form.attr('id') + " ." + self.options.verifymailclass).each(function (i) {
-            if (!jQuery(this).data('sebemailhelper').check()) {
+        $("#" + self.form.attr('id') + " ." + self.options.verifymailclass).each(function (i) {
+            if (!$(this).data('sebemailhelper').check()) {
                 isValid = false;
-                jQuery(this).addClass('is-invalid');
+                $(this).addClass('is-invalid');
             } else {
-                jQuery(this).addClass('is-valid');
+                $(this).addClass('is-valid');
             }
         });
-        jQuery("#" + self.form.attr('id') + " ." + self.options.verifypassclass).each(function (i) {
-            if (!jQuery(this).data('sebpasswordhelper').checkStrength()) {
+        $("#" + self.form.attr('id') + " ." + self.options.verifypassclass).each(function (i) {
+            if (!$(this).data('sebpasswordhelper').checkStrength()) {
                 isValid = false;
-                jQuery(this).addClass('is-invalid');
+                $(this).addClass('is-invalid');
             } else {
-                jQuery(this).addClass('is-valid');
+                $(this).addClass('is-valid');
             }
         });
-        jQuery("#" + self.form.attr('id') + " ." + self.options.verifypassmatchclass).each(function (i) {
-            if (!jQuery(jQuery(this).data('maininput')).data('sebpasswordhelper').checkIdentity()) {
+        $("#" + self.form.attr('id') + " ." + self.options.verifypassmatchclass).each(function (i) {
+            if (!$($(this).data('maininput')).data('sebpasswordhelper').checkIdentity()) {
                 isValid = false;
-                jQuery(this).addClass('is-invalid');
+                $(this).addClass('is-invalid');
             } else {
-                jQuery(this).addClass('is-valid');
+                $(this).addClass('is-valid');
             }
         });
-        jQuery("#" + self.form.attr('id') + " ." + self.options.verifypassold).each(function (i) {
-            if (!jQuery(jQuery(this).data('maininput')).data('sebpasswordhelper').checkOldPass()) {
+        $("#" + self.form.attr('id') + " ." + self.options.verifypassold).each(function (i) {
+            if (!$($(this).data('maininput')).data('sebpasswordhelper').checkOldPass()) {
                 isValid = false;
-                jQuery(this).addClass('is-invalid');
+                $(this).addClass('is-invalid');
             } else {
-                jQuery(this).addClass('is-valid');
+                $(this).addClass('is-valid');
             }
         });
-        jQuery("#" + self.form.attr('id') + " ." + self.options.requiredspecialclass).each(function (i) {
-            if (jQuery(this).data('sebrichtexthelper') != undefined) {
-                if (jQuery(this).data('sebrichtexthelper').isEmpty()) {
+        $("#" + self.form.attr('id') + " ." + self.options.requiredspecialclass).each(function (i) {
+            if ($(this).data('sebrichtexthelper') != undefined) {
+                if ($(this).data('sebrichtexthelper').isEmpty()) {
                     isValid = false;
-                    jQuery(this).find('.richText').addClass('is-invalid');
+                    $(this).find('.richText').addClass('is-invalid');
                 } else {
-                    jQuery(this).find('.richText').addClass('is-valid');
+                    $(this).find('.richText').addClass('is-valid');
                 }
             }
-            if (jQuery(this).data('uploader') != undefined) {
-                if (jQuery(this).data('uploader').getresultprocessor().countFiles() == 0) {
+            if ($(this).data('uploader') != undefined) {
+                if ($(this).data('uploader').getresultprocessor().countFiles() == 0) {
                     isValid = false;
-                    jQuery(this).find('.uploader').addClass('is-invalid');
+                    $(this).find('.uploader').addClass('is-invalid');
                 } else {
-                    jQuery(this).find('.uploader').addClass('is-valid');
+                    $(this).find('.uploader').addClass('is-valid');
                 }
             }
-            if (jQuery(this).data('tagsinput') != undefined) {
-                if (jQuery(this).data('tagsinput').count() == 0) {
+            if ($(this).data('tagsinput') != undefined) {
+                if ($(this).data('tagsinput').count() == 0) {
                     isValid = false;
-                    jQuery(this).data('tagsinput').autocompleter.addClass('is-invalid');
+                    $(this).data('tagsinput').autocompleter.addClass('is-invalid');
                 } else {
-                    jQuery(this).data('tagsinput').autocompleter.addClass('is-valid');
+                    $(this).data('tagsinput').autocompleter.addClass('is-valid');
                 }
             }
         });
@@ -371,53 +373,53 @@ var SebFormHelper = {
     },
     _reset: function () {
         for (var obj of this.options.resetvalues) {
-            jQuery('#' + obj.key).val(obj.value);
+            $('#' + obj.key).val(obj.value);
         }
-        jQuery('select option').each(function (e) {
+        $('select option').each(function (e) {
             $(this).prop('selected', false)
         });
-        jQuery('input[type=radio]').each(function (e) {
+        $('input[type=radio]').each(function (e) {
             $(this).prop('checked', false)
         });
-        jQuery('input[type=checkbox]').each(function (e) {
+        $('input[type=checkbox]').each(function (e) {
             $(this).prop('checked', false)
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.resettextclass).each(function (i) {
-            jQuery(this).val('').trigger('input');
+        $("#" + this.form.attr('id') + " ." + this.options.resettextclass).each(function (i) {
+            $(this).val('').trigger('input');
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.resetselectclass).each(function (i) {
-            jQuery(this).find('option').each(function (j) {
-                if (jQuery(this).attr('defaultchecked') == 'defaultchecked') {
-                    jQuery(this).prop('selected', true);
+        $("#" + this.form.attr('id') + " ." + this.options.resetselectclass).each(function (i) {
+            $(this).find('option').each(function (j) {
+                if ($(this).attr('defaultchecked') == 'defaultchecked') {
+                    $(this).prop('selected', true);
                 }
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.resetradioclass).each(function (i) {
-            jQuery(this).find('input').each(function (j) {
-                if (jQuery(this).attr('defaultchecked') == 'defaultchecked') {
-                    jQuery(this).prop('checked', true);
+        $("#" + this.form.attr('id') + " ." + this.options.resetradioclass).each(function (i) {
+            $(this).find('input').each(function (j) {
+                if ($(this).attr('defaultchecked') == 'defaultchecked') {
+                    $(this).prop('checked', true);
                 }
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.resetcheckclass).each(function (i) {
-            jQuery(this).find('input').each(function (j) {
-                if (jQuery(this).attr('defaultchecked') == 'defaultchecked') {
-                    jQuery(this).prop('checked', true);
+        $("#" + this.form.attr('id') + " ." + this.options.resetcheckclass).each(function (i) {
+            $(this).find('input').each(function (j) {
+                if ($(this).attr('defaultchecked') == 'defaultchecked') {
+                    $(this).prop('checked', true);
                 }
             });
         });
-        jQuery("#" + this.form.attr('id') + " ." + this.options.resetspecialclass).each(function (i) {
-            if (jQuery(this).data('sebrichtexthelper') != undefined) {
-                jQuery(this).data('sebrichtexthelper').loadContent('');
+        $("#" + this.form.attr('id') + " ." + this.options.resetspecialclass).each(function (i) {
+            if ($(this).data('sebrichtexthelper') != undefined) {
+                $(this).data('sebrichtexthelper').loadContent('');
             }
-            if (jQuery(this).data('uploader') != undefined) {
-                jQuery(this).data('uploader').reset();
+            if ($(this).data('uploader') != undefined) {
+                $(this).data('uploader').reset();
             }
-            if (jQuery(this).data('tagsinput') != undefined) {
-                jQuery(this).data('tagsinput').reset();
+            if ($(this).data('tagsinput') != undefined) {
+                $(this).data('tagsinput').reset();
             }
-            if (jQuery(this).data('sebdaterangepicker') != undefined) {
-                jQuery(this).data('sebdaterangepicker').reset();
+            if ($(this).data('sebdaterangepicker') != undefined) {
+                $(this).data('sebdaterangepicker').reset();
             }
         });
         if (this.options.clear_function != null) {
@@ -426,16 +428,16 @@ var SebFormHelper = {
         this.save();
     },
     insertButtons: function () {
-        this.buttonsdiv = jQuery('<div></div>')
+        this.buttonsdiv = $('<div></div>')
                 .attr('id', this.form.attr('id') + '_buttons')
                 .addClass(this.options.buttondivclass)
-        var text = jQuery('<span></span>')
+        var text = $('<span></span>')
                 .attr('id', this.form.attr('id') + '_submit_text').html(this.options.submitbtnlbl);
-        var spinner = jQuery('<i></i>')
+        var spinner = $('<i></i>')
                 .attr('id', this.form.attr('id') + '_submit_spinner')
                 .addClass("fa-solid fa-spinner fa-spin-pulse")
                 .hide();
-        jQuery('<button></button>')
+        $('<button></button>')
                 .attr('id', this.form.attr('id') + '_submit')
                 .attr('type', 'submit')
                 .addClass(this.options.submitbtnclass)
@@ -447,9 +449,9 @@ var SebFormHelper = {
                 .appendTo(this.buttonsdiv);
         if (this.options.additionalbuttons.length > 0) {
             for (var i in this.options.additionalbuttons) {
-                var btn = jQuery('<button></button>')
+                var btn = $('<button></button>')
                         .attr('type', 'button');
-                jQuery.map(this.options.additionalbuttons[i], function (value, key) {
+                $.map(this.options.additionalbuttons[i], function (value, key) {
                     if (key != 'value') {
                         btn.attr(key, value);
                     }
@@ -462,7 +464,7 @@ var SebFormHelper = {
                 .appendTo(this.form);
     },
     insertAlert: function () {
-        this.divalert = jQuery('<div></div>')
+        this.divalert = $('<div></div>')
                 .attr('id', this.form.attr('id') + '_result_container')
                 .attr('role', 'alert')
                 .hide();
@@ -508,22 +510,22 @@ var SebPasswordHelper = {
     oldinput: null,
     options: null,
     init: function (input, options) {
-        this.input = jQuery(input);
+        this.input = $(input);
         this.options = options;
         if (this.options.confirminput != null) {
-            var confirminput = jQuery(this.options.confirminput);
+            var confirminput = $(this.options.confirminput);
             if (confirminput.length == 0 || confirminput.prop('tagName') != 'INPUT')
                 throw 'error with confirminput';
             this.confirminput = confirminput;
         }
         if (this.options.clearinput != null) {
-            var clearinput = jQuery(this.options.clearinput);
+            var clearinput = $(this.options.clearinput);
             if (clearinput.length == 0 || clearinput.prop('tagName') != 'INPUT')
                 throw 'error with clearinput';
             this.clearinput = clearinput;
         }
         if (this.options.oldinput != null) {
-            var oldinput = jQuery(this.options.oldinput);
+            var oldinput = $(this.options.oldinput);
             if (oldinput.length == 0 || oldinput.prop('tagName') != 'INPUT')
                 throw 'error with oldinput';
             this.oldinput = oldinput;
@@ -538,12 +540,12 @@ var SebPasswordHelper = {
             });
         }
         var sel1 = '.' + this.input.attr('id') + '-btn';
-        jQuery(sel1).each(function () {
-            jQuery(this).on('click', {self: self}, self._toggleInputs);
+        $(sel1).each(function () {
+            $(this).on('click', {self: self}, self._toggleInputs);
         });
         var sel2 = '.' + this.input.attr('id') + '-gen';
-        jQuery(sel2).each(function () {
-            jQuery(this).on('click', {self: self}, self._generate);
+        $(sel2).each(function () {
+            $(this).on('click', {self: self}, self._generate);
         });
     },
     _generate: function (e) {
@@ -556,7 +558,7 @@ var SebPasswordHelper = {
         do {
             pass = '';
             for (var i = 0; i < this.options.genlength; i++) {
-                idx = Math.floor(Math.random() * Math.floor(this.options.passchars.length));
+                let idx = Math.floor(Math.random() * Math.floor(this.options.passchars.length));
                 pass += this.options.passchars[idx];
             }
         } while (passregex.exec(pass) == null);
@@ -567,8 +569,8 @@ var SebPasswordHelper = {
         if (this.clearinput != undefined) {
             this.clearinput.val(pass);
         }
-        jQuery('#' + this.input.attr('id') + '-hidden-div').hide();
-        jQuery('#' + this.input.attr('id') + '-clear-div').show();
+        $('#' + this.input.attr('id') + '-hidden-div').hide();
+        $('#' + this.input.attr('id') + '-clear-div').show();
     },
     clearpass: function () {
         this.input.val('');
@@ -580,8 +582,8 @@ var SebPasswordHelper = {
         }
     },
     checkStrength: function () {
-        jQuery('#' + this.input.attr('id') + '-hidden-div').show();
-        jQuery('#' + this.input.attr('id') + '-clear-div').hide();
+        $('#' + this.input.attr('id') + '-hidden-div').show();
+        $('#' + this.input.attr('id') + '-clear-div').hide();
         //var passregex = new RegExp(this.options.passregex);
         return this.input.val() != '' && this.options.passregex.exec(this.input.val()) != null
     },
@@ -596,8 +598,8 @@ var SebPasswordHelper = {
             var mydata = {};
             mydata[this.oldinput.attr('name')] = this.oldinput.val();
             var self = this;
-            returnval = false;
-            jQuery.ajax({
+            let returnval = false;
+            $.ajax({
                 url: self.options.checkoldpassurl,
                 data: mydata,
                 type: 'post',
@@ -634,8 +636,8 @@ var SebPasswordHelper = {
     },
     toggleInputs: function () {
         var sel = '.' + this.input.attr('id') + '-div';
-        jQuery(sel).each(function () {
-            jQuery(this).toggle();
+        $(sel).each(function () {
+            $(this).toggle();
         });
     }
 };
@@ -644,7 +646,7 @@ var SebEmailHelper = {
     input: null,
     options: null,
     init: function (input, options) {
-        this.input = jQuery(input);
+        this.input = $(input);
         this.options = options;
     },
     check: function () {
@@ -659,7 +661,7 @@ var SebRichTextHelper = {
     options: null,
     savedcontent: null,
     init: function (div, options) {
-        this.div = jQuery(div);
+        this.div = $(div);
         this.divid = this.div.prop('id');
         this.textareaid = this.div.find('textarea').prop('id'); //this.divid + '-input';
         this.options = options;
@@ -667,10 +669,10 @@ var SebRichTextHelper = {
         this.save();
     },
     build: function () {
-        jQuery('#' + this.textareaid).richText(this.options);
+        $('#' + this.textareaid).richText(this.options);
     },
     content: function () {
-        return jQuery('#' + this.textareaid).val();
+        return $('#' + this.textareaid).val();
     },
     isEmpty: function () {
         return this.content() == '' || this.content() == '<p><br></p>';
@@ -682,7 +684,7 @@ var SebRichTextHelper = {
         this.savedcontent = this.content();
     },
     loadContent: function (content) {
-        jQuery('#' + this.textareaid).val(content).trigger('change');
+        $('#' + this.textareaid).val(content).trigger('change');
     }
 };
 
@@ -694,11 +696,11 @@ if (typeof Object.create !== 'function') {
     };
 }
 // rich text helper builder function
-(function (jQuery) {
+(function ($) {
     /* Create plugin */
-    jQuery.fn.sebFormHelper = function (options) {
+    $.fn.sebFormHelper = function (options) {
         return this.each(function () {
-            var element = jQuery(this);
+            var element = $(this);
             if (element.prop('tagName') != 'FORM')
                 throw '#' + element.prop('id') + ' not a FORM';
             if (element.data('sebformhelper'))
@@ -709,9 +711,9 @@ if (typeof Object.create !== 'function') {
         });
     }
     //SebFormHelper
-    jQuery.fn.sebPasswordHelper = function (options) {
+    $.fn.sebPasswordHelper = function (options) {
         return this.each(function () {
-            var element = jQuery(this);
+            var element = $(this);
             if (element.prop('tagName') != 'INPUT')
                 throw  '#' + element.prop('id') + ' not a INPUT';
             if (element.data('sebpasswordhelper'))
@@ -721,9 +723,9 @@ if (typeof Object.create !== 'function') {
             element.data('sebpasswordhelper', sebpasswordhelper);
         });
     }
-    jQuery.fn.sebEmailHelper = function (options) {
+    $.fn.sebEmailHelper = function (options) {
         return this.each(function () {
-            var element = jQuery(this);
+            var element = $(this);
             if (element.prop('tagName') != 'INPUT')
                 throw '#' + element.prop('id') + ' not a INPUT';
             if (element.data('sebemailhelper'))
@@ -733,9 +735,9 @@ if (typeof Object.create !== 'function') {
             element.data('sebemailhelper', sebemailhelper);
         });
     }
-    jQuery.fn.sebRichTextHelper = function (options) {
+    $.fn.sebRichTextHelper = function (options) {
         return this.each(function () {
-            var element = jQuery(this);
+            var element = $(this);
             if (element.prop('tagName') != 'DIV')
                 throw '#' + element.prop('id') + ' not a DIV';
             // Return early if this element already has a plugin instance
@@ -747,4 +749,4 @@ if (typeof Object.create !== 'function') {
             element.data('sebrichtexthelper', sebrichtexthelper);
         });
     };
-})(jQuery);
+})($);

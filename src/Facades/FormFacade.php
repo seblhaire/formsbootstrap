@@ -1,11 +1,5 @@
 <?php
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
-namespace Seblhaire\Formsbootstrap;
+namespace Seblhaire\Formsbootstrap\Facades;
 use Illuminate\Support\Facades\Facade;
 /**
  * Description of FormFacade

@@ -1,3 +1,4 @@
+import $ from 'jquery';
 /*
  RichText: WYSIWYG editor developed as jQuery plugin
 
@@ -2185,4 +2186,4 @@
 
     };
 
-}(jQuery));
+}($));

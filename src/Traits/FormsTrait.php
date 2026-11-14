@@ -1,6 +1,6 @@
 <?php
 
-namespace Seblhaire\Formsbootstrap;
+namespace Seblhaire\Formsbootstrap\Traits;
 
 use Illuminate\Support\Facades\Validator;
 use function Stringy\create as s;
@@ -9,7 +9,7 @@ use function Stringy\create as s;
  * Helpers for package formsbootstrap
  */
 trait FormsTrait{
-    private function buildInput($type, $name, $value, $attributes) {
+    private function buildInput($type, $name, $value, $attributes) : string {
         $output = '<input type="' . $type . '" name="' . $name . '" value="' . $value . '"';
         foreach ($attributes as $key => $val) {
             if (is_null($val)) {
@@ -22,7 +22,7 @@ trait FormsTrait{
         return $output;
     }
 
-    private function buildTextarea($name, $value, $attributes) {
+    private function buildTextarea($name, $value, $attributes) : string {
         $output = '<textarea name="' . $name . '"';
         foreach ($attributes as $key => $val) {
             if (is_null($val)) {
@@ -40,7 +40,7 @@ trait FormsTrait{
         return $output;
     }
 
-    private function buildSelect($name, $values, $default, $attributes) {
+    private function buildSelect($name, $values, $default, $attributes) : string{
         $output = '<select name="' . $name . '"';
         foreach ($attributes as $key => $val) {
             if (is_null($val)) {
@@ -61,7 +61,7 @@ trait FormsTrait{
         return $output;
     }
 
-    private function buildLabel($name, $label, $attributes) {
+    private function buildLabel($name, $label, $attributes) : string{
         $output = '<label for="' . $name . '"';
         foreach ($attributes as $key => $value) {
             if (is_null($value)) {
@@ -74,7 +74,7 @@ trait FormsTrait{
         return $output;
     }
 
-    private function buildStartDiv($display, $divclass, $id, $attrs = []) {
+    private function buildStartDiv($display, $divclass, $id, $attrs = []) : string{
         $output = '';
         if ($display) {
             $output .= '<div class="' . $divclass . '" id="' . $id . '"';
@@ -92,11 +92,11 @@ trait FormsTrait{
         return $output;
     }
 
-    private function buildSimpleDiv($divclass) {
+    private function buildSimpleDiv($divclass) : string{
         return '<div class="' . $divclass . '">' . PHP_EOL;
     }
 
-    private function buildEndDiv($display) {
+    private function buildEndDiv($display) : string{
         $output = '';
         if ($display) {
             $output .= '</div>' . PHP_EOL;
@@ -104,7 +104,7 @@ trait FormsTrait{
         return $output;
     }
 
-    private function buildFeedbacks($valid_feedback, $invalid_feedback, $checkvalid, $checkinvalid) {
+    private function buildFeedbacks($valid_feedback, $invalid_feedback, $checkvalid, $checkinvalid) : string{
         $output = '';
         if ($checkvalid && strlen($valid_feedback) > 0) {
             $output .= '<div class="valid-feedback">' . $valid_feedback . '</div>' . PHP_EOL;
@@ -116,7 +116,7 @@ trait FormsTrait{
         return $output;
     }
 
-    private function buildHelp($data) {
+    private function buildHelp($data) : string{
         $output = '';
         if (strlen($data['helptext']) > 0) {
             $output .= '<p class="help-block">' . $data['helptext'] . '</p>' . PHP_EOL;
@@ -124,7 +124,7 @@ trait FormsTrait{
         return $output;
     }
 
-    private function buildButton($buttonclass, $buttoncontent, $params = [], $type = 'button') {
+    private function buildButton($buttonclass, $buttoncontent, $params = [], $type = 'button') : string{
         $output = '<button type="' . $type . '" class="' . $buttonclass . '"';
         foreach ($params as $key => $value) {
             if (is_null($value)) {
@@ -137,7 +137,7 @@ trait FormsTrait{
         return $output;
     }
 
-    private function _printTabs($depth) {
+    private function _printTabs($depth) : string{
         $tabs = '';
         for ($i = 0; $i <= $depth; $i++) {
             $tabs .= '  ';
@@ -145,33 +145,7 @@ trait FormsTrait{
         return $tabs;
     }
 
-    private function _printJsCode($code, &$depth) {
-        $depth++;
-        $output = '';
-        if (count($code) > 0) {
-            foreach ($code as $left => $right) {
-                if (is_array($right)) {
-                    $output .= $this->_printTabs($depth) . $left . PHP_EOL . $this->_printJsCode($right, $depth);
-                } elseif (is_null($right)) {
-                    $output .= $this->_printTabs($depth) . $left . PHP_EOL;
-                } else {
-                    $output .= $this->_printTabs($depth) . $left . ' : ' . $right . ',' . PHP_EOL;
-                }
-            }
-        }
-        $depth--;
-        return $output;
-    }
-
-    private function buildJsCode($code = []) {
-        $output = '<script>' . PHP_EOL;
-        $depth = 0;
-        $output .= $this->_printJsCode($code, $depth);
-        $output .= '</script>' . PHP_EOL;
-        return $output;
-    }
-
-    private function checkMandatory($mandatory, $data) {
+    private function checkMandatory($mandatory, $data){
         foreach ($mandatory as $param) {
             if (!isset($data[$param])) {
                 throw new \Exception('missing mandatory parameter ' . $param);
@@ -184,7 +158,7 @@ trait FormsTrait{
      * @param  string $key key to translate
      * @return string      translated key
      */
-    public function translateOrPrint($key) {
+    public function translateOrPrint($key) : string{
         if (preg_match('/^\#(.+)\#$/', $key, $matches)) {
             return addslashes(__($matches[1]));
         }
@@ -197,7 +171,7 @@ trait FormsTrait{
      * @param  array $newValues values to replace
      * @return array            merge results
      */
-    private function mergeValues($defaults, $newValues) {
+    private function mergeValues($defaults, $newValues) : array {
         if (count($newValues) > 0) {
             foreach ($newValues as $key => $value) {
                 if (is_array($value)) {
@@ -212,7 +186,7 @@ trait FormsTrait{
         return $defaults;
     }
 
-    private function complileRules() {
+    private function complileRules() : array{
         return [
             sprintf(
                     __('formsbootstrap::messages.password_rule_length'),
@@ -228,7 +202,7 @@ trait FormsTrait{
         ];
     }
 
-    public function validateEditorParams($params = null, $addTranslations = null) {
+    public function validateEditorParams($params = null, $addTranslations = null): string {
         if (!is_array($params) && !is_null($params)) {
             throw new \Exception('no array');
         }
